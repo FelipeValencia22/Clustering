@@ -1,0 +1,24 @@
+\BOOKMARK [1][-]{section.1}{Introducci\363n}{}% 1
+\BOOKMARK [1][-]{section.2}{Recursos}{}% 2
+\BOOKMARK [1][-]{section.3}{Clasificaci\363n NO-supervisada}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Clustering k-means}{section.3}% 4
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Algoritmo en pseudoc\363digo}{subsection.3.1}% 5
+\BOOKMARK [1][-]{section.4}{Dise\361o}{}% 6
+\BOOKMARK [1][-]{section.5}{Implementaci\363n}{}% 7
+\BOOKMARK [2][-]{subsubsection.5.0.2}{Problemas encontrados}{section.5}% 8
+\BOOKMARK [3][-]{subsubsection.5.0.3}{Soluciones adoptadas}{subsubsection.5.0.2}% 9
+\BOOKMARK [1][-]{section.6}{Validaci\363n del software}{}% 10
+\BOOKMARK [2][-]{subsection.6.1}{Dise\361o del banco de pruebas}{section.6}% 11
+\BOOKMARK [1][-]{section.7}{An\341lisis de resultados}{}% 12
+\BOOKMARK [2][-]{subsection.7.1}{Modificando inicializaciones}{section.7}% 13
+\BOOKMARK [2][-]{subsection.7.2}{Modificando distancia Minkowski}{section.7}% 14
+\BOOKMARK [2][-]{subsection.7.3}{Criterios de convergencia}{section.7}% 15
+\BOOKMARK [3][-]{subsubsection.7.3.1}{N\372mero fijo de iteraciones}{subsection.7.3}% 16
+\BOOKMARK [3][-]{subsubsection.7.3.2}{Disimilitud entre codebooks}{subsection.7.3}% 17
+\BOOKMARK [2][-]{subsection.7.4}{Distintas m\351tricas}{section.7}% 18
+\BOOKMARK [3][-]{subsubsection.7.4.1}{Manhattan}{subsection.7.4}% 19
+\BOOKMARK [3][-]{subsubsection.7.4.2}{Eucl\355dea}{subsection.7.4}% 20
+\BOOKMARK [3][-]{subsubsection.7.4.3}{Minkowski}{subsection.7.4}% 21
+\BOOKMARK [1][-]{section.8}{Clasificaci\363n supervisada respecto de }{}% 22
+\BOOKMARK [1][-]{section.9}{Conclusiones}{}% 23
+\BOOKMARK [1][-]{section.10}{Valoraci\363n subjetiva}{}% 24

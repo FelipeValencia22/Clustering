@@ -1,0 +1,264 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{lmodern}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{color}%para poder definir, utilizar colores en fuente, fondo...etc
+\setcounter{page}{0}%Para que la página de título no se tenga en cuenta
+\usepackage{natbib}
+\usepackage{hyperref}
+\setcounter{secnumdepth}{5} %Para subsubsusbsection, se debe poner paragraph.
+
+\setlength{\parskip}{2mm}%Separación entre párrafos.
+
+%kuggle.com  
+
+
+\author{Jose Ignacio Sánchez\\Josu Rodríguez}
+\title{\begin{center}\textbf{\Huge{Minería de datos} Práctica 1:Clustering knn-means}
+%\begin{center}\includegraphics[scale=0.5]{./img/SVM-classifiers.jpg} 
+%\footnote{Imagen
+%extraida de \url{http://www.thebookmyproject.com/cars/intrusion-detection-technique-using-k-means-fuzzy-neural-network-svm-classifiers/intrusion-detection-technique-by-using-k-means-fuzzy-neural-network-and-svm-classifiers/}}
+%\end{center} 
+\end{center}}
+\date{\today}
+
+
+\newtheorem{defi}{(\it Definición)}[section]%Para obtener las definiciones enumeradas, con la sección que las contiene
+\newtheorem{teorema}{(\it Teorema)}[section]%Para obtener los teoremas enumeradas, con la sección que las contiene
+
+\makeindex
+
+\renewcommand{\tablename}{\textbf{Tabla}}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}%para evitar enumeración de la página de la portada y del índice
+
+\newpage
+
+%Tabla de contenido
+\renewcommand\contentsname{\centering ÍNDICE DE CONTENIDO}
+\tableofcontents%índice
+\thispagestyle{empty}
+\newpage
+
+%Lista de tablas
+\renewcommand{\listtablename}{\centering ÍNDICE DE TABLAS} %Para cambiar el índice de las tablas
+\listoftables
+\thispagestyle{empty}
+\newpage
+
+%lista de figuras 
+\renewcommand\listfigurename{\centering ÍNDICE DE FIGURAS}
+\thispagestyle{empty}
+\listoffigures
+\clearpage
+
+\setcounter{page}{1}%Para reinizar el contador de páginas en la página deseada
+
+\section{Introducción}
+
+El objetivo principal de esta práctica es obtener la capacidad de formular un
+algoritmo de aprendizaje automático de clasificación \textbf{\textit{No-Supervisada}}. 
+Por otra parte, se trabajarán la capacidad de sintetizar uns técnica de aprendizaje automático
+no-supervisado, conocer su coste computacional así como sus limitaciones de representación
+y de inteligibilidad \par
+
+%\begin{defi}
+%	Esto es una definición o teorema.
+%\end{defi}
+
+\section{Recursos}
+\begin{itemize}
+	\item PC con aplicación Weka.
+	\item Bibliografía.
+	\item Librerías de  Weka.
+	\item Manual de Weka.
+	\item Guía de la práctica.
+	\item Ficheros para los datos de la
+	práctica:
+	\textcolor{green}{food.arff},
+	\textcolor{green}{colon.arff}.
+	\item Otros ficheros que no están en formato \textit{.arff}:
+		\begin{itemize}
+			\item En formato \textit{.txt}: \textcolor{green}{ClusterData.atributos.txt} (este fichero si tiene la clase asociada para 
+			evaluar la calidad del \textit{clustering} en \textcolor{green}{ClusterData.clase.txt}).
+			\item E formato \textit{.csv} \textcolor{green}{bank-data.csv}clustering
+		\end{itemize}
+\end{itemize}
+
+\section{Clasificación \textbf{NO-supervisada}}
+
+\begin{defi}
+	Se considera \textbf{clasificación no-supervisada}...
+\end{defi}
+
+\subsection{Clustering \textit{\textbf{k-means}}}
+
+\subsubsection{Algoritmo en pseudocódigo}
+
+\section{Diseño}
+ 
+ %mapa de diseño donde se muestran las dependencias y se documentan las rutinas.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.75]{./img/dependencias.png}%crear esquema para incluirlo
+	\caption[Esquema de dependencias del sistema]{Dependencias del sistema\protect\footnotemark.}
+	\label{fig:dependencias}
+\end{figure}
+
+%\footnotetext{Imagen obtenida de:
+%\href{http://stackoverflow.com/questions/6160495/support-vector-machines-a-simple-explanation}{http://stackoverflow.com/questions/6160495/support-vector-machines-a-simple-explanation}.}
+
+%\footnotetext{Imagen obtenida de:
+%\href{http://en.wikipedia.org/wiki/File:Svm\_max\_sep\_hyperplane\_with\_margin.png}{\nolinkurl{http://en.wikipedia.org/wiki/File:Svm\_max\_sep\_hyperplane\_with\_margin.png}}.}
+
+%\begin{equation}
+%	min\frac{1}{2}||w||^{2}
+%	\label{eq:pl}
+%\end{equation}
+
+\section{Implementación}
+
+\subsubsection{Problemas encontrados} 
+
+\subsubsection{Soluciones adoptadas} 
+
+\section{Validación del \textit{software}}
+
+\subsection{Diseño del banco de pruebas}
+
+\section{Análisis de resultados}
+
+\subsection{Modificando inicializaciones}
+
+\subsection{Modificando distancia Minkowski}
+
+\subsection{Criterios de convergencia}
+
+\subsubsection{Número fijo de iteraciones}
+
+\subsubsection{Disimilitud entre \textit{codebooks}}
+
+\subsection{Distintas métricas}
+
+\subsubsection{Manhattan}
+
+\subsubsection{Euclídea}
+
+\subsubsection{Minkowski}
+
+\section{Clasificación supervisada respecto de }
+
+%\section{Preproceso de los datos}
+%
+%\subsubsection{Randomize}
+%
+%\subsubsection{Normalize}
+%
+%\subsubsection{Outliers y Extreme Values}
+%
+%\subsubsection{Problemas al implementar el preproceso de datos}
+%
+%\subsection{Utils}
+%
+%\subsubsection{StopWatch}
+%
+%Esta función se encarga de indicarnos el tiempo transcurrido, en segundos,
+%desde donde se instancia el objeto, hasta donde se para el
+%contador\par
+%
+%Creemos necesario su uso, ya que nos aporta una visión objetiva del coste de tiempo computacional 
+%de los distintos algoritmos implementados,como por ejemplo en el proceso de
+%clasificación de las instancias sin estimar incluidas en los distintos conjuntos de
+%test.
+%
+%\subsubsection{VerboseCutter}
+%
+%Esta MAE se encarga de eliminar la salida de sistema que
+%imprime al hacer la evaluación el clasificador \textit{LibSVM} por defecto.\par
+%
+%La implementación de esta funcionalidad ha sido posible gracias a la inestimable
+%ayuda por parte de otro de los grupos\footnote{David Ramírez, Begoña Carcedo,
+%Andoni Martín, Marta Aguilera}.\par
+%
+%Eliminando la salida de sistema, podemos mostrar de forma más
+%clara infomación relevante de nuestro programa, facilitando, de esta manera,
+%la comprensión de los datos por parte del usuario.Además se puede seguir
+%revisando dicha salida en el fichero temporal al que ha sido redireccionada.\par
+%
+%\paragraph{Problemas de ejecución:}
+%	Al activar y desactivar esta MAE dentro de bucles anidados, no obtenemos el
+%	resultado deseado, esto ocurre por falta de capacidad de respuesta por
+%	capacidad de procesamiento y velocidad de escritura/lectura del disco.
+%\paragraph{Solución:}
+%	Aunque con desactivar la salida antes de cada evaluación es suficiente, hemos
+%	sacado la llamada a la MAE fuera de los bucles(antes de los bucles se desactiva y despues de los bucles se activa la salida de sistema).
+%	De esta manera hemos conseguido los resultados deseados.
+
+
+
+\section{Conclusiones}
+
+	\begin{itemize}
+		\item Breve descripción de las motivaciones para llevar a cabo técnicas de clustering.
+		\item Conclusiones a la vista de los resultados más relevantes.
+		\item Conclusiones generales.(Análisis de fortalezas del sw y reflexiones sobre la tarea.
+		\item Análisis de puntos débiles y propuestas de mejoras.
+	\end{itemize}
+
+\section{Valoración subjetiva}
+
+\begin{enumerate}
+
+	\item ¿Has alcanzado los objetivos que se plantean? 
+	
+	\item ¿Te ha resultado de utilidad la tarea planteada?
+
+	\item ¿Qué dificultades has encontrado?Valora el grado de dificultad de la tarea.
+
+	\item  ¿Cuánto tiempo has trabajado en esta tarea? Desglosado:
+
+		\begin{table}[H]
+		\centering
+		\resizebox{8cm}{!}{
+						\begin{tabular}{|l|l|}
+							\hline
+							\multicolumn{2}{|c|}{\textbf{Coste temporal}}\\
+							\hline
+								Diseño de software & \\
+								Implementación de software & \\
+								Tiempo trabajando con Weka & \\
+								Búsqueda bibliográfica & \\
+								Informe & 1\\
+								\hline
+							\end{tabular}
+						}
+		\end{table}
+
+	\item  Sugerencias para mejorar la tarea. Sugerencias para que se consiga
+	despertar mayor interés y motivación en los alumnos.\par
+
+	\item  Críticas(constructivas).
+
+\end{enumerate} 
+
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{bibliografia}
+
+%Ser crítico, analizar datos experemientales.Aplicar pequeños heurísticos.
+
+\end{document} 

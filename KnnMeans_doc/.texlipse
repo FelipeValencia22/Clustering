@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Sat Mar 29 19:49:09 CET 2014
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=SAD_P3_Informe.tex
+outputFile=SAD_P3_Informe.pdf
+langSpell=es
+markDer=true
+srcDir=
