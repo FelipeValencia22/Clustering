@@ -1,0 +1,37 @@
+
+Etapa-1: Elegir la forma de inicialización del algoritmo: Número de clusters y asignación inicial de los centroides, la distancia a utilizar(exponente de Minkowski).Seleccionar si se normalizan los datos o no.
+¿Outliers?Establecer el criterio de parada (disimilitud,nº iteraciones fijo, aleatorio)
+
+Etapa-2: Carga de los datos (que formatos vamos a utilizar.csv es facil con la función split de string está tirado, para arff podemos usar la implementación de weka, no le veo interés a implementar arff nosotros y txt
+se puede tratar como un csv siempre que cumpla con el estandar que nosotros mismos diseñaremos)
+
+Etapa-2: Pre-proceso de los datos
+Para normalizar sólo hay que aplicar la función estadística zscore. Es decir para cada 'feature' X_n hacer:
+
+	zscore = (X_n-mu)/sigma
+
+Donde: 	mu=media.
+	sigma = varianza.
+
+Creo que con este preproceso nos quitamos de un plumazo la influencia negativa de outliers puesto que los 
+valores van a estar dentro del intervalo [-1,1].
+
+Etapa-3:Reasignación de las instancias del cluster:
+Se asigna el cluster más próximo a la instancia para cada instancias según la medida de la distancia.¿Merece la pena elevar al exponente inverso de la raíz para la distancia seleccionada?
+
+Etapa-4:Recálculo de los centroides:
+Una vez que todas las instancias estan asignadas recalculamos los nuevos centroides.(Vector promedio para cada cluster)
+
+Etapa-5: Repetir las etapas 3 y 4 hasta que no se hagan reasignaciones, según los criterios establecidos.
+		Según he leido a centros iniciales lo más separados posibles, ofrece mejores resultados.
+		Buscar más información sobre esto.
+
+Etapa-6: Procesado de la salida (Fichero, terminal...)
+
+NOTAS
+======
+
+k-means es susceptible a valores extremos porque distorsionan la distribucion de los datos.
+fuente:ALGORITMOS DE APRENDIZAJE: KNN & KMEANS.
+ Es conveniente normalizar,¿quizás dar la opción de detectar y eliminar outliers? 
+Buscar información sobre esto. 
