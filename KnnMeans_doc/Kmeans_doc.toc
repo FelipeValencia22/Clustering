@@ -1,7 +1,7 @@
 \select@language {spanish}
 \contentsline {section}{\numberline {1}Introducci\IeC {\'o}n}{1}{section.1}
 \contentsline {section}{\numberline {2}Recursos}{1}{section.2}
-\contentsline {section}{\numberline {3}Clasificaci\IeC {\'o}n \textbf {NO-supervisada}}{1}{section.3}
+\contentsline {section}{\numberline {3}Clasificaci\IeC {\'o}n \textbf {NO-supervisada} o \textit {Clustering}}{1}{section.3}
 \contentsline {subsection}{\numberline {3.1}Clustering \textit {\textbf {k-means}}}{1}{subsection.3.1}
 \contentsline {subsubsection}{\numberline {3.1.1}Algoritmo en pseudoc\IeC {\'o}digo}{1}{subsubsection.3.1.1}
 \contentsline {section}{\numberline {4}Dise\IeC {\~n}o}{1}{section.4}
