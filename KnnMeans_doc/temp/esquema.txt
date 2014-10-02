@@ -1,0 +1,35 @@
+Algoritmo:
+
+	1. Inicialización de los code-words
+		Parámetros: 
+			- Tipo de inicialización: aleatoria, división del espacio...
+			- Si se quiere, inicializar en base a un conjunto ya hecho (recálculo de centroides): pasar el ClusteredInstances
+		Función: public CodeBook generarCodeBook("parámetro")	
+	
+	2. Crear los clústers en base al code-book y las instancias
+		*Esta función se utilizará también en las iteraciones
+		
+		Función: public ClusteredInstances asignarClusters(Instances, CodeBook)
+		
+	3. Iteración del algoritmo
+		Posibles parámetros:
+			- Indicar si la hay una condición de parada (ahí no sé, p. ej. especificar si hay un % de cambio en los clústers entre iteraciones para que se detenga...)
+			- Indicar la métrica a utilizar
+			- ...
+			
+		Función:
+			
+			while !condición
+				clusteredInstances = clusteredInstancesNuevo
+				codeBookNuevo = generarCodeBook(ClusteredInstances)
+				clusteredInstancesNuevo = asignarClusters(Instances, codeBookNuevo)
+				
+				if equalClusters(clusteredInstances, clusteredInstancesNuevo)
+					condición = true
+				else if "hay condición de parada"
+					"verificar condición"
+				end
+			end
+				
+				
+				
