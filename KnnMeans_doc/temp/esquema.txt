@@ -1,5 +1,6 @@
 Algoritmo:
 
+
 	1. Inicialización de los code-words
 		Parámetros: 
 			- Tipo de inicialización: aleatoria, división del espacio...
@@ -30,6 +31,8 @@ Algoritmo:
 					"verificar condición"
 				end
 			end
+				
+				
 				
 				
 				
