@@ -7,12 +7,14 @@ public class Instance
 	private String id;
 	private ArrayList<Double> doubleFeatures;
 	private ArrayList<String> stringFeatures;
-	private ArrayList<Enum> enumFeatures;
+	
+	//For test
+	private ArrayList<String> features;
 
 	public Instance(){
 		this.doubleFeatures= new ArrayList<Double>();
-		this.enumFeatures= new ArrayList<Enum>();
 		this.stringFeatures = new ArrayList<String>();
+		this.features = new ArrayList<String>();
 	}
 	public String getId() 
 	{
@@ -25,5 +27,21 @@ public class Instance
 	
 	public void addDobFeature(Double feature){
 		doubleFeatures.add(feature);
+	}
+	
+	/**
+	 * pruebas
+	 * @param feature
+	 */
+	public void addFeature(String feature){
+		features.add(feature);
+	}
+	
+	public int numFeatures(){
+		return this.features.size();
+	}
+	public ArrayList<Double> getDobFeatures() {
+		return this.doubleFeatures;
+		
 	}
 }

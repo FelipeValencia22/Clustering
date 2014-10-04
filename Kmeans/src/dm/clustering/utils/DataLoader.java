@@ -30,8 +30,7 @@ public class DataLoader
 	 * @param filePath
 	 * @return double[][]
 	 */
-	@SuppressWarnings("resource")
-	public ArrayList<Instance> loadData(String pFilePath,int pIndexini){
+	public ArrayList<Instance> loadNumericData(String pFilePath,int pIndexini){
 
 		
 		ArrayList<Instance> instances = new ArrayList<Instance>();
@@ -40,27 +39,28 @@ public class DataLoader
 			reader = new CSVReader(new FileReader(pFilePath));
 			List<String[]> features = reader.readAll();	
 			for(int i = pIndexini;i<features.size();i++){
-				for(int j = 0;i<features.get(i).length;i++)
-				{
-					Instance ins = new Instance();
-					
+				Instance ins = new Instance();
+				for(int j = 0;j<features.get(i).length;j++)
+				{					
 						try 
 						{
 							ins.addDobFeature(Double.valueOf(features.get(i)[j]));
+							System.out.println(features.get(i)[j]);
 						} catch (NumberFormatException e) 
 						{
-							Logger.getLogger(getClass().getName()).log(Level.INFO, "El atributo no es numérico");
-							e.printStackTrace();
+							Logger.getLogger(LOG_TAG).log(Level.INFO, "El atributo no es numérico");
 						}					
 				}
+				instances.add(ins);
 			}
-		} catch (FileNotFoundException e) 
+		} 
+		catch (FileNotFoundException e) 
 		{
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.getLogger(LOG_TAG).log(Level.INFO, "El archivo no existe");
+		} 
+		catch (IOException e) {
+			Logger.getLogger(LOG_TAG).log(Level.INFO, "Imposible acceder al archivo");
 		}
-
 		return instances;
 	}
 

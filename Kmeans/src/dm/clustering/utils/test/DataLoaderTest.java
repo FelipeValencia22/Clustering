@@ -13,7 +13,7 @@ import dm.core.Instance;
 
 public class DataLoaderTest {
 
-	ArrayList<Instance> instances;
+	private ArrayList<Instance> instances;
 	@Before
 	public void setUp() throws Exception 
 	{
@@ -28,9 +28,14 @@ public class DataLoaderTest {
 	@Test
 	public void testLoadData() 
 	{
-		instances = DataLoader.getMiLoader().loadData("data/bank-data.csv", 2);
+		instances = DataLoader.getMiLoader().loadNumericData("data/bank-data.csv", 2);
+		Instance ins = instances.iterator().next();
+		System.out.println(instances.size());
 		assertTrue(instances.size()>0);
-		
+		assertFalse(ins.getDobFeatures().contains("YES"));
+		assertFalse(ins.getDobFeatures().contains("FEMALE"));
+		assertTrue(ins.getDobFeatures().contains(48.0));
+		assertTrue(ins.getDobFeatures().contains(17546.0));
 	}
 
 }
