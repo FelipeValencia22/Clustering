@@ -1,0 +1,37 @@
+Let k be the number of clusters to partition the data set
+Let X = {x1,x2, ..., xn} be the data set to be analyzed
+Let M = {m1, m2, ..., mk} be the code-book associated to the clusters
+Let dist(a, b) be the desired distance metric
+
+Ensure: C = {C1, C2, ..., CK} set of clusterized instances
+
+Begin:
+
+	for each mj
+		mj = randomsample(X)
+	end
+		
+	for each xn
+		Cj = argmin dist (xi,mj) // para cada j, como la formulita del armgin de siempre. en vez del igual tengo que mirar algo que simbolice añadir
+	end
+		
+	while changes in M do
+		for each mj
+			mjnew = calculatecentroid(Cj)
+			if mjnew == mj
+				changes = false
+			else
+				changes = true
+			end
+			mj = mjnew	
+		end
+		
+		for each xn
+			Cj = argmin dist (xi,mj) // lo mismo que arriba, miraré a hacerlo con fórmulas de latex después de que lo repases
+		end
+	end
+	
+	return C = {C1, C2, ..., Ck}
+end
+		
+		
