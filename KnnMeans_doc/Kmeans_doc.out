@@ -2,11 +2,11 @@
 \BOOKMARK [1][-]{section.2}{Recursos}{}% 2
 \BOOKMARK [1][-]{section.3}{Clasificaci\363n NO-supervisada o Clustering}{}% 3
 \BOOKMARK [2][-]{subsection.3.1}{Clustering k-means}{section.3}% 4
-\BOOKMARK [3][-]{subsubsection.3.1.1}{Algoritmo en pseudoc\363digo}{subsection.3.1}% 5
-\BOOKMARK [1][-]{section.4}{Dise\361o}{}% 6
+\BOOKMARK [1][-]{section.4}{Dise\361o}{}% 5
+\BOOKMARK [2][-]{subsection.4.1}{Algoritmo en pseudoc\363digo}{section.4}% 6
 \BOOKMARK [1][-]{section.5}{Implementaci\363n}{}% 7
-\BOOKMARK [2][-]{subsubsection.5.0.2}{Problemas encontrados}{section.5}% 8
-\BOOKMARK [3][-]{subsubsection.5.0.3}{Soluciones adoptadas}{subsubsection.5.0.2}% 9
+\BOOKMARK [2][-]{subsubsection.5.0.1}{Problemas encontrados}{section.5}% 8
+\BOOKMARK [3][-]{subsubsection.5.0.2}{Soluciones adoptadas}{subsubsection.5.0.1}% 9
 \BOOKMARK [1][-]{section.6}{Validaci\363n del software}{}% 10
 \BOOKMARK [2][-]{subsection.6.1}{Dise\361o del banco de pruebas}{section.6}% 11
 \BOOKMARK [1][-]{section.7}{An\341lisis de resultados}{}% 12

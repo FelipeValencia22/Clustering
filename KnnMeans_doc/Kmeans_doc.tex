@@ -15,7 +15,52 @@
 \setcounter{page}{0}%Para que la página de título no se tenga en cuenta
 \usepackage{natbib}
 \usepackage{hyperref}
+\usepackage{eurosym}
 \setcounter{secnumdepth}{5} %Para subsubsusbsection, se debe poner paragraph.
+
+\usepackage{listings}%Entornos de código
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+%\lstset{frame=tb,
+%  language=Java,
+%  aboveskip=3mm,
+%  belowskip=3mm,
+%  showstringspaces=false,
+%  columns=flexible,
+%  basicstyle={\small\ttfamily},
+%  numberstyle=\tiny\color{gray},
+%  keywordstyle=\color{blue},
+%  commentstyle=\color{dkgreen},
+%  stringstyle=\color{mauve},
+%  breaklines=true,
+%  breakatwhitespace=true
+%  tabsize=2
+%}
+
+\lstset{frame=tb,
+  language=Java,% Set your language (you can change the language for each code-block optionally)
+  basicstyle=\footnotesize\ttfamily,
+  numbers=left,
+  morekeywords={end},
+  aboveskip=3mm,
+  belowskip=3mm,
+  backgroundcolor=\color{white},
+  frame=single,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{mauve},
+  commentstyle=\color{mygreen},
+  stringstyle=\color{blue},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2
+}
 
 \setlength{\parskip}{2mm}%Separación entre párrafos.
 
@@ -111,15 +156,41 @@ y de inteligibilidad \par
 
 \subsection{Clustering \textit{\textbf{k-means}}}
 
-\subsubsection{Algoritmo en pseudocódigo}
 
 \section{Diseño}
  
+ Estructuramos la ejecución del algoritmo en fases\ref{fig:dependencias} , las cuales se definen a continuación.\\
+ 
+\subsection*{Primera fase: carga de datos y configuración}
+ 
+ Inicialmente se encarga de cargar el fichero en una estructura de datos adecuada para el cálculo del algoritmo.Además se carga la configuración establecida
+ por el usuario, es decir que tipo de inicialización para el \textit{codebook}, número de clusters, distancia a utilizar\dots
+
+\subsection*{Segunda fase: Preproceso de datos}
+
+En el preproceso se normaliza el espacio, haciendo uso de la función estadística zscore, es decir a cada \textit{Feature} de la instancia se le resta su media y dividiendo el resultado por la varianza de dicha \textit{Feature} se consigue que todos los valores de los atributos se encuentren dentro del intervalo [-1,1]. Con ésto conseguimos evitar la mayor influencia de algunos atributos debido a que se encuentren dentro de un dominio de valores mayor. Por ejemplo si vamos a agrupar viviendas y utilizamos como características el número de habitaciones y el precio, seguramente el número de habitaciones no será mucho mayor de 3 y en cambio el precio puede ser mayor incluso de 300000 \euro .\cite{coursera}
+
+\subsection*{Tercera Fase: Algoritmo K-means}
+
+En esta fase se implementa el algoritmo \textbf{K-means}.
+\begin{enumerate}
+	\item En primer lugar inicia los \textit{centroides} con el criterio establecido por el usuario, o la matriz de bits de pertenencias.
+	\item Recorre las instancias del conjunto y calcula la distancia a cada uno de los \textit{codeword} actualizando la matriz de bits de pertenencia,el valor 		del bit es uno si es el centroide más cercano a la instancia.
+	\item Se calcula de nuevo el vector promedio para cada cluster.
+	\item Iterar los pasos dos y tres hasta converger.
+\end{enumerate}
+
+\subsection*{Cuarta Fase: Evaluación}
+
+En esta fase se tratará de automatizar la evaluación del algoritmo frente a los datos obtenidos con distintas ejecuciones, variando los parámetros o incluso con  
+los resultados obtenidos con el modelo de \textbf{K-means} que ya implementa el API de \textbf{weka}.
+
+\subsection*{Dependencias}
  %mapa de diseño donde se muestran las dependencias y se documentan las rutinas.
-\begin{figure}[H]
+\begin{figure}[h!]
 	\centering
-	\includegraphics[scale=0.75]{./img/dependencias.png}%crear esquema para incluirlo
-	\caption[Esquema de dependencias del sistema]{Dependencias del sistema\protect\footnotemark.}
+	\includegraphics[scale=0.50]{./img/dependenciasKmeans.pdf}%crear esquema para incluirlo
+	\caption[Esquema de dependencias del sistema]{Dependencias del sistema}
 	\label{fig:dependencias}
 \end{figure}
 
@@ -134,6 +205,46 @@ y de inteligibilidad \par
 %	\label{eq:pl}
 %\end{equation}
 
+\subsection{Algoritmo en pseudocódigo}
+
+\begin{lstlisting}
+Let k be the number of clusters to partition the data set
+Let X = {x1,x2, ..., xn} be the data set to be analyzed
+Let M = {m1, m2, ..., mk} be the code-book associated to the clusters
+Let dist(a, b) be the desired distance metric
+
+Ensure: C = {C1, C2, ..., CK} set of clusterized instances
+
+Begin:
+
+	for each mj
+		mj = randomsample(X)
+	end
+		
+	for each xn
+		Cj = argmin dist (xi,mj) // para cada j, como la formulita del armgin de siempre. en vez del igual tengo que mirar algo que simbolice a�adir
+	end
+		
+	while changes in M do
+		for each mj
+			mjnew = calculatecentroid(Cj)
+			if mjnew == mj
+				changes = false
+			else
+				changes = true
+			end
+			mj = mjnew	
+		end
+		
+		for each xn
+			Cj = argmin dist (xi,mj) // lo mismo que arriba, mirar� a hacerlo con f�rmulas de latex despu�s de que lo repases
+		end
+	end
+	
+	return C = {C1, C2, ..., Ck}
+end
+
+\end{lstlisting}
 \section{Implementación}
 
 \subsubsection{Problemas encontrados} 
