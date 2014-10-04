@@ -2,6 +2,7 @@ Let k be the number of clusters to partition the data set
 Let X = {x1,x2, ..., xn} be the data set to be analyzed
 Let M = {m1, m2, ..., mk} be the code-book associated to the clusters
 Let dist(a, b) be the desired distance metric
+Let B = {B11, B12, ..., Bnk} be the temporary pertenece bit matrix
 
 Ensure: C = {C1, C2, ..., CK} set of clusterized instances
 
@@ -27,7 +28,15 @@ Begin:
 		end
 		
 		for each xn
-			Cj = argmin dist (xi,mj) // lo mismo que arriba, miraré a hacerlo con fórmulas de latex después de que lo repases
+			// Cj = argmin dist (xi,mj) // lo mismo que arriba, miraré a hacerlo con fórmulas de latex después de que lo repases posibilidad 1, sin matriz de pertenencia
+			
+			Bnj = 1 sii argmin dist (xn,mj) = mj (para cada mj) si no Bnj = 0 
+		end
+		
+		for each Bij 
+			if Bij == 1
+				Cj = xi (añadir xi a Cj)
+			end
 		end
 	end
 	
