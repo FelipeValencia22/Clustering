@@ -12,13 +12,13 @@
 \usepackage{lmodern}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{color}%para poder definir, utilizar colores en fuente, fondo...etc
-\setcounter{page}{0}%Para que la pÃ¡gina de tÃ­tulo no se tenga en cuenta
+\setcounter{page}{0}%Para que la página de título no se tenga en cuenta
 \usepackage{natbib}
 \usepackage{hyperref}
 \usepackage{eurosym}
 \setcounter{secnumdepth}{5} %Para subsubsusbsection, se debe poner paragraph.
 
-\usepackage{listings}%Entornos de cÃ³digo
+\usepackage{listings}%Entornos de código
 \usepackage{color}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
@@ -62,13 +62,13 @@
   tabsize=2
 }
 
-\setlength{\parskip}{2mm}%SeparaciÃ³n entre pÃ¡rrafos.
+\setlength{\parskip}{2mm}%Separación entre párrafos.
 
 %kuggle.com  
 
 
-\author{Jose Ignacio SÃ¡nchez\\Josu RodrÃ­guez}
-\title{\begin{center}\textbf{\Huge{MinerÃ­a de datos} PrÃ¡ctica 1:Clustering knn-means}
+\author{Jose Ignacio Sánchez\\Josu Rodríguez}
+\title{\begin{center}\textbf{\Huge{Minería de datos} Práctica 1:Clustering knn-means}
 %\begin{center}\includegraphics[scale=0.5]{./img/SVM-classifiers.jpg} 
 %\footnote{Imagen
 %extraida de \url{http://www.thebookmyproject.com/cars/intrusion-detection-technique-using-k-means-fuzzy-neural-network-svm-classifiers/intrusion-detection-technique-by-using-k-means-fuzzy-neural-network-and-svm-classifiers/}}
@@ -77,8 +77,8 @@
 \date{\today}
 
 
-\newtheorem{defi}{(\it DefiniciÃ³n)}[section]%Para obtener las definiciones enumeradas, con la secciÃ³n que las contiene
-\newtheorem{teorema}{(\it Teorema)}[section]%Para obtener los teoremas enumeradas, con la secciÃ³n que las contiene
+\newtheorem{defi}{(\it Definición)}[section]%Para obtener las definiciones enumeradas, con la sección que las contiene
+\newtheorem{teorema}{(\it Teorema)}[section]%Para obtener los teoremas enumeradas, con la sección que las contiene
 
 \makeindex
 
@@ -88,54 +88,54 @@
 
 \maketitle
 
-\thispagestyle{empty}%para evitar enumeraciÃ³n de la pÃ¡gina de la portada y del Ã­ndice
+\thispagestyle{empty}%para evitar enumeración de la página de la portada y del índice
 
 \newpage
 
 %Tabla de contenido
-\renewcommand\contentsname{\centering Ã�NDICE DE CONTENIDO}
-\tableofcontents%Ã­ndice
+\renewcommand\contentsname{\centering ÍNDICE DE CONTENIDO}
+\tableofcontents%índice
 \thispagestyle{empty}
 \newpage
 
 %Lista de tablas
-\renewcommand{\listtablename}{\centering Ã�NDICE DE TABLAS} %Para cambiar el Ã­ndice de las tablas
+\renewcommand{\listtablename}{\centering ÍNDICE DE TABLAS} %Para cambiar el índice de las tablas
 \listoftables
 \thispagestyle{empty}
 \newpage
 
 %lista de figuras 
-\renewcommand\listfigurename{\centering Ã�NDICE DE FIGURAS}
+\renewcommand\listfigurename{\centering ÍNDICE DE FIGURAS}
 \thispagestyle{empty}
 \listoffigures
 \clearpage
 
-\setcounter{page}{1}%Para reinizar el contador de pÃ¡ginas en la pÃ¡gina deseada
+\setcounter{page}{1}%Para reinizar el contador de páginas en la página deseada
 
-\section{IntroducciÃ³n}
+\section{Introducción}
 
-El objetivo principal de esta prÃ¡ctica es obtener la capacidad de formular un
-algoritmo de aprendizaje automÃ¡tico de clasificaciÃ³n \textbf{\textit{No-Supervisada}}. 
-Por otra parte, se trabajarÃ¡n la capacidad de sintetizar uns tÃ©cnica de aprendizaje automÃ¡tico
-no-supervisado, conocer su coste computacional asÃ­ como sus limitaciones de representaciÃ³n
+El objetivo principal de esta práctica es obtener la capacidad de formular un
+algoritmo de aprendizaje automático de clasificación \textbf{\textit{No-Supervisada}}. 
+Por otra parte, se trabajarán la capacidad de sintetizar uns técnica de aprendizaje automático
+no-supervisado, conocer su coste computacional así como sus limitaciones de representación
 y de inteligibilidad \par
 
 %\begin{defi}
-%	Esto es una definiciÃ³n o teorema.
+%	Esto es una definición o teorema.
 %\end{defi}
 
 \section{Recursos}
 \begin{itemize}
-	\item PC con aplicaciÃ³n Weka.
-	\item BibliografÃ­a.
-	\item LibrerÃ­as de  Weka.
+	\item PC con aplicación Weka.
+	\item Bibliografía.
+	\item Librerías de  Weka.
 	\item Manual de Weka.
-	\item GuÃ­a de la prÃ¡ctica.
+	\item Guía de la práctica.
 	\item Ficheros para los datos de la
-	prÃ¡ctica:
+	práctica:
 	\textcolor{green}{food.arff},
 	\textcolor{green}{colon.arff}.
-	\item Otros ficheros que no estÃ¡n en formato \textit{.arff}:
+	\item Otros ficheros que no están en formato \textit{.arff}:
 		\begin{itemize}
 			\item En formato \textit{.txt}: \textcolor{green}{ClusterData.atributos.txt} (este fichero si tiene la clase asociada para 
 			evaluar la calidad del \textit{clustering} en \textcolor{green}{ClusterData.clase.txt}).
@@ -143,13 +143,13 @@ y de inteligibilidad \par
 		\end{itemize}
 \end{itemize}
 
-\section{ClasificaciÃ³n \textbf{NO-supervisada} o \textit{Clustering}}
+\section{Clasificación \textbf{NO-supervisada} o \textit{Clustering}}
 
 \begin{defi}
-	Se considera \textbf{clasificaciÃ³n no-supervisada} cuando el conjunto de
-	entrenamiento  no estÃ¡n las instancias etiquetadas con el valor de la clase. Es
+	Se considera \textbf{clasificación no-supervisada} cuando el conjunto de
+	entrenamiento  no están las instancias etiquetadas con el valor de la clase. Es
 	un experimento exploratorio, que trata de agrupar las instancias en grupos
-	definidos por similitud entre las caracterÃ­sticas de las instancias que
+	definidos por similitud entre las características de las instancias que
 	pertenecen al mismo grupo y disimilitud entre las que pertenecen a grupos
 	distintos. Tecnicamente estos grupos son llamados \textit{Clusters}.
 \end{defi}
@@ -157,36 +157,36 @@ y de inteligibilidad \par
 \subsection{Clustering \textit{\textbf{k-means}}}
 
 
-\section{DiseÃ±o}
+\section{Diseño}
  
- Estructuramos la ejecuciÃ³n del algoritmo en fases\ref{fig:dependencias} , las cuales se definen a continuaciÃ³n.\\
+ Estructuramos la ejecución del algoritmo en fases\ref{fig:dependencias} , las cuales se definen a continuación.\\
  
-\subsection*{Primera fase: carga de datos y configuraciÃ³n}
+\subsection*{Primera fase: carga de datos y configuración}
  
- Inicialmente se encarga de cargar el fichero en una estructura de datos adecuada para el cÃ¡lculo del algoritmo.AdemÃ¡s se carga la configuraciÃ³n establecida
- por el usuario, es decir que tipo de inicializaciÃ³n para el \textit{codebook}, nÃºmero de clusters, distancia a utilizar\dots
+ Inicialmente se encarga de cargar el fichero en una estructura de datos adecuada para el cálculo del algoritmo.Además se carga la configuración establecida
+ por el usuario, es decir que tipo de inicialización para el \textit{codebook}, número de clusters, distancia a utilizar\dots
 
 \subsection*{Segunda fase: Preproceso de datos}
 
-En el preproceso se normaliza el espacio, haciendo uso de la funciÃ³n estadÃ­stica zscore, es decir a cada \textit{Feature} de la instancia se le resta su media y dividiendo el resultado por la varianza de dicha \textit{Feature} se consigue que todos los valores de los atributos se encuentren dentro del intervalo [-1,1]. Con Ã©sto conseguimos evitar la mayor influencia de algunos atributos debido a que se encuentren dentro de un dominio de valores mayor. Por ejemplo si vamos a agrupar viviendas y utilizamos como caracterÃ­sticas el nÃºmero de habitaciones y el precio, seguramente el nÃºmero de habitaciones no serÃ¡ mucho mayor de 3 y en cambio el precio puede ser mayor incluso de 300000 \euro .\cite{coursera}
+En el preproceso se normaliza el espacio, haciendo uso de la función estadística zscore, es decir a cada \textit{Feature} de la instancia se le resta su media y dividiendo el resultado por la varianza de dicha \textit{Feature} se consigue que todos los valores de los atributos se encuentren dentro del intervalo [-1,1]. Con ésto conseguimos evitar la mayor influencia de algunos atributos debido a que se encuentren dentro de un dominio de valores mayor. Por ejemplo si vamos a agrupar viviendas y utilizamos como características el número de habitaciones y el precio, seguramente el número de habitaciones no será mucho mayor de 3 y en cambio el precio puede ser mayor incluso de 300000 \euro .\cite{coursera}
 
 \subsection*{Tercera Fase: Algoritmo K-means}
 
 En esta fase se implementa el algoritmo \textbf{K-means}.
 \begin{enumerate}
 	\item En primer lugar inicia los \textit{centroides} con el criterio establecido por el usuario, o la matriz de bits de pertenencias.
-	\item Recorre las instancias del conjunto y calcula la distancia a cada uno de los \textit{codeword} actualizando la matriz de bits de pertenencia,el valor 		del bit es uno si es el centroide mÃ¡s cercano a la instancia.
+	\item Recorre las instancias del conjunto y calcula la distancia a cada uno de los \textit{codeword} actualizando la matriz de bits de pertenencia,el valor 		del bit es uno si es el centroide más cercano a la instancia.
 	\item Se calcula de nuevo el vector promedio para cada cluster.
 	\item Iterar los pasos dos y tres hasta converger.
 \end{enumerate}
 
-\subsection*{Cuarta Fase: EvaluaciÃ³n}
+\subsection*{Cuarta Fase: Evaluación}
 
-En esta fase se tratarÃ¡ de automatizar la evaluaciÃ³n del algoritmo frente a los datos obtenidos con distintas ejecuciones, variando los parÃ¡metros o incluso con  
+En esta fase se tratará de automatizar la evaluación del algoritmo frente a los datos obtenidos con distintas ejecuciones, variando los parámetros o incluso con  
 los resultados obtenidos con el modelo de \textbf{K-means} que ya implementa el API de \textbf{weka}.
 
 \subsection*{Dependencias}
- %mapa de diseÃ±o donde se muestran las dependencias y se documentan las rutinas.
+ %mapa de diseño donde se muestran las dependencias y se documentan las rutinas.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[scale=0.50]{./img/dependenciasKmeans.pdf}%crear esquema para incluirlo
@@ -205,72 +205,65 @@ los resultados obtenidos con el modelo de \textbf{K-means} que ya implementa el 
 %	\label{eq:pl}
 %\end{equation}
 
-\subsection{Algoritmo en pseudocÃ³digo}
+\subsection{Algoritmo en pseudocódigo}
 
 \begin{lstlisting}
 Let k be the number of clusters to partition the data set
-Let X = {x_{1},x_{2}, ..., x_{n}} be the data set to be analyzed
-Let M = {m_{1}, m_{2}, ..., m_{k}} be the code-book associated to the clusters
+Let X = {x1,x2, ..., xn} be the data set to be analyzed
+Let M = {m1, m2, ..., mk} be the code-book associated to the clusters
 Let dist(a, b) be the desired distance metric
-Let B = {B_{11}, B_{12}, ..., B_{nk}} be the temporary pertenece bit matrix
+Let B = {B11, B12, ..., Bnk} be the temporary pertenece bit matrix
 
-Ensure: C = {C_{1}, C_{2}, ..., C_{k}} set of clusterized instances
+Ensure: C = {C1, C2, ..., CK} set of clusterized instances
 
 Begin:
 
-	//randomly initialize the first centroids
-	for each m_{j}
-		m_{j} = randomsample(X)
-	end
-	
-	//assign dataset instances to each cluster generated by the centroids
-	for each x_{n}
-		B_{nj} = 1 sii argmin dist (xn,mj) = mj \foreach m_{j} si no B_{nj} = 0 
+	for each mj
+		mj = randomsample(X)
 	end
 		
-	for each B_{nj}
-		if B_{nj} == 1
-			C_{j}.add(x_{i}) 
-		end
+	for each xn
+		Cj = argmin dist (xi,mj) // para cada j, como la formulita del armgin de siempre. en vez del igual tengo que mirar algo que simbolice a�adir
 	end
-	
-	//iterate the algorithm generatin new centroids based on previously clusterized instances until there are no changes between iterations
+		
 	while changes in M do
-		for each m_{j}
-			m_{j}new = calculatecentroid(C_{j})
-			if m_{j}new == m_{j}
+		for each mj
+			mjnew = calculatecentroid(Cj)
+			if mjnew == mj
 				changes = false
 			else
 				changes = true
 			end
-			m_{j} = m_{j}new	
+			mj = mjnew	
 		end
 		
-		for each x_{n}
-			B_{nj} = 1 sii argmin dist (xn,mj) = mj \foreach m_{j} si no B_{nj} = 0 
+		for each xn
+			// Cj = argmin dist (xi,mj) // lo mismo que arriba, mirar� a hacerlo con f�rmulas de latex despu�s de que lo repases posibilidad 1, sin matriz de pertenencia
+			
+			Bnj = 1 sii argmin dist (xn,mj) = mj (para cada mj) si no Bnj = 0 
 		end
 		
-		for each B_{nj}
-			if B_{nj} == 1
-				C_{j}.add(x_{i}) 
+		for each Bij 
+			if Bij == 1
+				Cj = xi (a�adir xi a Cj)
 			end
 		end
 	end
 	
-	return C = {C_{1}, C_{2}, ..., C_{k}}
+	return C = {C1, C2, ..., Ck}
 end
 \end{lstlisting}
-\section{ImplementaciÃ³n}
+\section{Implementación}
 
 \subsubsection{Problemas encontrados} 
 
 \subsubsection{Soluciones adoptadas} 
 
-\section{ValidaciÃ³n del \textit{software}}
+\section{Validación del \textit{software}}
 
-\subsection{DiseÃ±o del banco de pruebas}
+\subsection{Diseño del banco de pruebas}
 
-\section{AnÃ¡lisis de resultados}
+\section{Análisis de resultados}
 
 \subsection{Modificando inicializaciones}
 
@@ -278,19 +271,19 @@ end
 
 \subsection{Criterios de convergencia}
 
-\subsubsection{NÃºmero fijo de iteraciones}
+\subsubsection{Número fijo de iteraciones}
 
 \subsubsection{Disimilitud entre \textit{codebooks}}
 
-\subsection{Distintas mÃ©tricas}
+\subsection{Distintas métricas}
 
 \subsubsection{Manhattan}
 
-\subsubsection{EuclÃ­dea}
+\subsubsection{Euclídea}
 
 \subsubsection{Minkowski}
 
-\section{ClasificaciÃ³n supervisada respecto de }
+\section{Clasificación supervisada respecto de }
 
 %\section{Preproceso de los datos}
 %
@@ -306,35 +299,35 @@ end
 %
 %\subsubsection{StopWatch}
 %
-%Esta funciÃ³n se encarga de indicarnos el tiempo transcurrido, en segundos,
+%Esta función se encarga de indicarnos el tiempo transcurrido, en segundos,
 %desde donde se instancia el objeto, hasta donde se para el
 %contador\par
 %
-%Creemos necesario su uso, ya que nos aporta una visiÃ³n objetiva del coste de tiempo computacional 
+%Creemos necesario su uso, ya que nos aporta una visión objetiva del coste de tiempo computacional 
 %de los distintos algoritmos implementados,como por ejemplo en el proceso de
-%clasificaciÃ³n de las instancias sin estimar incluidas en los distintos conjuntos de
+%clasificación de las instancias sin estimar incluidas en los distintos conjuntos de
 %test.
 %
 %\subsubsection{VerboseCutter}
 %
 %Esta MAE se encarga de eliminar la salida de sistema que
-%imprime al hacer la evaluaciÃ³n el clasificador \textit{LibSVM} por defecto.\par
+%imprime al hacer la evaluación el clasificador \textit{LibSVM} por defecto.\par
 %
-%La implementaciÃ³n de esta funcionalidad ha sido posible gracias a la inestimable
-%ayuda por parte de otro de los grupos\footnote{David RamÃ­rez, BegoÃ±a Carcedo,
-%Andoni MartÃ­n, Marta Aguilera}.\par
+%La implementación de esta funcionalidad ha sido posible gracias a la inestimable
+%ayuda por parte de otro de los grupos\footnote{David Ramírez, Begoña Carcedo,
+%Andoni Martín, Marta Aguilera}.\par
 %
-%Eliminando la salida de sistema, podemos mostrar de forma mÃ¡s
-%clara infomaciÃ³n relevante de nuestro programa, facilitando, de esta manera,
-%la comprensiÃ³n de los datos por parte del usuario.AdemÃ¡s se puede seguir
+%Eliminando la salida de sistema, podemos mostrar de forma más
+%clara infomación relevante de nuestro programa, facilitando, de esta manera,
+%la comprensión de los datos por parte del usuario.Además se puede seguir
 %revisando dicha salida en el fichero temporal al que ha sido redireccionada.\par
 %
-%\paragraph{Problemas de ejecuciÃ³n:}
+%\paragraph{Problemas de ejecución:}
 %	Al activar y desactivar esta MAE dentro de bucles anidados, no obtenemos el
 %	resultado deseado, esto ocurre por falta de capacidad de respuesta por
 %	capacidad de procesamiento y velocidad de escritura/lectura del disco.
-%\paragraph{SoluciÃ³n:}
-%	Aunque con desactivar la salida antes de cada evaluaciÃ³n es suficiente, hemos
+%\paragraph{Solución:}
+%	Aunque con desactivar la salida antes de cada evaluación es suficiente, hemos
 %	sacado la llamada a la MAE fuera de los bucles(antes de los bucles se desactiva y despues de los bucles se activa la salida de sistema).
 %	De esta manera hemos conseguido los resultados deseados.
 
@@ -343,23 +336,23 @@ end
 \section{Conclusiones}
 
 	\begin{itemize}
-		\item Breve descripciÃ³n de las motivaciones para llevar a cabo tÃ©cnicas de clustering.
-		\item Conclusiones a la vista de los resultados mÃ¡s relevantes.
-		\item Conclusiones generales.(AnÃ¡lisis de fortalezas del sw y reflexiones sobre la tarea.
-		\item AnÃ¡lisis de puntos dÃ©biles y propuestas de mejoras.
+		\item Breve descripción de las motivaciones para llevar a cabo técnicas de clustering.
+		\item Conclusiones a la vista de los resultados más relevantes.
+		\item Conclusiones generales.(Análisis de fortalezas del sw y reflexiones sobre la tarea.
+		\item Análisis de puntos débiles y propuestas de mejoras.
 	\end{itemize}
 
-\section{ValoraciÃ³n subjetiva}
+\section{Valoración subjetiva}
 
 \begin{enumerate}
 
-	\item Â¿Has alcanzado los objetivos que se plantean? 
+	\item ¿Has alcanzado los objetivos que se plantean? 
 	
-	\item Â¿Te ha resultado de utilidad la tarea planteada?
+	\item ¿Te ha resultado de utilidad la tarea planteada?
 
-	\item Â¿QuÃ© dificultades has encontrado?Valora el grado de dificultad de la tarea.
+	\item ¿Qué dificultades has encontrado?Valora el grado de dificultad de la tarea.
 
-	\item  Â¿CuÃ¡nto tiempo has trabajado en esta tarea? Desglosado:
+	\item  ¿Cuánto tiempo has trabajado en esta tarea? Desglosado:
 
 		\begin{table}[H]
 		\centering
@@ -368,10 +361,10 @@ end
 							\hline
 							\multicolumn{2}{|c|}{\textbf{Coste temporal}}\\
 							\hline
-								DiseÃ±o de software & \\
-								ImplementaciÃ³n de software & \\
+								Diseño de software & \\
+								Implementación de software & \\
 								Tiempo trabajando con Weka & \\
-								BÃºsqueda bibliogrÃ¡fica & \\
+								Búsqueda bibliográfica & \\
 								Informe & 1\\
 								\hline
 							\end{tabular}
@@ -379,9 +372,9 @@ end
 		\end{table}
 
 	\item  Sugerencias para mejorar la tarea. Sugerencias para que se consiga
-	despertar mayor interÃ©s y motivaciÃ³n en los alumnos.\par
+	despertar mayor interés y motivación en los alumnos.\par
 
-	\item  CrÃ­ticas(constructivas).
+	\item  Críticas(constructivas).
 
 \end{enumerate} 
 
@@ -390,6 +383,6 @@ end
 \bibliographystyle{plain}
 \bibliography{bibliografia}
 
-%Ser crÃ­tico, analizar datos experemientales.Aplicar pequeÃ±os heurÃ­sticos.
+%Ser crítico, analizar datos experemientales.Aplicar pequeños heurísticos.
 
 \end{document} 
