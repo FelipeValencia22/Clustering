@@ -11,6 +11,11 @@ import java.util.logging.Logger;
 import dm.core.Instance;
 import au.com.bytecode.opencsv.CSVReader;
 
+/**
+ * 
+ * Fuentes consultadas: http://opencsv.sourceforge.net/
+ *
+ */
 public class CSVDataLoader 
 {
 	private static CSVDataLoader miDataLoader = new CSVDataLoader();
