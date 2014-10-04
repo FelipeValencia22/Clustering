@@ -11,14 +11,14 @@ import java.util.logging.Logger;
 import dm.core.Instance;
 import au.com.bytecode.opencsv.CSVReader;
 
-public class DataLoader 
+public class CSVDataLoader 
 {
-	private static DataLoader miDataLoader = new DataLoader();
+	private static CSVDataLoader miDataLoader = new CSVDataLoader();
 	private final String LOG_TAG = this.getClass().getSimpleName();
 
-	private DataLoader(){};
+	private CSVDataLoader(){};
 
-	public static DataLoader getMiLoader(){
+	public static CSVDataLoader getMiLoader(){
 		return miDataLoader;
 	}
 

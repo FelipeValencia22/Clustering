@@ -6,14 +6,11 @@ public class Instance
 {
 	private String id;
 	private ArrayList<Double> doubleFeatures;
-	private ArrayList<String> stringFeatures;
 	
-	//For test
 	private ArrayList<String> features;
 
 	public Instance(){
 		this.doubleFeatures= new ArrayList<Double>();
-		this.stringFeatures = new ArrayList<String>();
 		this.features = new ArrayList<String>();
 	}
 	public String getId() 
