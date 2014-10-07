@@ -6,9 +6,10 @@ import dm.core.Instance;
 
 public class Minkowski 
 {
-	private static Minkowski miMinkowski;
+	private static Minkowski miMinkowski = new Minkowski();
 	
 	private Minkowski(){
+		
 		
 	}
 	
@@ -24,7 +25,9 @@ public class Minkowski
 	
 	public double calculateDistance(Instance x, Instance y, double p)
 	{
+		
 		double res = 0.0;
+		
 		ArrayList<Double> attX = x.getDobFeatures();
 		ArrayList<Double> attY = y.getDobFeatures();
 		
