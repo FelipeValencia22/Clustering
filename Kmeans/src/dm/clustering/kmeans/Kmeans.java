@@ -53,6 +53,8 @@ public class Kmeans {
 				//TODO guardar las que minimizen la distancia
 			}
 		}
+		
+		//TODO generar los clusters
 				
 		
 		for (int i=0; i< clusterArray.size();i++)
@@ -74,6 +76,8 @@ public class Kmeans {
 					//TODO guardar las que minimizen la distancia
 				}
 			}
+			
+			//TODO generar los clusters
 					
 			
 			for (int i=0; i< clusterArray.size();i++)
