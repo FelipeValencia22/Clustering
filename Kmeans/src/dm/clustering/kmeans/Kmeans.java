@@ -15,7 +15,6 @@ public class Kmeans {
 
 	public static void main(String[] args) {
 		String LOG_TAG = Kmeans.class.getSimpleName();
-		Cluster cluster = new Cluster();
 		ArrayList<Cluster> clusterArray = new ArrayList<Cluster>();
 		
 		//Let seed be the seed for the random number to get the codebook.
@@ -30,6 +29,7 @@ public class Kmeans {
 			Logger.getLogger(LOG_TAG).log(Level.SEVERE, "El número de clusters k debe ser un entero");
 		}
 		//Let X = {x_{1},x_{2}, ..., x_{n}} be the data set to be analyzed
+		//TODO another data formats.
 		ArrayList<Instance> instances;
 		instances = CSVDataLoader.getMiLoader().loadNumericData(args[0], 2);
 		
@@ -40,26 +40,39 @@ public class Kmeans {
 		
 		//B Matrix membership.	Capturar de los argumentos inicialización escogida.
 		int nrow = instances.size();
-		int nCol = instances.get(0).getDobFeatures().size();
+		int nCol = k;
 		int[][] B = matrixMemberShipInitialize(nrow, nCol);
 		
-		// Primera iteración, antes del while
+		// First iteration while before
+		Cluster[] clusters = new Cluster[k];
 		
 		for (int i=0;i<instances.size();i++)
 		{
+			Double dist = 0.0;
 			for (int j = 0; j<codebook.size(); j++)
 			{
-				Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
-				//TODO guardar las que minimizen la distancia
+				Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
+				if(dist<=distAux)
+				{
+					dist = distAux;
+					//update Matrix membership
+					B[i][j]=1;
+					//update Cluster list
+					clusters[j].addInstance(instances.get(i));
+					
+				}
+				else
+				{
+					B[i][j]=0;
+					//update Cluster list
+					clusters[j].removeInstance(instances.get(i));
+				}
 			}
-		}
-		
-		//TODO generar los clusters
-				
+		}				
 		
 		for (int i=0; i< clusterArray.size();i++)
 		{
-			codebook.set(i, clusterArray.get(i).calcCentroid());
+			codebook.set(i, clusters[i].calcCentroid());
 		}
 		
 		// Iteraciones sucesivas
@@ -67,27 +80,37 @@ public class Kmeans {
 		
 		while(!condParada)
 		{
-
 			for (int i=0;i<instances.size();i++)
 			{
+				double dist=0.0;
 				for (int j = 0; j<codebook.size(); j++)
 				{
-					Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
-					//TODO guardar las que minimizen la distancia
+					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
+					if(dist<=distAux)
+					{
+						dist = distAux;
+						//update Matrix membership
+						B[i][j]=1;
+						
+					}
+					else
+					{
+						B[i][j]=0;
+						//update Cluster list
+						clusters[j].removeInstance(instances.get(i));
+						//update Cluster list
+						clusters[j].addInstance(instances.get(i));
+					}
 				}
-			}
-			
-			//TODO generar los clusters
-					
+			}					
 			
 			for (int i=0; i< clusterArray.size();i++)
 			{
-				codebook.set(i, clusterArray.get(i).calcCentroid());
-			}
-			
-		}
-		
-		
+				codebook.set(i, clusters[i].calcCentroid());
+			}			
+		}	
+		//TODO plot exit and data exit.
+		//TODO test and evaluation
 	}
 
 	/**
