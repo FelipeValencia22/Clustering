@@ -15,7 +15,6 @@ public class Kmeans {
 
 	public static void main(String[] args) {
 		String LOG_TAG = Kmeans.class.getSimpleName();
-		ArrayList<Cluster> clusterArray = new ArrayList<Cluster>();
 		
 		//Let seed be the seed for the random number to get the codebook.
 		//Let k be the number of clusters to partition the data set
@@ -33,8 +32,7 @@ public class Kmeans {
 		ArrayList<Instance> instances;
 		instances = CSVDataLoader.getMiLoader().loadNumericData(args[0], 2);
 		
-		//TODO Normalize Data
-		
+		//TODO Normalize Data		
 		//Let M = {m_{1}, m_{2}, ..., m_{k}} be the code-book associated to the clusters. Random instances.
 		ArrayList<Instance> codebook = startCodebook(k, instances);
 		
@@ -72,7 +70,7 @@ public class Kmeans {
 			}
 		}				
 		
-		for (int i=0; i< clusterArray.size();i++)
+		for (int i=0; i< clusters.length;i++)
 		{
 			codebook.set(i, clusters[i].calcCentroid());
 		}
@@ -108,7 +106,7 @@ public class Kmeans {
 				}
 			}					
 			
-			for (int i=0; i< clusterArray.size();i++)
+			for (int i=0; i< clusters.length;i++)
 			{
 				codebook.set(i, clusters[i].calcCentroid());
 			}			
