@@ -35,6 +35,7 @@ public class Kmeans {
 		//TODO Normalize Data		
 		//Let M = {m_{1}, m_{2}, ..., m_{k}} be the code-book associated to the clusters. Random instances.
 		ArrayList<Instance> codebook = startCodebook(k, instances);
+		ArrayList<Instance> codebookAux;
 		
 		//B Matrix membership.	Capturar de los argumentos inicialización escogida.
 		int nrow = instances.size();
@@ -108,7 +109,14 @@ public class Kmeans {
 			
 			for (int i=0; i< clusters.length;i++)
 			{
+				codebookAux = (ArrayList<Instance>)codebook.clone();
 				codebook.set(i, clusters[i].calcCentroid());
+				if (codebook.get(1).compareCodeBooks(codebookAux,codebook))
+				{
+					//TODO apañar bien donde meter la función compaar
+					condParada = true;
+				}
+					
 			}			
 		}	
 		//TODO plot exit and data exit.
@@ -147,5 +155,6 @@ public class Kmeans {
 		}
 		return B;
 	}
-
+	
+	
 }
