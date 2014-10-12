@@ -6,6 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dm.clustering.utils.CSVDataLoader;
+import dm.clustering.utils.Minkowski;
+import dm.core.Cluster;
 import dm.core.Instance;
 
 public class Kmeans {
@@ -13,6 +15,8 @@ public class Kmeans {
 
 	public static void main(String[] args) {
 		String LOG_TAG = Kmeans.class.getSimpleName();
+		Cluster cluster = new Cluster();
+		ArrayList<Cluster> clusterArray = new ArrayList<Cluster>();
 		
 		//Let seed be the seed for the random number to get the codebook.
 		//Let k be the number of clusters to partition the data set
@@ -39,9 +43,47 @@ public class Kmeans {
 		int nCol = instances.get(0).getDobFeatures().size();
 		int[][] B = matrixMemberShipInitialize(nrow, nCol);
 		
-		//TODO Minkowski distance.
+		// Primera iteración, antes del while
 		
-		//TODO calculate centroids.
+		for (int i=0;i<instances.size();i++)
+		{
+			for (int j = 0; j<codebook.size(); j++)
+			{
+				Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
+				//TODO guardar las que minimizen la distancia
+			}
+		}
+				
+		
+		for (int i=0; i< clusterArray.size();i++)
+		{
+			codebook.set(i, clusterArray.get(i).calcCentroid());
+		}
+		
+		// Iteraciones sucesivas
+		boolean condParada = false;
+		
+		while(!condParada)
+		{
+
+			for (int i=0;i<instances.size();i++)
+			{
+				for (int j = 0; j<codebook.size(); j++)
+				{
+					Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
+					//TODO guardar las que minimizen la distancia
+				}
+			}
+					
+			
+			for (int i=0; i< clusterArray.size();i++)
+			{
+				codebook.set(i, clusterArray.get(i).calcCentroid());
+			}
+			
+		}
+		
+		
 	}
 
 	/**
