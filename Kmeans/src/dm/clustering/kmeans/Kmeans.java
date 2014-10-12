@@ -48,23 +48,25 @@ public class Kmeans {
 		
 		for (int i=0;i<instances.size();i++)
 		{
-			Double dist = 0.0;
+			Double dist = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(0), 2);
+			int codewordIndex = 0;
+			
 			for (int j = 0; j<codebook.size(); j++)
 			{
-				Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
+				Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(1), 2);
 				if(dist<=distAux)
 				{
 					dist = distAux;
 					//update Matrix membership
 					B[i][j]=1;
+					B[i][codewordIndex]=0;
 					//update Cluster list
 					clusters[j].addInstance(instances.get(i));
-					
+					clusters[codewordIndex].removeInstance(instances.get(i));					
 				}
 				else
 				{
 					B[i][j]=0;
-					//update Cluster list
 					clusters[j].removeInstance(instances.get(i));
 				}
 			}
@@ -82,24 +84,26 @@ public class Kmeans {
 		{
 			for (int i=0;i<instances.size();i++)
 			{
-				double dist=0.0;
+				Double dist = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(0), 2);
+				int codewordIndex = 0;
+				
 				for (int j = 0; j<codebook.size(); j++)
 				{
-					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
+					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(1), 2);
 					if(dist<=distAux)
 					{
 						dist = distAux;
 						//update Matrix membership
 						B[i][j]=1;
-						
+						B[i][codewordIndex]=0;
+						//update Cluster list
+						clusters[j].addInstance(instances.get(i));
+						clusters[codewordIndex].removeInstance(instances.get(i));					
 					}
 					else
 					{
 						B[i][j]=0;
-						//update Cluster list
 						clusters[j].removeInstance(instances.get(i));
-						//update Cluster list
-						clusters[j].addInstance(instances.get(i));
 					}
 				}
 			}					
