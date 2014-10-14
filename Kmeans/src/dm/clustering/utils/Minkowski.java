@@ -14,7 +14,13 @@ public class Minkowski
 	public static Minkowski getMinkowski(){
 		return miMinkowski;
 	}
-	
+	/**
+	 * @pre instances of the same dataset, exponent >=1
+	 * @param x Instance 1
+	 * @param y Instance 2
+	 * @param p exponent of the Minkowski distance
+	 * @return distance between both instances
+	 */
 	public double calculateDistance(Instance x, Instance y, double p)
 	{
 		double res = 0.0;

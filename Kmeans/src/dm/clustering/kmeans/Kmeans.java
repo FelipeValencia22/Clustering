@@ -157,6 +157,14 @@ public class Kmeans {
 		return B;
 	}
 	
+	/**
+	 * @pre Equal sized codebooks (Instance Arraylists)
+	 * @param a Codebook 1
+	 * @param b Codebook 2
+	 * @return true if both codebooks do have the same codewords (not taking into account
+	 *  the order), false if not.
+	 */
+	
 	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b)
 	{
 		boolean rdo = true, aux = false;
