@@ -17,6 +17,9 @@ public class Kmeans {
 	public static void main(String[] args) {
 		String LOG_TAG = Kmeans.class.getSimpleName();
 		
+		//Get configuration from the configuration file.
+		
+		
 		//Let seed be the seed for the random number to get the codebook.
 		//Let k be the number of clusters to partition the data set
 		int k = 1;
@@ -46,37 +49,6 @@ public class Kmeans {
 		// First iteration while before
 		Cluster[] clusters = new Cluster[k];
 		
-		for (int i=0;i<instances.size();i++)
-		{
-			Double dist = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(0), 2);
-			int codewordIndex = 0;
-			
-			for (int j = 0; j<codebook.size(); j++)
-			{
-				Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(1), 2);
-				if(dist<=distAux)
-				{
-					dist = distAux;
-					//update Matrix membership
-					B[i][j]=1;
-					B[i][codewordIndex]=0;
-					//update Cluster list
-					clusters[j].addInstance(instances.get(i));
-					clusters[codewordIndex].removeInstance(instances.get(i));					
-				}
-				else
-				{
-					B[i][j]=0;
-					clusters[j].removeInstance(instances.get(i));
-				}
-			}
-		}				
-		
-		for (int i=0; i< clusters.length;i++)
-		{
-			codebook.set(i, clusters[i].calcCentroid());
-		}
-		
 		// Iteraciones sucesivas
 		boolean condParada = false;
 		
@@ -90,6 +62,7 @@ public class Kmeans {
 				for (int j = 0; j<codebook.size(); j++)
 				{
 					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(1), 2);
+					//TODO implementar margin
 					if(dist<=distAux)
 					{
 						dist = distAux;
@@ -114,10 +87,10 @@ public class Kmeans {
 				codebook.set(i, clusters[i].calcCentroid());
 				if (compareCodeBooks(codebookAux,codebook))
 				{
-					//TODO apañar bien donde meter la función compaar
+					//TODO apañar bien donde meter la función comparar
+					//TODO nº iteraciones fijo.args
 					condParada = true;
-				}
-					
+				}					
 			}			
 		}	
 		//TODO plot exit and data exit.
