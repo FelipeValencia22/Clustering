@@ -159,16 +159,23 @@ public class Kmeans {
 	
 	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b)
 	{
-		boolean rdo = true;
+		boolean rdo = true, aux = false;
 		int i = 0, j=0;
 		
 		while (i<a.size() && rdo)
 		{
-			while (j<b.size() && rdo)
+			while (j<b.size())
 			{
-				if (!a.get(i).equals(b.get(j)))
-					rdo = false;
+				if (a.get(i).equals(b.get(j)))
+					aux = true;
+				j++;
 			}
+			
+			if (!aux)
+				rdo=false;
+			else
+				aux=false;
+			i++;
 		}
 		return rdo;
 	}
