@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dm.clustering.utils.CSVDataLoader;
+import dm.clustering.utils.InputHandler;
 import dm.clustering.utils.Minkowski;
 import dm.core.Cluster;
 import dm.core.Instance;
@@ -18,40 +19,38 @@ public class Kmeans {
 		String LOG_TAG = Kmeans.class.getSimpleName();
 		
 		//Get configuration from the configuration file.
+		InputHandler.getMiHandler().loadArgs("config/kmeans.conf");
 		
-		
-		//Let seed be the seed for the random number to get the codebook.
 		//Let k be the number of clusters to partition the data set
-		int k = 1;
-		try
-		{
-			k = Integer.valueOf(args[1]);
-		} 
-		catch (NumberFormatException e) 
-		{
-			Logger.getLogger(LOG_TAG).log(Level.SEVERE, "El número de clusters k debe ser un entero");
-		}
+		//TODO k<<num instances and other args
+		int k = InputHandler.getMiHandler().getK();
+		
 		//Let X = {x_{1},x_{2}, ..., x_{n}} be the data set to be analyzed
 		//TODO another data formats.
-		ArrayList<Instance> instances;
-		instances = CSVDataLoader.getMiLoader().loadNumericData(args[0], 2);
 		
-		//TODO Normalize Data		
+		ArrayList<Instance> instances;
+		instances = CSVDataLoader.getMiLoader()
+				.loadNumericData(InputHandler
+				.getMiHandler()
+				.getDataPath(), 2);
+		
+		//TODO Normalize Data	
+		//Let seed be the seed for the random number to get the codebook.
 		//Let M = {m_{1}, m_{2}, ..., m_{k}} be the code-book associated to the clusters. Random instances.
 		ArrayList<Instance> codebook = startCodebook(k, instances);
 		ArrayList<Instance> codebookAux;
 		
-		//B Matrix membership.	Capturar de los argumentos inicialización escogida.
+		//B  membership matrix.
 		int nrow = instances.size();
 		int nCol = k;
 		int[][] B = matrixMemberShipInitialize(nrow, nCol);
 		
-		// First iteration while before
+		// Instance k clusters
 		Cluster[] clusters = new Cluster[k];
 		
-		// Iteraciones sucesivas
 		boolean condParada = false;
 		
+		//TODO número de iteraciones.
 		while(!condParada)
 		{
 			for (int i=0;i<instances.size();i++)
