@@ -11,6 +11,7 @@ import dm.core.Cluster;
 import dm.core.Instance;
 
 public class Kmeans {
+
 	
 
 	public static void main(String[] args) {
@@ -111,7 +112,7 @@ public class Kmeans {
 			{
 				codebookAux = (ArrayList<Instance>)codebook.clone();
 				codebook.set(i, clusters[i].calcCentroid());
-				if (codebook.get(1).compareCodeBooks(codebookAux,codebook))
+				if (compareCodeBooks(codebookAux,codebook))
 				{
 					//TODO apañar bien donde meter la función compaar
 					condParada = true;
@@ -156,5 +157,20 @@ public class Kmeans {
 		return B;
 	}
 	
-	
+	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b)
+	{
+		boolean rdo = true;
+		int i = 0, j=0;
+		
+		while (i<a.size() && rdo)
+		{
+			while (j<b.size() && rdo)
+			{
+				if (!a.get(i).equals(b.get(j)))
+					rdo = false;
+			}
+		}
+		return rdo;
+	}
+
 }

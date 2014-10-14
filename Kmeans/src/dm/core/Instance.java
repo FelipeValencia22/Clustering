@@ -44,28 +44,20 @@ public class Instance
 	
 	public boolean equals(Instance x)
 	{
-		boolean rdo = false;
-		
-		//TODO ssls
-		
-		return rdo;
-	}
-	
-	
-	public boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b)
-	{
 		boolean rdo = true;
-		int i = 0, j=0;
-		
-		while (i<a.size() && rdo)
+		int i = 0;
+		while (i<this.doubleFeatures.size()&&rdo)
 		{
-			while (j<b.size() && rdo)
-			{
-				if (!a.get(i).equals(b.get(j)))
-					rdo = false;
-			}
+			if (this.doubleFeatures.get(i)!=x.doubleFeatures.get(i))
+					{rdo=false;}
+			i++;
 		}
+		
+		
+		
 		return rdo;
 	}
-
+	
+	
+	
 }
