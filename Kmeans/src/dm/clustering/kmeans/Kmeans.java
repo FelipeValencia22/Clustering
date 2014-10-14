@@ -50,10 +50,23 @@ public class Kmeans {
 		
 		boolean condParada = false;
 		
-		//TODO número de iteraciones.
+		//Iterations		
+		int itera = InputHandler.getMiHandler().getIterations();		
+		if(itera<=0)
+		{
+			itera=instances.size();
+		}
+		
+		//Disim
+		double difference = InputHandler.getMiHandler().getDiff();
+		if(difference<0.0)
+		{
+			difference=0.0;
+		}
+		
 		while(!condParada)
 		{
-			for (int i=0;i<instances.size();i++)
+			for (int i=0;i<itera;i++)
 			{
 				Double dist = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(0), 2);
 				int codewordIndex = 0;
@@ -61,8 +74,7 @@ public class Kmeans {
 				for (int j = 0; j<codebook.size(); j++)
 				{
 					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(1), 2);
-					//TODO implementar margin
-					if(dist<=distAux)
+					if(dist<=distAux-difference)
 					{
 						dist = distAux;
 						//update Matrix membership
@@ -87,7 +99,6 @@ public class Kmeans {
 				if (compareCodeBooks(codebookAux,codebook))
 				{
 					//TODO apañar bien donde meter la función comparar
-					//TODO nº iteraciones fijo.args
 					condParada = true;
 				}					
 			}			
