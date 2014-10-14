@@ -42,6 +42,12 @@ public class Instance
 		
 	}
 	
+	/**
+	 * @pre x must be a instance of the same dataset
+	 * @param x Instance to be compared with
+	 * @return true if all attributes have the same values, false if not.
+	 */
+	
 	public boolean equals(Instance x)
 	{
 		boolean rdo = true;

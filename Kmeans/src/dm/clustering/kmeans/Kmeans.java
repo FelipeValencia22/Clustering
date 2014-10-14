@@ -130,18 +130,33 @@ public class Kmeans {
 		return B;
 	}
 	
+	/**
+	 * @pre Equal sized codebooks (Instance Arraylists)
+	 * @param a Codebook 1
+	 * @param b Codebook 2
+	 * @return true if both codebooks do have the same codewords (not taking into account
+	 *  the order), false if not.
+	 */
+	
 	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b)
 	{
-		boolean rdo = true;
+		boolean rdo = true, aux = false;
 		int i = 0, j=0;
 		
 		while (i<a.size() && rdo)
 		{
-			while (j<b.size() && rdo)
+			while (j<b.size())
 			{
-				if (!a.get(i).equals(b.get(j)))
-					rdo = false;
+				if (a.get(i).equals(b.get(j)))
+					aux = true;
+				j++;
 			}
+			
+			if (!aux)
+				rdo=false;
+			else
+				aux=false;
+			i++;
 		}
 		return rdo;
 	}
