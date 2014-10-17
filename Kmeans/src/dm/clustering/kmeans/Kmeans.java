@@ -85,15 +85,17 @@ public class Kmeans {
 				for (int j = 0; j<k; j++)
 				{
 					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
-					if(dist<=distAux-difference)
+					System.out.println(distAux);
+					if(dist>=distAux-difference)
 					{
 						dist = distAux;
 						//update Matrix membership
 						B[i][j]=1;
 						B[i][codewordIndex]=0;
 						//update Cluster list
-						clusters[j].addInstance(instances.get(i));
-						clusters[codewordIndex].removeInstance(instances.get(i));					
+						clusters[codewordIndex].removeInstance(instances.get(i));
+						codewordIndex=j;
+						clusters[j].addInstance(instances.get(i));						
 					}
 					else
 					{
