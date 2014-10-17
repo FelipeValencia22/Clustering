@@ -73,8 +73,9 @@ public class Kmeans {
 			difference=0.0;
 		}
 
-		while(!condParada)
-		{
+		
+		/*while(!condParada)
+		{*/
 			for (int i=0;i<instances.size();i++)
 			{
 				Double dist = Minkowski.getMinkowski()
@@ -85,6 +86,7 @@ public class Kmeans {
 				for (int j = 0; j<k; j++)
 				{
 					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
+					System.out.println(dist);
 					System.out.println(distAux);
 					if(dist>=distAux-difference)
 					{
@@ -103,7 +105,9 @@ public class Kmeans {
 						clusters[j].removeInstance(instances.get(i));
 					}
 				}
+				System.out.println(clusters[0].getInstances().hasNext());
 			}					
+			System.out.println(clusters[0].getInstances().hasNext());
 
 			for (int s=0; s< clusters.length;s++)
 			{
@@ -115,7 +119,7 @@ public class Kmeans {
 					condParada = true;
 				}					
 			}			
-		}	
+		/*}*/	
 		//TODO plot exit and data exit.
 		final FastScatterPlotDemo clustersChar = new FastScatterPlotDemo("Fast Scatter Plot Demo",B);
         clustersChar.pack();
@@ -131,7 +135,7 @@ public class Kmeans {
 		ArrayList<Instance> codebook = new ArrayList<Instance>();
 		for(int i=0;i<k;i++)
 		{
-			Random rand = new Random(100);
+			Random rand = new Random();
 			int cWordIndex = rand.nextInt(instances.size());
 			codebook.add(instances.get(cWordIndex));
 		}
