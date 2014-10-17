@@ -1,9 +1,12 @@
 package dm.clustering.kmeans;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JFrame;
 
 import dm.clustering.utils.CSVDataLoader;
 import dm.clustering.utils.InputHandler;
@@ -104,6 +107,10 @@ public class Kmeans {
 			}			
 		}	
 		//TODO plot exit and data exit.
+		JFrame jf = new JFrame();
+		jf.getContentPane().setLayout(new BorderLayout());
+		Sc
+		 
 		//TODO test and evaluation
 	}
 
