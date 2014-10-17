@@ -63,6 +63,15 @@ public class Instance
 		
 		return rdo;
 	}
+	public double getAtt(int index) {
+		
+		return this.getDobFeatures().get(index);
+	}
+	public void setAtt(int j, double att)
+	{
+		doubleFeatures.add(j, att);
+		
+	}
 	
 	
 	
