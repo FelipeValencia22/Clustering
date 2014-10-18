@@ -76,6 +76,7 @@ public class Kmeans {
 		
 		/*while(!condParada)
 		{*/
+		for(int numIter=0;numIter<itera;numIter++){
 			for (int i=0;i<instances.size();i++)
 			{
 				Double dist = Minkowski.getMinkowski()
@@ -104,27 +105,35 @@ public class Kmeans {
 						B[i][j]=0;
 						clusters[j].removeInstance(instances.get(i));
 					}
+					System.out.println(clusters[0].getInstances().hasNext());
 				}
-				System.out.println(clusters[0].getInstances().hasNext());
-			}					
-			System.out.println(clusters[0].getInstances().hasNext());
-
-			for (int s=0; s< clusters.length;s++)
-			{
-				codebookAux = (ArrayList<Instance>)codebook.clone();
-				codebook.set(s, clusters[s].calcCentroid());
-				if (compareCodeBooks(codebookAux,codebook))
+				/*for (int s=0; s< clusters.length;s++)
 				{
-					//TODO apañar bien donde meter la función comparar
-					condParada = true;
-				}					
-			}			
-		/*}*/	
-		//TODO plot exit and data exit.
+					codebookAux = (ArrayList<Instance>)codebook.clone();
+					codebook.set(s, clusters[s].calcCentroid());
+					if (compareCodeBooks(codebookAux,codebook))
+					{
+						//TODO apañar bien donde meter la función comparar
+						condParada = true;
+					}					
+				}*/
+			}		
+			/*}*/
+		}	
+		/*//TODO plot exit and data exit.
 		final FastScatterPlotDemo clustersChar = new FastScatterPlotDemo("Fast Scatter Plot Demo",B);
         clustersChar.pack();
         clustersChar.setVisible(true);
 		//TODO test and evaluation
+		 * */	
+		
+		for(int j=0;j<clusters.length;j++){
+			System.out.println("CLUSTER: "+j);
+			System.out.println("---------------------------------------");
+			for(int i=0;i<clusters[j].getListaInstances().size();i++){
+				System.out.println(clusters[j].getListaInstances().get(i).toString());
+			}
+		}
 	}
 
 	/**
@@ -170,6 +179,7 @@ public class Kmeans {
 
 	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b)
 	{
+		//TODO diferencia de disimilitud, para que la ejecución no sea infinita
 		boolean rdo = true, aux = false;
 		int i = 0, j=0;
 
@@ -181,7 +191,6 @@ public class Kmeans {
 					aux = true;
 				j++;
 			}
-
 			if (!aux)
 				rdo=false;
 			else
@@ -219,8 +228,8 @@ public class Kmeans {
 
 	        final ChartPanel panel = new ChartPanel(chart, true);
 	        panel.setPreferredSize(new java.awt.Dimension(500, 270));
-	  //      panel.setHorizontalZoom(true);
-	    //    panel.setVerticalZoom(true);
+	        //panel.setHorizontalZoom(true);
+	        //panel.setVerticalZoom(true);
 	        panel.setMinimumDrawHeight(10);
 	        panel.setMaximumDrawHeight(2000);
 	        panel.setMinimumDrawWidth(20);

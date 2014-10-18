@@ -21,7 +21,7 @@ public class Cluster {
 		instances = new ArrayList<Instance>();
 	}
 	
-	private ArrayList<Instance> getListaInstances(){
+	public ArrayList<Instance> getListaInstances(){
 		return this.instances;
 	}
 
