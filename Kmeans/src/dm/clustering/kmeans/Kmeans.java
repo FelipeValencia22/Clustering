@@ -206,7 +206,8 @@ public class Kmeans {
 		{
 			while (j<b.size())
 			{
-				if (!a.get(i).equals(b.get(j)) && Minkowski.getMinkowski().calculateDistance(a.get(i), b.get(i), p)>10)
+				double dist = Minkowski.getMinkowski().calculateDistance(a.get(i), b.get(i), p);
+				if (!a.get(i).equals(b.get(j)) && dist>0.10)
 				{
 					return false;
 				}
