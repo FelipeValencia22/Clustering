@@ -1,20 +1,22 @@
 package dm.clustering.kmeans;
 
-import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.JFrame;
-
-import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.FastScatterPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import dm.clustering.utils.CSVDataLoader;
 import dm.clustering.utils.InputHandler;
 import dm.clustering.utils.Minkowski;
 import dm.core.Cluster;
 import dm.core.Instance;
+
 
 
 public class Kmeans {
@@ -49,8 +51,9 @@ public class Kmeans {
 		//B  membership matrix.
 		int nrow = instances.size();
 		int nCol = k;
+		//TODO select initialize matrix or centroid.
 		//float[][] B = matrixMemberShipInitialize(nrow, nCol);
-		float[][] B = new float[instances.size()][k];
+		int[][] B = new int[instances.size()][k];
 		// Instance k clusters
 		Cluster[] clusters = new Cluster[k];
 		for(int index=0;index<k;index++){
@@ -76,17 +79,15 @@ public class Kmeans {
 		
 		/*while(!condParada)
 		{*/
-		for(int numIter=0;numIter<10000;numIter++){
-			//TODO
-			
+		for(int numIter=0;numIter<itera;numIter++){
+			//TODO			
 			for (int p = 0; p<clusters.length;p++)
 			{
 				clusters[p].reset();
 			}
 			
 			for (int i=0;i<instances.size();i++)
-			{
-		
+			{		
 				Double dist = Minkowski.getMinkowski()
 						.calculateDistance(instances.get(i)
 								, codebook.get(0), 2);
@@ -127,12 +128,26 @@ public class Kmeans {
 			}		
 			/*}*/
 		}	
-		/*//TODO plot exit and data exit.
-		final FastScatterPlotDemo clustersChar = new FastScatterPlotDemo("Fast Scatter Plot Demo",B);
-        clustersChar.pack();
-        clustersChar.setVisible(true);
+		//TODO plot exit and data exit.
+		
+		JFreeChart chart = ChartFactory.createScatterPlot(
+	            "Scatter Plot", // chart title
+	            "X", // x axis label
+	            "Y", // y axis label
+	            createDataset(B), // data  ***-----PROBLEM------***
+	            PlotOrientation.VERTICAL,
+	            true, // include legend
+	            true, // tooltips
+	            false // urls
+	            );
+
+	        // create and display a frame...
+	        ChartFrame frame = new ChartFrame("First", chart);
+	        frame.pack();
+	        frame.setVisible(true);
+	        
 		//TODO test and evaluation
-		 * */	
+		 	
 		
 		for(int j=0;j<clusters.length;j++){
 			System.out.println("CLUSTER: "+j);
@@ -199,45 +214,31 @@ public class Kmeans {
 			}
 			i++;
 		}
-		return true;
+		return true;	
 	}
-	public static class FastScatterPlotDemo extends JFrame {
-
-	    /** A constant for the number of items in the sample dataset. */
-
-	    /** The data. */
-	    private float[][] data;
-
-	    /**
-	     * Creates a new fast scatter plot.
-	     *
-	     * @param title  the frame title.
-	     */
-	    public FastScatterPlotDemo(final String title,float[][] pData) {
-
-	        super(title);
-	        data = pData;
-	        final NumberAxis domainAxis = new NumberAxis("X");
-	        domainAxis.setAutoRangeIncludesZero(false);
-	        final NumberAxis rangeAxis = new NumberAxis("Y");
-	        rangeAxis.setAutoRangeIncludesZero(false);
-	        final FastScatterPlot plot = new FastScatterPlot(this.data, domainAxis, rangeAxis);
-	        final JFreeChart chart = new JFreeChart("Fast Scatter Plot", plot);
-
-	        // force aliasing of the rendered content..
-	        chart.getRenderingHints().put
-	            (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-	        final ChartPanel panel = new ChartPanel(chart, true);
-	        panel.setPreferredSize(new java.awt.Dimension(500, 270));
-	        //panel.setHorizontalZoom(true);
-	        //panel.setVerticalZoom(true);
-	        panel.setMinimumDrawHeight(10);
-	        panel.setMaximumDrawHeight(2000);
-	        panel.setMinimumDrawWidth(20);
-	        panel.setMaximumDrawWidth(2000);	        
-	        setContentPane(panel);
-
+	
+	/**
+	 * 
+	 * @param B
+	 * @return dataset for ploting
+	 */
+	private static XYDataset createDataset(int[][] B) {
+	    XYSeriesCollection result = new XYSeriesCollection();
+	    XYSeries series = new XYSeries("Membership");
+	    for (int i = 0; i < B.length; i++) {
+	    	System.out.println(B.length);
+	    	for(int j=0;j<B[i].length;j++){
+	    		System.out.println(B[i][j]);
+	    		System.out.println(B[i].length);
+	    		if(B[i][j]==1)
+	    		{
+	    			double x = i;
+	    			double y = j;
+	    			series.add(x, y);
+	    		}
+	    	}
 	    }
+	    result.addSeries(series);
+	    return result;
 	}
 }
