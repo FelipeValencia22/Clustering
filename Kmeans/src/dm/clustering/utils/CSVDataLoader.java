@@ -50,10 +50,9 @@ public class CSVDataLoader
 						try 
 						{
 							ins.addDobFeature(Double.valueOf(features.get(i)[j]));
-							System.out.println(features.get(i)[j]);
 						} catch (NumberFormatException e) 
 						{
-							Logger.getLogger(LOG_TAG).log(Level.INFO, "El atributo no es numérico");
+							Logger.getLogger(LOG_TAG).log(Level.INFO, "El atributo: "+j+ " no es numérico");
 						}					
 				}
 				instances.add(ins);

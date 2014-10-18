@@ -55,12 +55,12 @@ public class Plot
 			for(int j=0;j<traspuesta[i].length;j++){
 				if(traspuesta[i][j]==1)
 	    		{
+					System.out.println(i);
 	    			double x = i;
 	    			double y = j;
 	    			series.add(x, y);
 	    		}
 			}
-			System.out.println(this.getMatrixMembership().length);
 			this.collection.addSeries(series);
 		}		
 	}
@@ -128,7 +128,6 @@ public class Plot
         Iterator<XYSeries> itr = this.collection.getSeries().iterator();
         while(itr.hasNext()){
         	int index =this.collection.indexOf(itr.next());
-        	System.out.println(index);
         	renderer.setSeriesPaint(index, randomColor());
         	renderer.setSeriesShapesVisible(index, true);
         }
@@ -147,6 +146,7 @@ public class Plot
             for (j =0;j<B[i].length;j++){
                 traspuesta[j][i]=B[i][j];
             }
+            System.out.println(traspuesta[0][i]);
         }
         return traspuesta;
     }

@@ -16,9 +16,6 @@ import dm.plots.Plot;
 
 
 public class Kmeans {
-
-
-
 	public static void main(String[] args) {
 		String LOG_TAG = Kmeans.class.getSimpleName();
 
@@ -40,8 +37,8 @@ public class Kmeans {
 
 		//TODO Normalize Data
 		Normalizer norm = new Normalizer();
+		//instances = norm.normalize(instances);
 		
-		instances = norm.normalize(instances);
 		//Let seed be the seed for the random number to get the codebook.
 		//Let M = {m_{1}, m_{2}, ..., m_{k}} be the code-book associated to the clusters. Random instances.
 		ArrayList<Instance> codebook = startCodebook(k, instances);
@@ -75,68 +72,60 @@ public class Kmeans {
 		{
 			difference=0.0;
 		}
-
-		
 		while(!condParada)
 		{
-		for(int numIter=0;numIter<itera;numIter++){
-			for (int p = 0; p<clusters.length;p++)
-			{
-				clusters[p].reset();
-			}
-			
-			for (int i=0;i<instances.size();i++)
-			{		
-				Double dist = Minkowski.getMinkowski()
-						.calculateDistance(instances.get(i)
-								, codebook.get(0), distExp);
-				int codewordIndex = 0;
-				clusters[0].addInstance(instances.get(i));
-				for (int j=0;j<k; j++)
+			for(int numIter=0;numIter<itera;numIter++){
+				for (int p = 0; p<clusters.length;p++)
 				{
-					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), distExp);
-					if(dist>distAux-difference)
-					{
-						dist = distAux;
-						//update Matrix membership
-						B[i][j]=1;
-						B[i][codewordIndex]=0;
-						//update Cluster list
-						clusters[codewordIndex].removeInstance(instances.get(i));
-						codewordIndex=j;
-						clusters[j].addInstance(instances.get(i));						
-					}
-					else
-					{
-						//B[i][j]=0;
-						//clusters[j].removeInstance(instances.get(i));
-						
-					}
+					clusters[p].reset();
 				}
-				for (int s=0; s< clusters.length;s++)
-				{
-					codebookAux = (ArrayList<Instance>)codebook.clone();
-					if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());					
-					if (compareCodeBooks(codebookAux,codebook,distExp))
+
+				for (int i=0;i<instances.size();i++)
+				{		
+					Double dist = Minkowski.getMinkowski()
+							.calculateDistance(instances.get(i)
+									, codebook.get(0), distExp);
+					int codewordIndex = 0;
+					clusters[0].addInstance(instances.get(i));
+					for (int j=0;j<k; j++)
 					{
-						condParada = true;
-					}					
-				}
-				
-			}		
+						Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), distExp);
+						if(dist>distAux-difference)
+						{
+							dist = distAux;
+							//update Matrix membership
+							B[i][j]=1;
+							B[i][codewordIndex]=0;
+							//update Cluster list
+							clusters[codewordIndex].removeInstance(instances.get(i));
+							codewordIndex=j;
+							clusters[j].addInstance(instances.get(i));						
+						}
+					}
+					for (int s=0; s< clusters.length;s++)
+					{
+						codebookAux = (ArrayList<Instance>)codebook.clone();
+						if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());					
+						if (compareCodeBooks(codebookAux,codebook,distExp))
+						{
+							condParada = true;
+						}					
+					}
+
+				}		
 			}
 		}	
-		
+
 		Plot.getMiPlot().setMatrixMembership(B);
 		JFreeChart scatter = Plot.getMiPlot().plotting("Memberships", "Clusters", "Instances");
 		// create and display a frame...
-				ChartFrame frame = new ChartFrame("First", scatter);
-				frame.pack();
-				frame.setVisible(true);
+		ChartFrame frame = new ChartFrame("First", scatter);
+		frame.pack();
+		frame.setVisible(true);
 
 		//TODO test and evaluation
-		 	
-		
+
+
 		for(int j=0;j<clusters.length;j++){
 			System.out.println("CLUSTER: "+j);
 			System.out.println("---------------------------------------");
@@ -189,7 +178,7 @@ public class Kmeans {
 	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b, double p)
 	{
 		int i = 0, j=0;
-		
+
 		while (i<a.size())
 		{
 			while (j<b.size())
