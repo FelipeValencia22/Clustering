@@ -7,16 +7,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * @author 
+ *  
  *
  */
 public class Cluster {
 
 	
 	private ArrayList<Instance> instances;
-	/**
-	 * 
-	 */
+	
+	
 	public Cluster() {
 		instances = new ArrayList<Instance>();
 	}
@@ -54,10 +53,12 @@ public class Cluster {
 	 * 
 	 * @return cluster's average vector.
 	 */
-	public Instance calcCentroid(){
+	public Instance calcCentroid()
+	{
 		Instance centroid = new Instance();
 		int numInstances = this.getListaInstances().size();
-		int numFeatures = this.getListaInstances().get(0).getDobFeatures().size();
+		int numFeatures =0;
+		if(!getInstances().hasNext())numFeatures = this.getInstances().next().getDobFeatures().size(); 
 		double[] codeword = new double[numFeatures];
 		
 		//Initialize array for calculus
@@ -82,5 +83,12 @@ public class Cluster {
 		{
 			centroid.getDobFeatures().add(codeword[s]);
 		}
-		return centroid;	}
+		return centroid;	
+		}
+	/**
+	 * Clear the List of instances.
+	 */
+	public void reset() {
+			this.getListaInstances().clear();		
+	}
 }

@@ -6,7 +6,7 @@ public class Instance
 {
 	private String id;
 	private ArrayList<Double> doubleFeatures;
-	
+
 	private ArrayList<String> features;
 
 	public Instance(){
@@ -21,11 +21,11 @@ public class Instance
 	{
 		this.id = id;
 	}
-	
+
 	public void addDobFeature(Double feature){
 		doubleFeatures.add(feature);
 	}
-	
+
 	/**
 	 * pruebas
 	 * @param feature
@@ -33,46 +33,41 @@ public class Instance
 	public void addFeature(String feature){
 		features.add(feature);
 	}
-	
+
 	public int numFeatures(){
 		return this.features.size();
 	}
 	public ArrayList<Double> getDobFeatures() {
 		return this.doubleFeatures;
-		
+
 	}
-	
+
 	/**
 	 * @pre x must be a instance of the same dataset
 	 * @param x Instance to be compared with
 	 * @return true if all attributes have the same values, false if not.
 	 */
-	
+
 	public boolean equals(Instance x)
 	{
-		boolean rdo = true;
 		int i = 0;
-		while (i<this.doubleFeatures.size()&&rdo)
+		while (i<this.doubleFeatures.size()&&i<x.doubleFeatures.size())
 		{
-			if (this.doubleFeatures.get(i)!=x.doubleFeatures.get(i))
-					{rdo=false;}
+			if(this.doubleFeatures.get(i)!=x.doubleFeatures.get(i))
+			{
+				return false;
+			}
 			i++;
-		}
-		
-		
-		
-		return rdo;
+		}		
+		return true;
 	}
 	public double getAtt(int index) {
-		
+
 		return this.getDobFeatures().get(index);
 	}
 	public void setAtt(int j, double att)
 	{
 		doubleFeatures.add(j, att);
-		
+
 	}
-	
-	
-	
 }

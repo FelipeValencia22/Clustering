@@ -49,8 +49,8 @@ public class Kmeans {
 		//B  membership matrix.
 		int nrow = instances.size();
 		int nCol = k;
-		float[][] B = matrixMemberShipInitialize(nrow, nCol);
-
+		//float[][] B = matrixMemberShipInitialize(nrow, nCol);
+		float[][] B = new float[instances.size()][k];
 		// Instance k clusters
 		Cluster[] clusters = new Cluster[k];
 		for(int index=0;index<k;index++){
@@ -77,19 +77,19 @@ public class Kmeans {
 		/*while(!condParada)
 		{*/
 		for(int numIter=0;numIter<itera;numIter++){
-			for (int i=0;i<instances.size();i++)
+			//TODO
+			for (int i=0;i<3;i++)
 			{
+		
 				Double dist = Minkowski.getMinkowski()
 						.calculateDistance(instances.get(i)
 								, codebook.get(0), 2);
 				int codewordIndex = 0;
-
-				for (int j = 0; j<k; j++)
+				clusters[0].addInstance(instances.get(i));
+				for (int j=0;j<k; j++)
 				{
 					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
-					System.out.println(dist);
-					System.out.println(distAux);
-					if(dist>=distAux-difference)
+					if(dist>distAux-difference)
 					{
 						dist = distAux;
 						//update Matrix membership
@@ -104,19 +104,23 @@ public class Kmeans {
 					{
 						B[i][j]=0;
 						clusters[j].removeInstance(instances.get(i));
+						
 					}
-					System.out.println(clusters[0].getInstances().hasNext());
 				}
-				/*for (int s=0; s< clusters.length;s++)
+				for (int s=0; s< clusters.length;s++)
 				{
 					codebookAux = (ArrayList<Instance>)codebook.clone();
-					codebook.set(s, clusters[s].calcCentroid());
+					if(!clusters[s].getListaInstances().isEmpty())
+					{
+						if()
+						codebook.set(s, clusters[s].calcCentroid());					
+					}
 					if (compareCodeBooks(codebookAux,codebook))
 					{
 						//TODO apañar bien donde meter la función comparar
 						condParada = true;
 					}					
-				}*/
+				}
 			}		
 			/*}*/
 		}	
@@ -130,9 +134,9 @@ public class Kmeans {
 		for(int j=0;j<clusters.length;j++){
 			System.out.println("CLUSTER: "+j);
 			System.out.println("---------------------------------------");
-			for(int i=0;i<clusters[j].getListaInstances().size();i++){
-				System.out.println(clusters[j].getListaInstances().get(i).toString());
-			}
+			System.out.println("Número de instancias en el cluster: "+clusters[j].getListaInstances().size());
+			System.out.println("===========================================================================");
+
 		}
 	}
 
@@ -163,7 +167,6 @@ public class Kmeans {
 			{
 				Random rand = new Random();				
 				B[j][s]= rand.nextInt(2);
-				System.out.println(B[j][s]);
 			}
 		}
 		return B;
@@ -179,25 +182,21 @@ public class Kmeans {
 
 	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b)
 	{
-		//TODO diferencia de disimilitud, para que la ejecución no sea infinita
-		boolean rdo = true, aux = false;
 		int i = 0, j=0;
-
-		while (i<a.size() && rdo)
+		
+		while (i<a.size())
 		{
 			while (j<b.size())
 			{
-				if (a.get(i).equals(b.get(j)))
-					aux = true;
+				if (!a.get(i).equals(b.get(j)))
+				{
+					return false;
+				}
 				j++;
 			}
-			if (!aux)
-				rdo=false;
-			else
-				aux=false;
 			i++;
 		}
-		return rdo;
+		return true;
 	}
 	public static class FastScatterPlotDemo extends JFrame {
 
