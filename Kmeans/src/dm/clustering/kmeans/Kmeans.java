@@ -1,12 +1,18 @@
 package dm.clustering.kmeans;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYCoordinate;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -16,6 +22,7 @@ import dm.clustering.utils.InputHandler;
 import dm.clustering.utils.Minkowski;
 import dm.core.Cluster;
 import dm.core.Instance;
+import dm.plots.Plot;
 
 
 
@@ -128,24 +135,31 @@ public class Kmeans {
 			}		
 			/*}*/
 		}	
-		//TODO plot exit and data exit.
 		
-		JFreeChart chart = ChartFactory.createScatterPlot(
-	            "Scatter Plot", // chart title
-	            "X", // x axis label
-	            "Y", // y axis label
-	            createDataset(B), // data  ***-----PROBLEM------***
-	            PlotOrientation.VERTICAL,
-	            true, // include legend
-	            true, // tooltips
-	            false // urls
-	            );
+		/*JFreeChart chart = ChartFactory.createScatterPlot(
+				"Membership", // chart title
+				"Instances", // x axis label
+				"Clusters", // y axis label
+				createDataset(B), // data  ***-----PROBLEM------***
+				PlotOrientation.VERTICAL,
+				true, // include legend
+				true, // tooltips
+				false // urls
+				);
+		XYPlot plot = (XYPlot) chart.getPlot();
+		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer)plot.getRenderer();
+		renderer.setSeriesPaint(0, randomColor());
+		// create and display a frame...
+		ChartFrame frame = new ChartFrame("First", chart);
+		frame.pack();
+		frame.setVisible(true);*/
+		Plot.getMiPlot().setMatrixMembership(B);
+		JFreeChart scatter = Plot.getMiPlot().plotting("Memberships", "Clusters", "Instances");
+		// create and display a frame...
+				ChartFrame frame = new ChartFrame("First", scatter);
+				frame.pack();
+				frame.setVisible(true);
 
-	        // create and display a frame...
-	        ChartFrame frame = new ChartFrame("First", chart);
-	        frame.pack();
-	        frame.setVisible(true);
-	        
 		//TODO test and evaluation
 		 	
 		
@@ -228,8 +242,6 @@ public class Kmeans {
 	    for (int i = 0; i < B.length; i++) {
 	    	System.out.println(B.length);
 	    	for(int j=0;j<B[i].length;j++){
-	    		System.out.println(B[i][j]);
-	    		System.out.println(B[i].length);
 	    		if(B[i][j]==1)
 	    		{
 	    			double x = i;
@@ -240,5 +252,19 @@ public class Kmeans {
 	    }
 	    result.addSeries(series);
 	    return result;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private static Color randomColor(){
+		Random rand = new Random();
+		
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+		
+		return new Color(r,g,b);
 	}
 }
