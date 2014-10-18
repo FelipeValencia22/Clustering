@@ -30,10 +30,12 @@ public class Normalizer {
 		
 		for (int i = 0; i < Instances.size(); i++)
 		{
+			
 			for (int j = 0; j < Instances.get(0).numFeatures(); j++)
 			{
 				// X - mean / stdev
 				att = (Instances.get(i).getAtt(j)-arguments[j][0]) / arguments[j][1]; 
+			
 				Instances.get(i).setAtt(j,att);
 			}
 		}

@@ -58,7 +58,8 @@ public class NormalizerTest {
 	
 	@Test
 	public void testNormalize() {
-		fail("Not yet implemented");
+		Normalizer norm = new Normalizer();
+		norm.normalize(instances);
 	}
 	@Test
 	public void testMean(){

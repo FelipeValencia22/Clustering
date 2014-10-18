@@ -35,7 +35,7 @@ public class Instance
 	}
 
 	public int numFeatures(){
-		return this.features.size();
+		return this.doubleFeatures.size();
 	}
 	public ArrayList<Double> getDobFeatures() {
 		return this.doubleFeatures;
