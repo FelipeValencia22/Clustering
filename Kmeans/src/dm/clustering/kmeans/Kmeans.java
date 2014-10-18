@@ -76,9 +76,15 @@ public class Kmeans {
 		
 		/*while(!condParada)
 		{*/
-		for(int numIter=0;numIter<itera;numIter++){
+		for(int numIter=0;numIter<10000;numIter++){
 			//TODO
-			for (int i=0;i<3;i++)
+			
+			for (int p = 0; p<clusters.length;p++)
+			{
+				clusters[p].reset();
+			}
+			
+			for (int i=0;i<instances.size();i++)
 			{
 		
 				Double dist = Minkowski.getMinkowski()
@@ -103,7 +109,7 @@ public class Kmeans {
 					else
 					{
 						B[i][j]=0;
-						clusters[j].removeInstance(instances.get(i));
+						//clusters[j].removeInstance(instances.get(i));
 						
 					}
 				}
@@ -117,6 +123,7 @@ public class Kmeans {
 						condParada = true;
 					}					
 				}
+				
 			}		
 			/*}*/
 		}	
