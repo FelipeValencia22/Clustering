@@ -92,16 +92,16 @@ public class Plot
 		chart.setBackgroundPaint(BCK_COLOR);
 
 		final XYPlot plot = (XYPlot) chart.getPlot();
-		//configurarPlot(plot);
+		configurarPlot(plot);
 
 		final NumberAxis domainAxis = (NumberAxis)plot.getDomainAxis();
-		//configurarDomainAxis(domainAxis);
+		configurarDomainAxis(domainAxis);
 
 		final NumberAxis rangeAxis = (NumberAxis)plot.getRangeAxis();
 		//configurarRangeAxis(rangeAxis);
 
 		final XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer)plot.getRenderer();
-		//configurarRendered(renderer);
+		configurarRendered(renderer);
 
 		return chart;
 	}
@@ -120,7 +120,7 @@ public class Plot
     //configuramos el eje y de la gráfica (números enteros de uno en uno y rango entre 0 y 25)
     private void configurarRangeAxis (NumberAxis rangeAxis) {
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        rangeAxis.setTickUnit(new NumberTickUnit(1));
+        rangeAxis.setTickUnit(new NumberTickUnit(5));
         //rangeAxis.setRange(0, 25);
     }
     // configuramos las líneas de las series (añadimos formas en los puntos y asignamos el color de cada serie)
@@ -128,6 +128,7 @@ public class Plot
         Iterator<XYSeries> itr = this.collection.getSeries().iterator();
         while(itr.hasNext()){
         	int index =this.collection.indexOf(itr.next());
+        	System.out.println(index);
         	renderer.setSeriesPaint(index, randomColor());
         	renderer.setSeriesShapesVisible(index, true);
         }

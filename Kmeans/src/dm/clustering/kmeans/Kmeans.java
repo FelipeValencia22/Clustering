@@ -20,6 +20,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import dm.clustering.utils.CSVDataLoader;
 import dm.clustering.utils.InputHandler;
 import dm.clustering.utils.Minkowski;
+import dm.clustering.utils.Normalizer;
 import dm.core.Cluster;
 import dm.core.Instance;
 import dm.plots.Plot;
@@ -49,7 +50,10 @@ public class Kmeans {
 						.getMiHandler()
 						.getDataPath(), 2);
 
-		//TODO Normalize Data	
+		//TODO Normalize Data
+		Normalizer norm = new Normalizer();
+		
+		instances = norm.normalize(instances);
 		//Let seed be the seed for the random number to get the codebook.
 		//Let M = {m_{1}, m_{2}, ..., m_{k}} be the code-book associated to the clusters. Random instances.
 		ArrayList<Instance> codebook = startCodebook(k, instances);
@@ -66,7 +70,8 @@ public class Kmeans {
 		for(int index=0;index<k;index++){
 			clusters[index]=new Cluster();
 		}
-
+		//Let distance exponent
+		double distExp = InputHandler.getMiHandler().getExp(); 
 		boolean condParada = false;
 
 		//Iterations		
@@ -84,10 +89,9 @@ public class Kmeans {
 		}
 
 		
-		/*while(!condParada)
-		{*/
+		while(!condParada)
+		{
 		for(int numIter=0;numIter<itera;numIter++){
-			//TODO			
 			for (int p = 0; p<clusters.length;p++)
 			{
 				clusters[p].reset();
@@ -97,12 +101,12 @@ public class Kmeans {
 			{		
 				Double dist = Minkowski.getMinkowski()
 						.calculateDistance(instances.get(i)
-								, codebook.get(0), 2);
+								, codebook.get(0), distExp);
 				int codewordIndex = 0;
 				clusters[0].addInstance(instances.get(i));
 				for (int j=0;j<k; j++)
 				{
-					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), 2);
+					Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), distExp);
 					if(dist>distAux-difference)
 					{
 						dist = distAux;
@@ -116,7 +120,7 @@ public class Kmeans {
 					}
 					else
 					{
-						B[i][j]=0;
+						//B[i][j]=0;
 						//clusters[j].removeInstance(instances.get(i));
 						
 					}
@@ -125,34 +129,16 @@ public class Kmeans {
 				{
 					codebookAux = (ArrayList<Instance>)codebook.clone();
 					if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());					
-					if (compareCodeBooks(codebookAux,codebook))
+					if (compareCodeBooks(codebookAux,codebook,distExp))
 					{
-						//TODO apañar bien donde meter la función comparar
 						condParada = true;
 					}					
 				}
 				
 			}		
-			/*}*/
+			}
 		}	
 		
-		/*JFreeChart chart = ChartFactory.createScatterPlot(
-				"Membership", // chart title
-				"Instances", // x axis label
-				"Clusters", // y axis label
-				createDataset(B), // data  ***-----PROBLEM------***
-				PlotOrientation.VERTICAL,
-				true, // include legend
-				true, // tooltips
-				false // urls
-				);
-		XYPlot plot = (XYPlot) chart.getPlot();
-		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer)plot.getRenderer();
-		renderer.setSeriesPaint(0, randomColor());
-		// create and display a frame...
-		ChartFrame frame = new ChartFrame("First", chart);
-		frame.pack();
-		frame.setVisible(true);*/
 		Plot.getMiPlot().setMatrixMembership(B);
 		JFreeChart scatter = Plot.getMiPlot().plotting("Memberships", "Clusters", "Instances");
 		// create and display a frame...
@@ -212,7 +198,7 @@ public class Kmeans {
 	 *  the order), false if not.
 	 */
 
-	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b)
+	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b, double p)
 	{
 		int i = 0, j=0;
 		
@@ -220,7 +206,7 @@ public class Kmeans {
 		{
 			while (j<b.size())
 			{
-				if (!a.get(i).equals(b.get(j)))
+				if (!a.get(i).equals(b.get(j)) && Minkowski.getMinkowski().calculateDistance(a.get(i), b.get(i), p)>10)
 				{
 					return false;
 				}
@@ -229,42 +215,5 @@ public class Kmeans {
 			i++;
 		}
 		return true;	
-	}
-	
-	/**
-	 * 
-	 * @param B
-	 * @return dataset for ploting
-	 */
-	private static XYDataset createDataset(int[][] B) {
-	    XYSeriesCollection result = new XYSeriesCollection();
-	    XYSeries series = new XYSeries("Membership");
-	    for (int i = 0; i < B.length; i++) {
-	    	System.out.println(B.length);
-	    	for(int j=0;j<B[i].length;j++){
-	    		if(B[i][j]==1)
-	    		{
-	    			double x = i;
-	    			double y = j;
-	    			series.add(x, y);
-	    		}
-	    	}
-	    }
-	    result.addSeries(series);
-	    return result;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	private static Color randomColor(){
-		Random rand = new Random();
-		
-		float r = rand.nextFloat();
-		float g = rand.nextFloat();
-		float b = rand.nextFloat();
-		
-		return new Color(r,g,b);
 	}
 }
