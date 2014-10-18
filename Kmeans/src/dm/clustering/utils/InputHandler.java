@@ -16,6 +16,7 @@ public class InputHandler
 	private String dataPath;
 	private int iterations;
 	private double diff;
+	private int initialize;
 	private final String LOG_TAG = InputHandler.class.getSimpleName();
 	
 	private InputHandler() {
@@ -23,7 +24,12 @@ public class InputHandler
 		this.exp = 2;
 		this.iterations = 0;
 		this.diff = 0.0;
+		this.initialize= 0;
 	}		
+	
+	public static InputHandler getMiHandler(){
+		return miHandler;
+	}
 	
 	public int getK() {
 		return K;
@@ -64,14 +70,19 @@ public class InputHandler
 	public void setDiff(double diff) {
 		this.diff = diff;
 	}
-
-	public static InputHandler getMiHandler(){
-		return miHandler;
+	
+	private void setIni(Integer pIni) {
+		this.initialize=pIni;
+	}
+	
+	public int getIni(){
+		return this.initialize;
 	}
 	
 	public void loadArgs(String filePath){
 		try 
 		{
+			@SuppressWarnings("resource")
 			Scanner sc = new Scanner(new File(filePath));
 			sc.useDelimiter(";");
 			ArrayList<String> args = new ArrayList<String>(); 
@@ -94,7 +105,7 @@ public class InputHandler
 			} 
 			catch (NumberFormatException e) 
 			{
-				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro k en el fichero de configuración");;
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro k en el fichero de configuración");
 
 			}
 			try 
@@ -103,7 +114,7 @@ public class InputHandler
 			} 
 			catch (NumberFormatException e) 
 			{
-				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el el parámetro iteraciones en el archivo de configuración");;
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el el parámetro iteraciones en el archivo de configuración");
 
 			}
 			try 
@@ -112,7 +123,7 @@ public class InputHandler
 			} 
 			catch (NumberFormatException e) 
 			{
-				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro difference en el archivo de configuración");;
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro difference en el archivo de configuración");
 
 			}
 			try 
@@ -121,7 +132,17 @@ public class InputHandler
 			} 
 			catch (NumberFormatException e) 
 			{
-				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro distance en el archivo de configuración");;
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro distance en el archivo de configuración");
+
+			}
+			try
+			{
+				this.setIni(Integer.valueOf(args.get(5)));
+
+			}
+			catch(NumberFormatException e)
+			{
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro initialize en el archivo de configuración");
 
 			}
 		} 

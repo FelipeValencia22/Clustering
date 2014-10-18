@@ -1,6 +1,7 @@
 package dm.plots;
 
 import java.awt.Color;
+import java.awt.Shape;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -13,6 +14,9 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.util.ShapeUtilities;
+
+import dm.core.Cluster;
 
 /**
  * Fuente:http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=graficaSeriesJFreeChart
@@ -22,9 +26,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class Plot 
 {
+	private Cluster[] clusters;	
+	
 	private int[][] matrixMembership;
 	
-	private static Color BCK_COLOR = Color.white;
+	private static Color BCK_COLOR = Color.WHITE;
 	
 	private static Color GRID_COLOR = new Color(31, 87, 4);
 	
@@ -34,8 +40,12 @@ public class Plot
 	
 	private Plot(){
 		
-	}
+	}	
 	
+	public static Plot getMiPlot(){
+		return miPlot;
+	}
+		
 	public int[][] getMatrixMembership() {
 		return matrixMembership;
 	}
@@ -43,19 +53,22 @@ public class Plot
 	public void setMatrixMembership(int[][] matrixMembership) {
 		this.matrixMembership = matrixMembership;
 	}
-
-	public static Plot getMiPlot(){
-		return miPlot;
+	
+	public Cluster[] getClusters() {
+		return clusters;
 	}
 	
-	private void initializeCollection(){
+	public void setClusters(Cluster[] clusters) {
+		this.clusters = clusters;
+	}
+
+	private void initializeCollectionWithMatrix(){
 		int[][] traspuesta=transpuesta(getMatrixMembership());
 		for(int i=0;i<traspuesta.length;i++){
 			XYSeries series = new XYSeries(i);
 			for(int j=0;j<traspuesta[i].length;j++){
 				if(traspuesta[i][j]==1)
 	    		{
-					System.out.println(i);
 	    			double x = i;
 	    			double y = j;
 	    			series.add(x, y);
@@ -78,9 +91,9 @@ public class Plot
 		
 		return new Color(r,g,b);
 	}
-	public JFreeChart plotting(String title,String X, String Y)
+	public JFreeChart plottingMatrix(String title,String X, String Y)
 	{
-		initializeCollection();
+		initializeCollectionWithMatrix();
 		final JFreeChart chart = ChartFactory.createScatterPlot(title, X, Y, 
 				this.collection,
 				PlotOrientation.VERTICAL, 
@@ -97,6 +110,36 @@ public class Plot
 		final NumberAxis domainAxis = (NumberAxis)plot.getDomainAxis();
 		configurarDomainAxis(domainAxis);
 
+		@SuppressWarnings("unused")
+		final NumberAxis rangeAxis = (NumberAxis)plot.getRangeAxis();
+		//configurarRangeAxis(rangeAxis);
+
+		final XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer)plot.getRenderer();
+		configurarRendered(renderer);
+
+		return chart;
+	}
+	
+	public JFreeChart plottingClusters(String title,String X, String Y)
+	{
+		initializeCollectionWithMatrix();
+		final JFreeChart chart = ChartFactory.createScatterPlot(title, X, Y, 
+				this.collection,
+				PlotOrientation.VERTICAL, 
+				false, // uso de leyenda
+				false, // uso de tooltips  
+				false // uso de urls
+				);
+		// color de fondo de la gráfica
+		chart.setBackgroundPaint(BCK_COLOR);
+
+		final XYPlot plot = (XYPlot) chart.getPlot();
+		configurarPlot(plot);
+
+		final NumberAxis domainAxis = (NumberAxis)plot.getDomainAxis();
+		configurarDomainAxis(domainAxis);
+
+		@SuppressWarnings("unused")
 		final NumberAxis rangeAxis = (NumberAxis)plot.getRangeAxis();
 		//configurarRangeAxis(rangeAxis);
 
@@ -110,27 +153,34 @@ public class Plot
     {
         plot.setDomainGridlinePaint(GRID_COLOR);
         plot.setRangeGridlinePaint(GRID_COLOR);
+        
     }
     // configuramos el eje X de la gráfica (se muestran números enteros y de uno en uno)
     private void configurarDomainAxis (NumberAxis domainAxis) {
         domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         domainAxis.setTickUnit(new NumberTickUnit(1));
+        domainAxis.setRange(-1, this.getMatrixMembership()[0].length);
     }
     
     //configuramos el eje y de la gráfica (números enteros de uno en uno y rango entre 0 y 25)
-    private void configurarRangeAxis (NumberAxis rangeAxis) {
+    @SuppressWarnings("unused")
+	private void configurarRangeAxis (NumberAxis rangeAxis) {
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         rangeAxis.setTickUnit(new NumberTickUnit(5));
         //rangeAxis.setRange(0, 25);
     }
     // configuramos las líneas de las series (añadimos formas en los puntos y asignamos el color de cada serie)
-    private void configurarRendered (XYLineAndShapeRenderer renderer) {
+    @SuppressWarnings("unchecked")
+	private void configurarRendered (XYLineAndShapeRenderer renderer) {
         Iterator<XYSeries> itr = this.collection.getSeries().iterator();
+        Shape cross = ShapeUtilities.createDiagonalCross(3, 1);
         while(itr.hasNext()){
         	int index =this.collection.indexOf(itr.next());
         	renderer.setSeriesPaint(index, randomColor());
         	renderer.setSeriesShapesVisible(index, true);
-        }
+        	renderer.setSeriesShape(index, cross);
+        	
+        }        
     }
     /**
      * pre:the matrix isn't empty.
@@ -146,7 +196,6 @@ public class Plot
             for (j =0;j<B[i].length;j++){
                 traspuesta[j][i]=B[i][j];
             }
-            System.out.println(traspuesta[0][i]);
         }
         return traspuesta;
     }

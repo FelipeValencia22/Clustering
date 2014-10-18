@@ -35,6 +35,7 @@ public class CSVDataLoader
 	 * @param filePath
 	 * @return double[][]
 	 */
+	@SuppressWarnings("resource")
 	public ArrayList<Instance> loadNumericData(String pFilePath,int pIndexini){
 
 		

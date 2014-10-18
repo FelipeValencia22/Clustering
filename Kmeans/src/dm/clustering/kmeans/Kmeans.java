@@ -35,26 +35,48 @@ public class Kmeans {
 						.getMiHandler()
 						.getDataPath(), 2);
 
-		//TODO Normalize Data
+		//Normalize data
 		Normalizer norm = new Normalizer();
-		//instances = norm.normalize(instances);
+		instances = norm.normalize(instances);
 		
-		//Let seed be the seed for the random number to get the codebook.
-		//Let M = {m_{1}, m_{2}, ..., m_{k}} be the code-book associated to the clusters. Random instances.
-		ArrayList<Instance> codebook = startCodebook(k, instances);
-		ArrayList<Instance> codebookAux;
-
 		//B  membership matrix.
 		int nrow = instances.size();
 		int nCol = k;
-		//TODO select initialize matrix or centroid.
-		//float[][] B = matrixMemberShipInitialize(nrow, nCol);
-		int[][] B = new int[instances.size()][k];
+		int[][] B = new int[nrow][nCol];
+		
+		//codebook
+		ArrayList<Instance> codebook = new ArrayList<Instance>();
+
 		// Instance k clusters
 		Cluster[] clusters = new Cluster[k];
 		for(int index=0;index<k;index++){
 			clusters[index]=new Cluster();
 		}
+		
+		if(InputHandler.getMiHandler().getIni()<1)
+		{
+			//Let seed be the seed for the random number to get the codebook.
+			//Let M = {m_{1}, m_{2}, ..., m_{k}} be the code-book associated to the clusters. Random instances.
+			codebook = startRandomCodebook(k, instances);
+		}
+		else
+		{
+			B = matrixMemberShipInitialize(nrow, nCol);
+			for(int i=0;i<B.length;i++){
+				for(int j=0;j<B[i].length;j++){
+					if(B[i][j]==1)
+					{
+						clusters[j].addInstance(instances.get(i));
+					}
+				}
+			}
+			
+			for(int l=0;l<clusters.length;l++)
+			{
+				codebook.add(clusters[l].calcCentroid());
+			}
+		}
+		
 		//Let distance exponent
 		double distExp = InputHandler.getMiHandler().getExp(); 
 		boolean condParada = false;
@@ -79,7 +101,6 @@ public class Kmeans {
 				{
 					clusters[p].reset();
 				}
-
 				for (int i=0;i<instances.size();i++)
 				{		
 					Double dist = Minkowski.getMinkowski()
@@ -87,21 +108,24 @@ public class Kmeans {
 									, codebook.get(0), distExp);
 					int codewordIndex = 0;
 					clusters[0].addInstance(instances.get(i));
+					B[i][0]=1;
 					for (int j=0;j<k; j++)
 					{
 						Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), distExp);
 						if(dist>distAux-difference)
 						{
 							dist = distAux;
+							System.out.println(dist);
 							//update Matrix membership
 							B[i][j]=1;
 							B[i][codewordIndex]=0;
 							//update Cluster list
 							clusters[codewordIndex].removeInstance(instances.get(i));
 							codewordIndex=j;
-							clusters[j].addInstance(instances.get(i));						
+							clusters[j].addInstance(instances.get(i));	
 						}
 					}
+					ArrayList<Instance> codebookAux;
 					for (int s=0; s< clusters.length;s++)
 					{
 						codebookAux = (ArrayList<Instance>)codebook.clone();
@@ -117,11 +141,12 @@ public class Kmeans {
 		}	
 
 		Plot.getMiPlot().setMatrixMembership(B);
-		JFreeChart scatter = Plot.getMiPlot().plotting("Memberships", "Clusters", "Instances");
+		JFreeChart scatter = Plot.getMiPlot().plottingMatrix("Memberships", "Clusters", "Instances");
 		// create and display a frame...
 		ChartFrame frame = new ChartFrame("First", scatter);
 		frame.pack();
 		frame.setVisible(true);
+		
 
 		//TODO test and evaluation
 
@@ -139,7 +164,7 @@ public class Kmeans {
 	 * @param k
 	 * @param instances
 	 */
-	private static ArrayList<Instance> startCodebook(int k, ArrayList<Instance> instances) {
+	private static ArrayList<Instance> startRandomCodebook(int k, ArrayList<Instance> instances) {
 		ArrayList<Instance> codebook = new ArrayList<Instance>();
 		for(int i=0;i<k;i++)
 		{
@@ -154,8 +179,8 @@ public class Kmeans {
 	 * @param nrow
 	 * @param nCol
 	 */
-	private static float[][]  matrixMemberShipInitialize(int nrow, int nCol) {
-		float[][] B = new float[nrow][nCol];
+	private static int[][]  matrixMemberShipInitialize(int nrow, int nCol) {
+		int[][] B = new int[nrow][nCol];
 		for(int j=0;j<nrow;j++)
 		{
 			for (int s=0;s<nCol;s++)
