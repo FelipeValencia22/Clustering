@@ -51,12 +51,14 @@ public class Normalizer {
 	 */
 
 	
-	private double mean(ArrayList<Instance> Instances, int index)
+	public double mean(ArrayList<Instance> Instances, int index)
 	{
 		double res = 0.0;
-		
+	
 		for (int i = 0; i < Instances.size(); i++)
+		{
 			res=res+Instances.get(i).getAtt(index);
+		}
 		res = res/Instances.size();
 		
 		return res;
@@ -70,7 +72,7 @@ public class Normalizer {
 	 * @param useMean specifies if the mean has been calculated or is not valid
 	 * @return the stdev of the specified attribute in a dataset
 	 */
-	private double stdev(ArrayList<Instance> Instances, int index, double mean, boolean useMean)
+	public double stdev(ArrayList<Instance> Instances, int index, double mean, boolean useMean)
 	{
 		double res = 0.0;
 		if (!useMean)
@@ -82,6 +84,6 @@ public class Normalizer {
 			res = res + Math.pow(mean - Instances.get(i).getAtt(index), 2);
 		res = res/Instances.size();
 		
-		return res;
+		return Math.sqrt(res);
 	}
 }
