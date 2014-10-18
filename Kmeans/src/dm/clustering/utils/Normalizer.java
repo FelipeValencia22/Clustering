@@ -12,8 +12,9 @@ public class Normalizer {
 		/*
 		 * Create the array containing the mean and stdev for each feature
 		 */
+		int nfeat = Instances.get(0).numFeatures();
 		
-		double [][] arguments = new double[Instances.get(0).numFeatures()][2];
+		double [][] arguments = new double[nfeat][2];
 		double mean = 0.0;
 		for (int i = 0; i < Instances.get(0).numFeatures();i++)
 		{
@@ -31,9 +32,10 @@ public class Normalizer {
 		for (int i = 0; i < Instances.size(); i++)
 		{
 			
-			for (int j = 0; j < Instances.get(0).numFeatures(); j++)
+			for (int j = 0; j < nfeat; j++)
 			{
 				// X - mean / stdev
+				
 				att = (Instances.get(i).getAtt(j)-arguments[j][0]) / arguments[j][1]; 
 			
 				Instances.get(i).setAtt(j,att);
