@@ -138,14 +138,15 @@ public class Plot
      * @param B
      * @return transpose matrix
      */
-    private int[][] transpuesta (int B [] [])
+    private int[][] transpuesta (int B[][])
     {     
     	int i, j;
     	int[][] traspuesta = new int[B[0].length][B.length];
         for (i =0;i< B.length;i++)
         {
-            for (j =0;j<B[i].length;j++)
+            for (j =0;j<B[i].length;j++){
                 traspuesta[j][i]=B[i][j];
+            }
         }
         return traspuesta;
     }

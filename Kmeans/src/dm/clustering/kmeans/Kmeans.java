@@ -1,22 +1,10 @@
 package dm.clustering.kmeans;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.LineAndShapeRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYCoordinate;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
 import dm.clustering.utils.CSVDataLoader;
 import dm.clustering.utils.InputHandler;
 import dm.clustering.utils.Minkowski;
