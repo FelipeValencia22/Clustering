@@ -110,11 +110,7 @@ public class Kmeans {
 				for (int s=0; s< clusters.length;s++)
 				{
 					codebookAux = (ArrayList<Instance>)codebook.clone();
-					if(!clusters[s].getListaInstances().isEmpty())
-					{
-						if()
-						codebook.set(s, clusters[s].calcCentroid());					
-					}
+					if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());					
 					if (compareCodeBooks(codebookAux,codebook))
 					{
 						//TODO apañar bien donde meter la función comparar

@@ -58,7 +58,7 @@ public class Cluster {
 		Instance centroid = new Instance();
 		int numInstances = this.getListaInstances().size();
 		int numFeatures =0;
-		if(!getInstances().hasNext())numFeatures = this.getInstances().next().getDobFeatures().size(); 
+		if(getInstances().hasNext())numFeatures = this.getInstances().next().getDobFeatures().size(); 
 		double[] codeword = new double[numFeatures];
 		
 		//Initialize array for calculus
