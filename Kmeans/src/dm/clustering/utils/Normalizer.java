@@ -8,42 +8,36 @@ public class Normalizer {
 	
 	public ArrayList<Instance> normalize(ArrayList<Instance> Instances)
 	{
-		
 		/*
 		 * Create the array containing the mean and stdev for each feature
 		 */
-		int nfeat = Instances.get(0).numFeatures();
+		int nfeat = Instances.get(0).getDobFeatures().size();
 		
 		double [][] arguments = new double[nfeat][2];
 		double mean = 0.0;
+		double stdev = 0.0;
 		for (int i = 0; i < Instances.get(0).numFeatures();i++)
 		{
 			
 			mean = mean(Instances, i);
+			stdev= stdev(Instances, i, mean, true);
 			arguments[i][0]= mean;
-			arguments[i][1]= stdev(Instances, i, mean, true);
+			arguments[i][1]= stdev;
 		}
-		double att=0.0;
-		
+		double att=0.0;		
 		/*
 		 * Change each attribute of each instance to the normalized one 
 		 */
 		
 		for (int i = 0; i < Instances.size(); i++)
-		{
-			
+		{			
 			for (int j = 0; j < nfeat; j++)
 			{
-				// X - mean / stdev
-				
-				att = (Instances.get(i).getAtt(j)-arguments[j][0]) / arguments[j][1]; 
-			
+				// X - mean / stdev				
+				att = (Instances.get(i).getAtt(j)-arguments[j][0])/ arguments[j][1];			
 				Instances.get(i).setAtt(j,att);
 			}
-		}
-		
-		
-		
+		}		
 		return Instances;
 	}
 	
@@ -78,16 +72,18 @@ public class Normalizer {
 	 */
 	public double stdev(ArrayList<Instance> Instances, int index, double mean, boolean useMean)
 	{
-		double res = 0.0;
+		double res = 0.0;		
 		if (!useMean)
 		{
 			mean = mean(Instances, index);
 		}
 		
 		for (int i = 0; i < Instances.size(); i++)
-			res = res + Math.pow(mean - Instances.get(i).getAtt(index), 2);
-		res = res/Instances.size();
-		
-		return Math.sqrt(res);
+		{
+			res = res + (Math.pow(Instances.get(i).getAtt(index)-mean, 2))/Instances.size();
+			
+		}
+		double rdo = Math.sqrt(res);
+		return rdo;
 	}
 }
