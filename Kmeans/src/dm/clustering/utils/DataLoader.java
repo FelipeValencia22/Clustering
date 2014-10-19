@@ -82,9 +82,10 @@ public class DataLoader
 	/**
 	 * 
 	 * @param pFilePath
+	 * @param delimiter 
 	 * @return ArrayList<Instance>
 	 */
-	public ArrayList<Instance> loadARFF(String pFilePath)
+	public ArrayList<Instance> loadARFF(String pFilePath, String delimiter)
 	{
 		ArrayList<Instance> instances = new ArrayList<Instance>();
 		File file = new File(pFilePath);
@@ -113,7 +114,7 @@ public class DataLoader
 					while(reader.ready())
 					{
 						linea=reader.readLine();
-						String[] features = linea.split(",");
+						String[] features = linea.split(delimiter);
 						Instance ins = new Instance();
 						for(int i=0;i<features.length;i++)
 						{

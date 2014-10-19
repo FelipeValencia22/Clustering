@@ -159,7 +159,7 @@ public class Kmeans {
 
 		//TODO test and evaluation
 
-
+		System.out.println(instances.size());
 		for(int j=0;j<clusters.length;j++){
 			System.out.println("CLUSTER: "+j);
 			System.out.println("---------------------------------------");
@@ -171,7 +171,7 @@ public class Kmeans {
 			{
 				s=s+codebook.get(j).getAtt(p)+"\n";
 			}
-			System.out.println("Con el codeword: "+s);
+			System.out.println("Con el codeword: \n"+s);
 			System.out.println("===========================================================================");
 		}
 	}
@@ -182,7 +182,7 @@ public class Kmeans {
 	 * @return
 	 */
 	private static ArrayList<Instance> loadInstances(String extension) {
-		ArrayList<Instance> instances;
+		ArrayList<Instance> instances = null;
 		if(extension.equals("csv"))
 		{
 			instances = DataLoader.getMiLoader()
@@ -195,7 +195,9 @@ public class Kmeans {
 			instances = DataLoader.getMiLoader()
 					.loadARFF(InputHandler
 							.getMiHandler()
-							.getDataPath());
+							.getDataPath(),
+							InputHandler.getMiHandler()
+							.getDelimiter());
 		}
 		else
 		{
