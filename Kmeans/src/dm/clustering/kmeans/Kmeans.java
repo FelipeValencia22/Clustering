@@ -106,10 +106,8 @@ public class Kmeans {
 		while(!condParada)
 		{
 			for(int numIter=0;numIter<itera;numIter++){
-				for (int p = 0; p<clusters.length;p++)
-				{
-					clusters[p].reset();
-				}
+				clusters=resetClusters(clusters);
+				B=resetMatrixMembership(B);
 				for (int i=0;i<instances.size();i++)
 				{		
 					Double dist = Minkowski.getMinkowski()
@@ -152,7 +150,7 @@ public class Kmeans {
 		Plot.getMiPlot().setMatrixMembership(B);
 		JFreeChart scatter = Plot.getMiPlot().plottingMatrix("Memberships", "Clusters", "Instances");
 		// create and display a frame...
-		ChartFrame frame = new ChartFrame("First", scatter);
+		ChartFrame frame = new ChartFrame("CLUSTERING:K-MEDIAS", scatter);
 		frame.pack();
 		frame.setVisible(true);
 		
@@ -174,6 +172,32 @@ public class Kmeans {
 			System.out.println("Con el codeword: \n"+s);
 			System.out.println("===========================================================================");
 		}
+	}
+
+	/**
+	 * reset all clusters
+	 * @param clusters
+	 */
+	private static Cluster[] resetClusters(Cluster[] clusters) {
+		for (int p = 0; p<clusters.length;p++)
+		{
+			clusters[p].reset();
+		}
+		return clusters;
+	}
+	
+	/**
+	 * Put all members in zero
+	 * @param B
+	 * @return matrix with all members = 0.
+	 */
+	private static int[][] resetMatrixMembership(int[][] B){
+		for(int i=0;i<B.length;i++){
+			for(int j=0;j<B[i].length;j++){
+				B[i][j]=0;
+			}
+		}
+		return B;
 	}
 
 	/**
