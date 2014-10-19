@@ -2,6 +2,7 @@ package dm.clustering.utils;
 
 
 import java.util.ArrayList;
+
 import dm.core.Instance;
 
 public class Normalizer {
@@ -29,12 +30,22 @@ public class Normalizer {
 		 * Change each attribute of each instance to the normalized one 
 		 */
 		
+		
+		
+		
 		for (int i = 0; i < Instances.size(); i++)
 		{			
 			for (int j = 0; j < nfeat; j++)
 			{
-				// X - mean / stdev				
-				att = (Instances.get(i).getAtt(j)-arguments[j][0])/ arguments[j][1];			
+				// X - mean / stdev		
+				att=Instances.get(i).getAtt(j);
+				
+				System.out.println("Jota: "+j+" Atributo: " + att + " media: "+ arguments[j][0]+ " desv: "+arguments[j][1]);
+				
+				att = (Instances.get(i).getAtt(j)-arguments[j][0])/ (arguments[j][1]);
+				
+				System.out.println("Atributo despues: "+att);
+				
 				Instances.get(i).setAtt(j,att);
 			}
 		}		
@@ -80,9 +91,10 @@ public class Normalizer {
 		
 		for (int i = 0; i < Instances.size(); i++)
 		{
-			res = res + (Math.pow(Instances.get(i).getAtt(index)-mean, 2))/Instances.size();
+			res = res + (Math.pow(Instances.get(i).getAtt(index)-mean, 2));
 			
 		}
+		res = res /Instances.size();
 		double rdo = Math.sqrt(res);
 		return rdo;
 	}

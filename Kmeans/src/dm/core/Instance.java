@@ -67,7 +67,8 @@ public class Instance
 	}
 	public void setAtt(int j, double att)
 	{
-		doubleFeatures.add(j, att);
+		
+		doubleFeatures.set(j, att);
 
 	}
 }

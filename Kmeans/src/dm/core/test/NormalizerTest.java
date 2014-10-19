@@ -3,10 +3,12 @@ package dm.core.test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 
 
 
@@ -58,8 +60,13 @@ public class NormalizerTest {
 	
 	@Test
 	public void testNormalize() {
+	
+			
 		Normalizer norm = new Normalizer();
 		norm.normalize(instances);
+		
+		
+		
 	}
 	@Test
 	public void testMean(){
