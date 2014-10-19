@@ -88,7 +88,8 @@ public class DataLoader
 	{
 		ArrayList<Instance> instances = new ArrayList<Instance>();
 		File file = new File(pFilePath);
-		if(file.exists()){
+		if(file.exists())
+		{
 			BufferedReader reader;
 			boolean enc=false;
 			try
@@ -138,6 +139,54 @@ public class DataLoader
 			{
 				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Algo va mal en tu archivo arff, no se encuentra @data");
 			}
+		}
+		else
+		{
+			Logger.getLogger(LOG_TAG).log(Level.SEVERE, "El archivo no existe");
+		}
+		return instances;
+	}
+	
+	public ArrayList<Instance> loadData(String pFilePath,int pIndexIni,String pDelimiter)
+	{
+		ArrayList<Instance> instances = new ArrayList<Instance>();
+		File file = new File(pFilePath);
+		if(file.exists()){
+			BufferedReader reader;
+			boolean enc=false;
+			try {
+				reader = new BufferedReader(new FileReader(pFilePath));
+				String linea;
+				while(reader.ready())
+				{
+					linea=reader.readLine();
+					String[] features = linea.split(pDelimiter);
+					Instance ins = new Instance();
+					for(int i=0;i<features.length;i++)
+					{
+						try 
+						{
+							ins.addDobFeature(Double.valueOf(features[i]));
+						} catch (NumberFormatException e) 
+						{
+							Logger.getLogger(LOG_TAG).log(Level.INFO, "El atributo: "+i+ " no es numérico, se añade a features");
+							ins.addFeature(features[i]);
+						}	
+					}
+					instances.add(ins);
+				}
+			reader.close();	
+			} 
+			catch (FileNotFoundException e1) 
+			{
+
+				e1.printStackTrace();
+			} catch (IOException e) 
+			{
+
+				e.printStackTrace();
+			}
+						
 		}
 		return instances;
 	}

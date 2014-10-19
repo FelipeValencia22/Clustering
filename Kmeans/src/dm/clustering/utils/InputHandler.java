@@ -19,6 +19,7 @@ public class InputHandler
 	private int initialize;
 	private String fileExtension;
 	private int dataIndexStart;	
+	private String delimiter;
 
 	private final String LOG_TAG = InputHandler.class.getSimpleName();
 	
@@ -30,6 +31,7 @@ public class InputHandler
 		this.initialize= 0;
 		this.fileExtension="csv";
 		this.dataIndexStart=0;
+		this.delimiter=" ";
 	}		
 	
 	public static InputHandler getMiHandler(){
@@ -100,6 +102,14 @@ public class InputHandler
 		this.dataIndexStart = dataIndexStart;
 	}
 	
+	public String getDelimiter() {
+		return delimiter;
+	}
+
+	public void setDelimiter(String delimiter) {
+		this.delimiter = delimiter;
+	}
+
 	public void loadArgs(String filePath){
 		try 
 		{
@@ -184,6 +194,16 @@ public class InputHandler
 			catch(NumberFormatException e)
 			{
 				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro data_index_start en el archivo de configuración");
+
+			}
+			try
+			{
+				this.setDelimiter(args.get(8));
+
+			}
+			catch(NumberFormatException e)
+			{
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro delimiter en el archivo de configuración");
 
 			}
 		} 

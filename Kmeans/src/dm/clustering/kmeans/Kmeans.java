@@ -34,20 +34,7 @@ public class Kmeans {
 
 		ArrayList<Instance> instances = null;
 		String extension=InputHandler.getMiHandler().getFileExtension();
-		if(extension.equals("csv"))
-		{
-			instances = DataLoader.getMiLoader()
-					.loadCSVNumericData(InputHandler
-							.getMiHandler()
-							.getDataPath(), InputHandler.getMiHandler().getDataIndexStart());
-		}
-		else if(extension.equalsIgnoreCase("arff"))
-		{
-			instances = DataLoader.getMiLoader()
-					.loadARFF(InputHandler
-							.getMiHandler()
-							.getDataPath());
-		}
+		instances = loadInstances(extension);
 
 		//Normalize data
 		Normalizer norm = new Normalizer();
@@ -186,6 +173,40 @@ public class Kmeans {
 			System.out.println("Con el codeword: "+s);
 			System.out.println("===========================================================================");
 		}
+	}
+
+	/**
+	 * Load data from the file with extension get by parameter
+	 * @param extension
+	 * @return
+	 */
+	private static ArrayList<Instance> loadInstances(String extension) {
+		ArrayList<Instance> instances;
+		if(extension.equals("csv"))
+		{
+			instances = DataLoader.getMiLoader()
+					.loadCSVNumericData(InputHandler
+							.getMiHandler()
+							.getDataPath(), InputHandler.getMiHandler().getDataIndexStart());
+		}
+		else if(extension.equalsIgnoreCase("arff"))
+		{
+			instances = DataLoader.getMiLoader()
+					.loadARFF(InputHandler
+							.getMiHandler()
+							.getDataPath());
+		}
+		else
+		{
+			instances = DataLoader.getMiLoader()
+					.loadData(InputHandler.getMiHandler()
+							.getDataPath(), 
+							InputHandler.getMiHandler()
+							.getDataIndexStart(),
+							InputHandler.getMiHandler()
+							.getDelimiter());
+		}
+		return instances;
 	}
 
 	/**
