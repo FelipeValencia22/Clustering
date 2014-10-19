@@ -17,6 +17,9 @@ public class InputHandler
 	private int iterations;
 	private double diff;
 	private int initialize;
+	private String fileExtension;
+	private int dataIndexStart;	
+
 	private final String LOG_TAG = InputHandler.class.getSimpleName();
 	
 	private InputHandler() {
@@ -25,12 +28,22 @@ public class InputHandler
 		this.iterations = 0;
 		this.diff = 0.0;
 		this.initialize= 0;
+		this.fileExtension="csv";
+		this.dataIndexStart=0;
 	}		
 	
 	public static InputHandler getMiHandler(){
 		return miHandler;
 	}
 	
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
+
 	public int getK() {
 		return K;
 	}
@@ -77,6 +90,14 @@ public class InputHandler
 	
 	public int getIni(){
 		return this.initialize;
+	}
+	
+	public int getDataIndexStart() {
+		return dataIndexStart;
+	}
+
+	public void setDataIndexStart(int dataIndexStart) {
+		this.dataIndexStart = dataIndexStart;
 	}
 	
 	public void loadArgs(String filePath){
@@ -143,6 +164,26 @@ public class InputHandler
 			catch(NumberFormatException e)
 			{
 				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro initialize en el archivo de configuración");
+
+			}
+			try
+			{
+				this.setFileExtension(args.get(6));
+
+			}
+			catch(Exception e)
+			{
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro file_extension en el archivo de configuración");
+
+			}
+			try
+			{
+				this.setDataIndexStart(Integer.valueOf(args.get(7)));
+
+			}
+			catch(NumberFormatException e)
+			{
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro data_index_start en el archivo de configuración");
 
 			}
 		} 

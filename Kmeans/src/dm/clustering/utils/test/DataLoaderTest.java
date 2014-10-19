@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import dm.clustering.utils.CSVDataLoader;
+import dm.clustering.utils.DataLoader;
 import dm.core.Instance;
 
 public class DataLoaderTest {
@@ -28,7 +28,7 @@ public class DataLoaderTest {
 	@Test
 	public void testLoadData() 
 	{
-		instances = CSVDataLoader.getMiLoader().loadNumericData("data/bank-data.csv", 2);
+		instances = DataLoader.getMiLoader().loadCSVNumericData("data/bank-data.csv", 2);
 		Instance ins = instances.iterator().next();
 		System.out.println(instances.size());
 		assertTrue(instances.size()>0);

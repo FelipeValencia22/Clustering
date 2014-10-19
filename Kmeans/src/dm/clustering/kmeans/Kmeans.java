@@ -2,10 +2,13 @@ package dm.clustering.kmeans;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
-import dm.clustering.utils.CSVDataLoader;
+
+import dm.clustering.utils.DataLoader;
 import dm.clustering.utils.InputHandler;
 import dm.clustering.utils.Minkowski;
 import dm.clustering.utils.Normalizer;
@@ -29,15 +32,33 @@ public class Kmeans {
 		//Let X = {x_{1},x_{2}, ..., x_{n}} be the data set to be analyzed
 		//TODO another data formats.
 
-		ArrayList<Instance> instances;
-		instances = CSVDataLoader.getMiLoader()
-				.loadNumericData(InputHandler
-						.getMiHandler()
-						.getDataPath(), 2);
+		ArrayList<Instance> instances = null;
+		String extension=InputHandler.getMiHandler().getFileExtension();
+		if(extension.equals("csv"))
+		{
+			instances = DataLoader.getMiLoader()
+					.loadCSVNumericData(InputHandler
+							.getMiHandler()
+							.getDataPath(), InputHandler.getMiHandler().getDataIndexStart());
+		}
+		else if(extension.equalsIgnoreCase("arff"))
+		{
+			instances = DataLoader.getMiLoader()
+					.loadARFF(InputHandler
+							.getMiHandler()
+							.getDataPath());
+		}
 
 		//Normalize data
 		Normalizer norm = new Normalizer();
-		instances = norm.normalize(instances);
+		try 
+		{
+			instances = norm.normalize(instances);
+		} 
+		catch (Exception e) 
+		{
+			Logger.getLogger(LOG_TAG).log(Level.SEVERE,"ERROR al normalizar las instancias");
+		}
 		
 		//B  membership matrix.
 		int nrow = instances.size();

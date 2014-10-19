@@ -40,7 +40,7 @@ public class Normalizer {
 				// X - mean / stdev		
 				att=Instances.get(i).getAtt(j);
 				
-				System.out.println("Jota: "+j+" Atributo: " + att + " media: "+ arguments[j][0]+ " desv: "+arguments[j][1]);
+				//System.out.println("Jota: "+j+" Atributo: " + att + " media: "+ arguments[j][0]+ " desv: "+arguments[j][1]);
 				
 				att = (Instances.get(i).getAtt(j)-arguments[j][0])/ (arguments[j][1]);
 				
