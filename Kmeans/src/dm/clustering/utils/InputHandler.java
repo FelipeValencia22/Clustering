@@ -20,6 +20,7 @@ public class InputHandler
 	private String fileExtension;
 	private int dataIndexStart;	
 	private String delimiter;
+	private int normalize;
 
 	private final String LOG_TAG = InputHandler.class.getSimpleName();
 	
@@ -32,6 +33,7 @@ public class InputHandler
 		this.fileExtension="csv";
 		this.dataIndexStart=0;
 		this.delimiter=" ";
+		this.normalize=0;
 	}		
 	
 	public static InputHandler getMiHandler(){
@@ -73,6 +75,14 @@ public class InputHandler
 	public int getIterations() {
 		return iterations;
 	}
+	
+	public boolean getNormalize(){
+		if (normalize==0){
+			return false;}
+		else if (normalize==1){
+			return true;}
+		else return false;
+	}
 
 	public void setIterations(int iterations) {
 		this.iterations = iterations;
@@ -108,6 +118,11 @@ public class InputHandler
 
 	public void setDelimiter(String delimiter) {
 		this.delimiter = delimiter;
+	}
+	
+	public void setNormalize(int i)
+	{
+		this.normalize=i;
 	}
 
 	public void loadArgs(String filePath){
@@ -199,12 +214,24 @@ public class InputHandler
 			try
 			{
 				this.setDelimiter(args.get(8));
+				System.out.println(this.getDelimiter());
 			}
 			catch(NumberFormatException e)
 			{
 				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro delimiter en el archivo de configuración");
 
 			}
+			
+			try
+			{
+				this.setNormalize(Integer.parseInt(args.get(9)));
+			}
+			catch(NumberFormatException e)
+			{
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro normalize en el archivo de configuración");
+
+			}
+			
 		} 
 		catch (FileNotFoundException e) 
 		{

@@ -38,16 +38,18 @@ public class Kmeans {
 
 		System.out.println(InputHandler.getMiHandler().getDelimiter());
 		//Normalize data
-		Normalizer norm = new Normalizer();
-		try 
+		if(InputHandler.getMiHandler().getNormalize())
 		{
-			instances = norm.normalize(instances);
-		} 
-		catch (Exception e) 
-		{
-			Logger.getLogger(LOG_TAG).log(Level.SEVERE,"ERROR al normalizar las instancias");
+			Normalizer norm = new Normalizer();
+			try 
+			{
+				instances = norm.normalize(instances);
+			} 
+			catch (Exception e) 
+			{
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE,"ERROR al normalizar las instancias");
+			}
 		}
-		
 		//B  membership matrix.
 		int nrow = instances.size();
 		int nCol = k;
