@@ -155,8 +155,15 @@ public class Kmeans {
 			System.out.println("CLUSTER: "+j);
 			System.out.println("---------------------------------------");
 			System.out.println("Número de instancias en el cluster: "+clusters[j].getListaInstances().size());
+			
+			
+			String s="";
+			for (int p=0;p<codebook.get(0).numFeatures();p++)
+			{
+				s=s+codebook.get(j).getAtt(p)+" ";
+			}
+			System.out.println("Con el codeword: "+s);
 			System.out.println("===========================================================================");
-
 		}
 	}
 
