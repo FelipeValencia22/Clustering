@@ -36,6 +36,7 @@ public class Kmeans {
 		String extension=InputHandler.getMiHandler().getFileExtension();
 		instances = loadInstances(extension);
 
+		System.out.println(InputHandler.getMiHandler().getDelimiter());
 		//Normalize data
 		Normalizer norm = new Normalizer();
 		try 
@@ -168,7 +169,7 @@ public class Kmeans {
 			String s="";
 			for (int p=0;p<codebook.get(0).numFeatures();p++)
 			{
-				s=s+codebook.get(j).getAtt(p)+" ";
+				s=s+codebook.get(j).getAtt(p)+"\n";
 			}
 			System.out.println("Con el codeword: "+s);
 			System.out.println("===========================================================================");
