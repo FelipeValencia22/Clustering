@@ -199,7 +199,7 @@ public class InputHandler
 			try
 			{
 				this.setDelimiter(args.get(8));
-
+				System.out.println(this.getDelimiter());
 			}
 			catch(NumberFormatException e)
 			{

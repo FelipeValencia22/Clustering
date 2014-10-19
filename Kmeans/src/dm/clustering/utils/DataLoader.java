@@ -113,7 +113,7 @@ public class DataLoader
 					while(reader.ready())
 					{
 						linea=reader.readLine();
-						String[] features = linea.split(" ");
+						String[] features = linea.split(",");
 						Instance ins = new Instance();
 						for(int i=0;i<features.length;i++)
 						{
