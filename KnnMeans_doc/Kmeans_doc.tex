@@ -264,9 +264,25 @@ end
 
 \section{Implementación}
 
-\subsubsection{Problemas encontrados} 
+\subsubsection{Problemas encontrados y soluciones adoptadas}
 
-\subsubsection{Soluciones adoptadas} 
+
+\subsubsubsection{Problema con la normalización de los atributos}
+Este problema por el momento no ha podido ser resuelto. Al aplicar la función Z-Score sobre los atributos de las diferentes instancias, se obtienen resultados fuera del 
+rango de [-1, 1], que es incorrecto para esta normalización. No se ha conseguido localizar el error, desconociendo si se trata de una formulación incorrecta o un bug de 
+programación.
+
+\subsubsubsection{Problema de generación de excesivas instancias}
+Una vez estructurado todo el código y con todos los módulos programados, nos encontramos con el problema de que durante la ejecución, 
+se generaban demasiadas instancias. Esto se debía a que en cada iteración del algoritmo, los clusters no eran reseteados correctamente, y cada vez que se añadía 
+una nueva instancia en lugar de eliminar la que estaba presente en su lugar, desplazaba esta última y se insertaba en su posición. Para corregir esto sencillamente
+se modificó la función de añadir instancias para que esta sobreescribiese la presente, y además, se resetean los clusters en cada iteración.
+
+\subsubsubsection{Ausencia de representación para el cluster 0}
+Una vez incorporado el código necesario para la generación de gráficos su funcionamiento era correcto, pero no mostraba los datos del cluster 0. El problema radicaba
+ en que a la hora de tratar la matriz de bits de pertenencia, el primer caso se trataba fuera de un bucle y por ello no se hacían las actualizaciones correctas. Una 
+ vez corregido esto el gráfico se crea correctamente.
+
 
 \section{Validación del \textit{software}}
 
