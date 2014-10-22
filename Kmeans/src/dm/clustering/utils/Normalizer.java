@@ -10,20 +10,30 @@ public class Normalizer {
 	public ArrayList<Instance> normalize(ArrayList<Instance> Instances)
 	{
 		/*
-		 * Create the array containing the mean and stdev for each feature
+		 * Create the array containing the max and min values for each feature
 		 */
 		int nfeat = Instances.get(0).getDobFeatures().size();
-		
 		double [][] arguments = new double[nfeat][2];
-		double mean = 0.0;
-		double stdev = 0.0;
-		for (int i = 0; i < Instances.get(0).numFeatures();i++)
+		double min = 0.0;
+		double max = 0.0;
+		for (int j = 0; j < nfeat; j++)
 		{
+			max = Instances.get(0).getAtt(j);
+			min = Instances.get(0).getAtt(j);
+			for (int i = 0; i < Instances.size();i++)
+			{	
+				if (Instances.get(i).getAtt(j)>max)
+				{
+					max = Instances.get(i).getAtt(j);
+				}
+				else if (Instances.get(i).getAtt(j)<min)
+				{
+					min = Instances.get(i).getAtt(j);
+				}
+			}
+			arguments[j][0] = max;
+			arguments[j][1] = min;
 			
-			mean = mean(Instances, i);
-			stdev= stdev(Instances, i, mean, true);
-			arguments[i][0]= mean;
-			arguments[i][1]= stdev;
 		}
 		double att=0.0;		
 		/*
@@ -37,15 +47,8 @@ public class Normalizer {
 		{			
 			for (int j = 0; j < nfeat; j++)
 			{
-				// X - mean / stdev		
 				att=Instances.get(i).getAtt(j);
-				
-				//System.out.println("Jota: "+j+" Atributo: " + att + " media: "+ arguments[j][0]+ " desv: "+arguments[j][1]);
-				
-				att = (Instances.get(i).getAtt(j)-arguments[j][0])/ (arguments[j][1]);
-				
-				System.out.println("Atributo despues: "+att);
-				
+				att = (att - arguments[j][1])/(arguments[j][0]-arguments[j][1]);
 				Instances.get(i).setAtt(j,att);
 			}
 		}		
