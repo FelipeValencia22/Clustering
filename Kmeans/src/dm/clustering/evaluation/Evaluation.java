@@ -87,7 +87,8 @@ public class Evaluation
 		ArrayList<Double>distances=new ArrayList<Double>();
 		for(Instance i:cluster.getListaInstances())
 		{
-			distances.add(Minkowski.getMinkowski().calculateDistance(ins, i, exp));
+			double dist=Minkowski.getMinkowski().calculateDistance(ins, i, exp);
+			distances.add(dist);
 		}
 		return Statistics.getMiStatistics().mean(distances);
 	}	

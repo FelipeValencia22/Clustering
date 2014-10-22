@@ -54,7 +54,6 @@ public class Kmeans {
 		String extension=InputHandler.getMiHandler().getFileExtension();
 		instances = loadInstances(extension);
 
-		System.out.println(InputHandler.getMiHandler().getDelimiter());
 		//Normalize data
 		if(InputHandler.getMiHandler().getNormalize())
 		{
@@ -142,7 +141,6 @@ public class Kmeans {
 						if(dist>distAux-difference)
 						{
 							dist = distAux;
-							System.out.println(dist);
 							//update Matrix membership
 							B[i][j]=1;
 							B[i][codewordIndex]=0;
@@ -162,7 +160,6 @@ public class Kmeans {
 							condParada = true;
 						}					
 					}
-
 				}		
 			}
 		}	
