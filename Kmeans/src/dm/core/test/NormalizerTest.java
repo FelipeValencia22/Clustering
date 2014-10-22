@@ -14,6 +14,7 @@ import org.junit.Test;
 
 
 
+
 import dm.clustering.utils.Normalizer;
 import dm.core.Instance;
 
@@ -60,10 +61,20 @@ public class NormalizerTest {
 	
 	@Test
 	public void testNormalize() {
-	
-			
+		boolean rdo = true;
 		Normalizer norm = new Normalizer();
 		norm.normalize(instances);
+		
+		for (int i =0; i<instances.size();i++)
+		{
+			for (int j=0; j<instances.get(0).numFeatures(); j++)
+			{
+				if (instances.get(i).getAtt(j)>1.0)
+					rdo = false;
+			}
+		}
+		
+		assertTrue(rdo);
 		
 		
 		
