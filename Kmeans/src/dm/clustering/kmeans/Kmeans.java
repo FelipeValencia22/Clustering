@@ -192,7 +192,7 @@ public class Kmeans {
 			System.out.println("===========================================================================");
 		}
 		
-		//report(clusters, codebook, InputHandler.getMiHandler().getDataPath());
+		report(clusters, codebook, InputHandler.getMiHandler().getDataPath());
 	}
 
 	/**
