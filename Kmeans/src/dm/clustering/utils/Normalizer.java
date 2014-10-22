@@ -10,7 +10,7 @@ public class Normalizer {
 	public ArrayList<Instance> normalize(ArrayList<Instance> Instances)
 	{
 		/*
-		 * Create the array containing the max and min values for each feature
+		 * Create the array containing the max (args[j][0]) and min (args[j][1]) values for each feature
 		 */
 		int nfeat = Instances.get(0).getDobFeatures().size();
 		double [][] arguments = new double[nfeat][2];
@@ -62,17 +62,21 @@ public class Normalizer {
 		int nfeat = Instances.get(0).getDobFeatures().size();
 		double [] arguments = new double[nfeat];
 		
+		// arguments holds the array of each atts stdev
 		for (int i = 0; i < nfeat; i++)
 		{
 			arguments[i] = stdev(Instances, i, 0, false);
 		}
 		
+		// mean of the stdevs
 		double mean = 0.0;
 		for (int i = 0; i < arguments.length; i++)
 		{
 			mean = mean + arguments[i];
 		}
 		mean = mean / arguments.length;
+		
+		// stdev of the stdevs
 		double stdev = 0.0;
 		for (int i = 0; i< arguments.length; i++)
 		{
@@ -84,12 +88,16 @@ public class Normalizer {
 		//coefficient of variation
 		double CoV = stdev / mean;
 		
+		if (CoV>0.1)
+		{
+			res = true;
+		}
 		
 		/*
 		 * calculate the mean of distances between att values
 		 * i: indes of each att
 		 * j: index of each instance
-		 */
+		 
 		double[] params = new double[nfeat];
 		double difAcc=0.0;
 		for (int i = 0; i < nfeat; i++)
@@ -106,7 +114,7 @@ public class Normalizer {
 			difAcc=0.0;
 		}
 		
-		
+		*/
 		return res;
 	}
 	
@@ -159,4 +167,6 @@ public class Normalizer {
 		double rdo = Math.sqrt(res);
 		return rdo;
 	}
+	
+	
 }
