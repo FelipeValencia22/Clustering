@@ -25,6 +25,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import dm.clustering.evaluation.Evaluation;
 import dm.clustering.utils.DataLoader;
 import dm.clustering.utils.InputHandler;
 import dm.clustering.utils.Minkowski;
@@ -191,6 +192,10 @@ public class Kmeans {
 			System.out.println("Con el codeword: \n"+s);
 			System.out.println("===========================================================================");
 		}
+		Evaluation eval= new Evaluation();
+		System.out.println("===========================================================================");
+		System.out.println("Average Silhouette coefficient: "+eval.silhouetteCoefficient(clusters, 2));
+		
 		
 		//report(clusters, codebook, InputHandler.getMiHandler().getDataPath());
 	}
