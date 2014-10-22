@@ -2,8 +2,6 @@ package dm.clustering.utils;
 
 import java.util.ArrayList;
 
-import dm.core.Instance;
-
 public class Statistics 
 {
 	private static Statistics miStatistics=new Statistics();
@@ -37,11 +35,10 @@ public class Statistics
 	
 	/**
 	 * 
-	 * @param Instances
-	 * @param index index of the attribute which stdev has to be calculated
+	 * @param values
 	 * @param mean 
 	 * @param useMean specifies if the mean has been calculated or is not valid
-	 * @return the stdev of the specified attribute in a dataset
+	 * @return the stdev of the specified values.
 	 */
 	public double stdev(ArrayList<Double> values,double mean, boolean useMean)
 	{
