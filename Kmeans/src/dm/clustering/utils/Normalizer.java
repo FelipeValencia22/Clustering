@@ -55,6 +55,64 @@ public class Normalizer {
 		return Instances;
 	}
 	
+	
+	public boolean shouldNormalize(ArrayList<Instance> Instances)
+	{
+		boolean res = false;
+		int nfeat = Instances.get(0).getDobFeatures().size();
+		double [] arguments = new double[nfeat];
+		
+		for (int i = 0; i < nfeat; i++)
+		{
+			arguments[i] = stdev(Instances, i, 0, false);
+		}
+		
+		double mean = 0.0;
+		for (int i = 0; i < arguments.length; i++)
+		{
+			mean = mean + arguments[i];
+		}
+		mean = mean / arguments.length;
+		double stdev = 0.0;
+		for (int i = 0; i< arguments.length; i++)
+		{
+			stdev = stdev + (Math.pow(arguments[i]-mean, 2));
+		}
+		stdev = stdev / arguments.length;
+		
+		
+		//coefficient of variation
+		double CoV = stdev / mean;
+		
+		
+		/*
+		 * calculate the mean of distances between att values
+		 * i: indes of each att
+		 * j: index of each instance
+		 */
+		double[] params = new double[nfeat];
+		double difAcc=0.0;
+		for (int i = 0; i < nfeat; i++)
+		{
+			for (int j = 0; j<Instances.size(); j++)
+			{
+				for (int k = j; k<Instances.size(); k++)
+				{
+					difAcc= Math.abs(Instances.get(j).getAtt(i)-Instances.get(k).getAtt(i));
+				}
+			}
+			difAcc=difAcc/Instances.size();
+			params[i]=difAcc;
+			difAcc=0.0;
+		}
+		
+		
+		return res;
+	}
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param Instances
