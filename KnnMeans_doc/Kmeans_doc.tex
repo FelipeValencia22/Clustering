@@ -163,12 +163,18 @@ y de inteligibilidad \par
  
 \subsection*{Primera fase: carga de datos y configuración}
  
- Inicialmente se encarga de cargar el fichero en una estructura de datos adecuada para el cálculo del algoritmo.Además se carga la configuración establecida
- por el usuario, es decir que tipo de inicialización para el \textit{codebook}, número de clusters, distancia a utilizar\dots
+ Inicialmente se carga la configuración
+ establecida por el usuario en el fichero \textbf{kmeans.conf}, es decir: path
+ del fichero y su formato, tipo de inicialización para el \textit{codebook}, número de clusters, distancia a
+ utilizar, número de clústers deseados, elección manual o automática sobre la
+ normalización y diversas opciones más.
 
 \subsection*{Segunda fase: Preproceso de datos}
 
-En el preproceso se normaliza el espacio, haciendo uso de la función estadística zscore, es decir a cada \textit{Feature} de la instancia se le resta su media y dividiendo el resultado por la varianza de dicha \textit{Feature} se consigue que todos los valores de los atributos se encuentren dentro del intervalo [-1,1]. Con ésto conseguimos evitar la mayor influencia de algunos atributos debido a que se encuentren dentro de un dominio de valores mayor. Por ejemplo si vamos a agrupar viviendas y utilizamos como características el número de habitaciones y el precio, seguramente el número de habitaciones no será mucho mayor de 3 y en cambio el precio puede ser mayor incluso de 300000 \euro .\cite{coursera}
+En el preproceso de datos se normalizará o no, dependiendo del parámetro
+indicado por el usuario. Si el parámetro es 0 no se normalizará, si es 1 se
+normaliza y si es 2 se hará uso del método experimental para decidir la
+idoneidad de la normalización.
 
 \subsection*{Tercera Fase: Algoritmo K-means}
 
@@ -247,7 +253,7 @@ Begin:
 		end
 		
 		for each $x_{n}$
-			$B_{nj} = 1$ si $argmindist(x_{n},m_{j}) = m_{j}$ \foreach $m_{j}$ si no $B_{nj} = 0$
+			$B_{nj} = 1$ if $argmindist(x_{n},m_{j}) = m_{j}$ \foreach $m_{j}$ else $B_{nj} = 0$
 		end
 		
 		for each $B_{nj}$
@@ -264,13 +270,41 @@ end
 
 \section{Implementación}
 
-\subsubsection{Problemas encontrados y soluciones adoptadas}
+\subsection{Análisis del conjunto de datos para decidir la conveniencia de la normalización}
+Debido a las dudas surgidas en torno a la normalización de los atributos y su conveniencia, consideramos adecuado para la tarea tratar de buscar algún método que fuese
+en alguna manera indicador de la utilidad de la normalización.
+
+En un principio nuestro planteamiento se basaba en utilizar la media de la desviación típica de los valores de cada atributo con el objeto de poder analizar los rangos 
+de las diferencias entre valores de cada atributo. Sin embargo la media por su cuenta no nos es útil, ya que por ejemplo, si la media es alta pero la desviación es baja, 
+en realidad, puede no haber mucha variación en los rangos. Esto nos llevó a
+hallar el Coeficiente de Variación\\
+
+\begin{equation}
+C_{V}=\frac{\sigma}{\bar{x}}
+ \end{equation}\\
+
+De esta forma logramos un indicador más preciso sobre el rango que buscamos ya que nos indica la proporción de la variabilidad de las desviaciones, en lugar de la mera 
+cantidad de desviación.
+
+La motivación de este análisis viene dada más por el interés de hallar una forma de conocer la utilidad que pueda tener la normalización en un conjunto de datos, ya que
+ objetivamente, el beneficio principal que puede tener es que si no afecta demasiado al resultado final, nos puede interesar más tener los atributos en su rango numérico inicial (p.ej.: es más visual ver un gráfico con edades entre 0 y 100 que entre 0 y 1).
+
+Por otra parte, hemos tratado de hallar una cifra del Coeficiente de Variación que esté comunmente aceptada como baja, pero no hemos encontrado ninguna fuente fidedigna 
+para ello. Por lo tanto, hemos decidido establecer una cifra pequeña (0,1) teniendo en cuenta que ante la posibilidad de que haya rangos muy variados, puede ser más 
+conveniente normalizar.
+
+Huelga decir que este método y sus resultados son experimentales, pese a tener cierta base empírica carecemos de la certeza sobre su eficacia, siendo nuestro objetivo 
+principal investigar respecto a la normalización en lugar de simplemente aplicarla por estar aceptada como conveniente. 
+
+
+\subsection{Problemas encontrados y soluciones adoptadas}
 
 
 \subsubsubsection{Problema con la normalización de los atributos}
-Este problema por el momento no ha podido ser resuelto. Al aplicar la función Z-Score sobre los atributos de las diferentes instancias, se obtienen resultados fuera del 
-rango de [-1, 1], que es incorrecto para esta normalización. No se ha conseguido localizar el error, desconociendo si se trata de una formulación incorrecta o un bug de 
-programación.
+En un comienzo, para normalizar, nuestra intención era aplicar la función Z-Score sobre los atributos de las diferentes instancias. Sin embargo, de esta forma se 
+obtenían resultados fuera del rango de [-1, 1], que es incorrecto para esta normalización. No se consiguió localizar el error, desconociendo si se trataba de una
+ formulación incorrecta o un bug de programación. En lugar de ello se ha realizado una proyección lineal al intervalo [0,1] y de esta forma se ha conseguido 
+ unificar los atributos en el mismo intervalo.
 
 \subsubsubsection{Problema de generación de excesivas instancias}
 Una vez estructurado todo el código y con todos los módulos programados, nos encontramos con el problema de que durante la ejecución, 
