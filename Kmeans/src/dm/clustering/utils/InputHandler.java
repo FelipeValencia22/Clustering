@@ -82,12 +82,8 @@ public class InputHandler
 		return iterations;
 	}
 	
-	public boolean getNormalize(){
-		if (normalize==0){
-			return false;}
-		else if (normalize==1){
-			return true;}
-		else return false;
+	public int getNormalize(){
+		return normalize;
 	}
 
 	public void setIterations(int iterations) {
