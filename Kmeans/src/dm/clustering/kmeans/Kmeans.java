@@ -174,7 +174,6 @@ public class Kmeans {
 
 		//TODO test and evaluation
 
-		System.out.println(instances.size());
 		for(int j=0;j<clusters.length;j++){
 			System.out.println("CLUSTER: "+j);
 			System.out.println("---------------------------------------");

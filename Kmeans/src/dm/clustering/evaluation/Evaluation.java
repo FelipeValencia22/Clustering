@@ -22,16 +22,19 @@ public class Evaluation
 		ArrayList<Double> sForClusters=new ArrayList<Double>();
 		for(Cluster clust:clusters)
 		{
-			sForClusters.add(silhouetteCoefficientForCluster(clust, clusters, exp));
+			double s=silhouetteCoefficientForCluster(clust, clusters, exp);
+			sForClusters.add(s);
 		}
-		return Statistics.getMiStatistics().mean(sForClusters);
+		double rdo=Statistics.getMiStatistics().mean(sForClusters);
+		return rdo;
 	}
 	
 	private double silhouetteCoefficientForCluster(Cluster cluster,Cluster[] clusters,double exp){
 		ArrayList<Double> coefficients= new ArrayList<Double>();
 		for(Instance ins:cluster.getListaInstances())
 		{
-			 coefficients.add(silhouetteCoefficientForInstance(ins,cluster,clusters, exp));
+			double s = silhouetteCoefficientForInstance(ins,cluster,clusters, exp);
+			coefficients.add(s);
 		}
 		return Statistics.getMiStatistics().mean(coefficients);
 	}
@@ -47,7 +50,19 @@ public class Evaluation
 		intraDissims.add(intra);
 		double inter =getInterDissimilarity(ins,cluster,clusters,exp);
 		interDissims.add(inter);	
-		return (inter-intra)/(Math.max(intra, inter));
+		if(intra<inter)
+		{
+			return 1-(intra/inter);
+		}
+		else if(intra > inter)
+		{
+			return (inter/intra)-1;
+		}
+		else
+		{
+			return 0;
+		}
+		//return  (inter-intra)/Math.max(intra, inter);
 	}
 
 	/**
@@ -66,8 +81,9 @@ public class Evaluation
 			ArrayList<Double>distances=new ArrayList<Double>();
 			if(clust!=cluster)
 			{
-				for(Instance i:cluster.getListaInstances())
+				for(Instance i:clust.getListaInstances())
 				{
+					//System.out.println(ins==i);
 					distances.add(Minkowski.getMinkowski().calculateDistance(ins, i, exp));
 				}
 				meanAux=Statistics.getMiStatistics().mean(distances);
@@ -87,8 +103,11 @@ public class Evaluation
 		ArrayList<Double>distances=new ArrayList<Double>();
 		for(Instance i:cluster.getListaInstances())
 		{
-			double dist=Minkowski.getMinkowski().calculateDistance(ins, i, exp);
-			distances.add(dist);
+			if(i!=ins)
+			{
+				double dist=Minkowski.getMinkowski().calculateDistance(ins, i, exp);
+				distances.add(dist);
+			}
 		}
 		return Statistics.getMiStatistics().mean(distances);
 	}	

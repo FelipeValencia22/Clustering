@@ -22,8 +22,7 @@ public class Statistics
 	
 	public double mean(ArrayList<Double> values)
 	{
-		double res = 0.0;
-	
+		double res = 0.0;	
 		for (int i = 0; i < values.size(); i++)
 		{
 			res=res+values.get(i);
