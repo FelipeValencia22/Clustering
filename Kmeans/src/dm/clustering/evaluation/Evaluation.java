@@ -22,13 +22,23 @@ public class Evaluation
 		ArrayList<Double> sForClusters=new ArrayList<Double>();
 		for(Cluster clust:clusters)
 		{
-			double s=silhouetteCoefficientForCluster(clust, clusters, exp);
-			sForClusters.add(s);
+			if(!clust.getListaInstances().isEmpty())
+			{
+				double s=silhouetteCoefficientForCluster(clust, clusters, exp);
+				sForClusters.add(s);
+			}		
 		}
 		double rdo=Statistics.getMiStatistics().mean(sForClusters);
 		return rdo;
 	}
 	
+	/**
+	 * 
+	 * @param cluster
+	 * @param clusters
+	 * @param exp
+	 * @return
+	 */
 	private double silhouetteCoefficientForCluster(Cluster cluster,Cluster[] clusters,double exp){
 		ArrayList<Double> coefficients= new ArrayList<Double>();
 		for(Instance ins:cluster.getListaInstances())
@@ -79,7 +89,7 @@ public class Evaluation
 		for(Cluster clust:clusters)
 		{
 			ArrayList<Double>distances=new ArrayList<Double>();
-			if(clust!=cluster)
+			if(clust!=cluster && !clust.getListaInstances().isEmpty())
 			{
 				for(Instance i:clust.getListaInstances())
 				{
