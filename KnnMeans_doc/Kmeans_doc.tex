@@ -294,9 +294,10 @@ principal investigar respecto a la normalización en lugar de simplemente aplica
 
 
 \subsubsubsection{Problema con la normalización de los atributos}
-Este problema por el momento no ha podido ser resuelto. Al aplicar la función Z-Score sobre los atributos de las diferentes instancias, se obtienen resultados fuera del 
-rango de [-1, 1], que es incorrecto para esta normalización. No se ha conseguido localizar el error, desconociendo si se trata de una formulación incorrecta o un bug de 
-programación.
+En un comienzo, para normalizar, nuestra intención era aplicar la función Z-Score sobre los atributos de las diferentes instancias. Sin embargo, de esta forma se 
+obtenían resultados fuera del rango de [-1, 1], que es incorrecto para esta normalización. No se consiguió localizar el error, desconociendo si se trataba de una
+ formulación incorrecta o un bug de programación. En lugar de ello se ha realizado una proyección lineal al intervalo [0,1] y de esta forma se ha conseguido 
+ unificar los atributos en el mismo intervalo.
 
 \subsubsubsection{Problema de generación de excesivas instancias}
 Una vez estructurado todo el código y con todos los módulos programados, nos encontramos con el problema de que durante la ejecución, 
