@@ -2,6 +2,8 @@ package dm.core;
 
 import java.util.ArrayList;
 
+import dm.clustering.utils.*;
+
 public class Instance 
 {
 	private String id;
@@ -59,29 +61,29 @@ public class Instance
 	public boolean equals(Instance x,double ratioMax)
 	{
 		int i = 0;
-		while (i<this.doubleFeatures.size()&&i<x.doubleFeatures.size())
+		double ratioMean=0;
+		ArrayList<Double>ratios=new ArrayList<Double>();
+		if(x.equals(this))
 		{
-			double att=Math.abs(this.doubleFeatures.get(i));
-			double attX=Math.abs(x.doubleFeatures.get(i));
-			if(att>attX)
+			while (i<this.doubleFeatures.size()&&i<x.doubleFeatures.size())
 			{
-				double ratio=attX/att;
-				if(ratio>ratioMax)
-				{					
-					return false;
-				}
-			}
-			else 
-			{
-				double ratio=att/attX;
-				if(ratio>ratioMax)
+				double att=Math.abs(this.doubleFeatures.get(i));
+				double attX=Math.abs(x.doubleFeatures.get(i));
+				if(att>attX)
 				{
-					return false;
+					double ratio=attX/att;
+					ratios.add(ratio);
 				}
-			}
-			i++;
-		}		
-		return true;
+				else 
+				{
+					double ratio=att/attX;
+					ratios.add(ratio);
+				}
+				i++;
+			}		
+			ratioMean = Statistics.getMiStatistics().mean(ratios);
+		}
+		return ratioMean>ratioMax;
 	}	
 	
 }

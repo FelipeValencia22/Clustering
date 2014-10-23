@@ -155,11 +155,14 @@ public class Kmeans {
 					for (int s=0; s< clusters.length;s++)
 					{
 						codebookAux = (ArrayList<Instance>)codebook.clone();
-						if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());					
-						if (compareCodeBooks(codebookAux,codebook,distExp,ratioMax))
+						if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());
+						if(!codebook.equals(codebookAux))
 						{
-							condParada = true;
-						}					
+							if (compareCodeBooks(codebookAux,codebook,distExp,ratioMax))
+							{
+								condParada = true;
+							}
+						}
 					}
 				}		
 			}
@@ -307,7 +310,6 @@ public class Kmeans {
 		{
 			while (j<b.size())
 			{
-				System.out.println(j);
 				if (!a.get(i).equals(b.get(j),ratioMax))
 				{
 					return false;
