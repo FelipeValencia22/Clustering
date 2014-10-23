@@ -21,6 +21,7 @@ public class InputHandler
 	private int dataIndexStart;	
 	private String delimiter;
 	private int normalize;
+	private double ratioMax;
 
 	private final String LOG_TAG = InputHandler.class.getSimpleName();
 	
@@ -34,8 +35,13 @@ public class InputHandler
 		this.dataIndexStart=0;
 		this.delimiter=" ";
 		this.normalize=0;
+		this.ratioMax=0;
 	}		
 	
+	public void setRatioMax(double ratioMax) {
+		this.ratioMax = ratioMax;
+	}
+
 	public static InputHandler getMiHandler(){
 		return miHandler;
 	}
@@ -123,6 +129,10 @@ public class InputHandler
 	public void setNormalize(int i)
 	{
 		this.normalize=i;
+	}
+	
+	public double getRatioMax() {
+		return this.ratioMax;
 	}
 
 	public void loadArgs(String filePath){
@@ -220,8 +230,7 @@ public class InputHandler
 			{
 				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro delimiter en el archivo de configuración");
 
-			}
-			
+			}			
 			try
 			{
 				this.setNormalize(Integer.parseInt(args.get(9)));
@@ -231,6 +240,15 @@ public class InputHandler
 				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro normalize en el archivo de configuración");
 
 			}
+			try
+			{
+				this.setRatioMax(Double.valueOf(args.get(10)));
+			}
+			catch(NumberFormatException e)
+			{
+				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro ratio_max en el archivo de configuración");
+
+			}
 			
 		} 
 		catch (FileNotFoundException e) 
@@ -238,4 +256,6 @@ public class InputHandler
 			Logger.getLogger(LOG_TAG).log(Level.SEVERE, "No es posible encontrar el archivo de configuración");
 		}
 	}
+
+	
 }

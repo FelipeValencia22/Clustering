@@ -150,12 +150,13 @@ public class Kmeans {
 							clusters[j].addInstance(instances.get(i));	
 						}
 					}
+					double ratioMax=InputHandler.getMiHandler().getRatioMax();
 					ArrayList<Instance> codebookAux;
 					for (int s=0; s< clusters.length;s++)
 					{
 						codebookAux = (ArrayList<Instance>)codebook.clone();
 						if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());					
-						if (compareCodeBooks(codebookAux,codebook,distExp))
+						if (compareCodeBooks(codebookAux,codebook,distExp,ratioMax))
 						{
 							condParada = true;
 						}					
@@ -298,7 +299,7 @@ public class Kmeans {
 	 *  the order), false if not.
 	 */
 
-	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b, double p)
+	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b, double p, double ratioMax)
 	{
 		int i = 0, j=0;
 
@@ -306,8 +307,8 @@ public class Kmeans {
 		{
 			while (j<b.size())
 			{
-				double dist = Minkowski.getMinkowski().calculateDistance(a.get(i), b.get(i), p);
-				if (!a.get(i).equals(b.get(j)) && dist>0.10)
+				System.out.println(j);
+				if (!a.get(i).equals(b.get(j),ratioMax))
 				{
 					return false;
 				}

@@ -41,6 +41,14 @@ public class Instance
 		return this.doubleFeatures;
 
 	}
+	public void setAtt(int j, double att)
+	{		
+		doubleFeatures.set(j, att);
+	}
+	
+	public double getAtt(int index) {
+		return this.getDobFeatures().get(index);
+	}
 
 	/**
 	 * @pre x must be a instance of the same dataset
@@ -48,27 +56,32 @@ public class Instance
 	 * @return true if all attributes have the same values, false if not.
 	 */
 
-	public boolean equals(Instance x)
+	public boolean equals(Instance x,double ratioMax)
 	{
 		int i = 0;
 		while (i<this.doubleFeatures.size()&&i<x.doubleFeatures.size())
 		{
-			if(this.doubleFeatures.get(i)!=x.doubleFeatures.get(i))
+			double att=Math.abs(this.doubleFeatures.get(i));
+			double attX=Math.abs(x.doubleFeatures.get(i));
+			if(att>attX)
 			{
-				return false;
+				double ratio=attX/att;
+				if(ratio>ratioMax)
+				{					
+					return false;
+				}
+			}
+			else 
+			{
+				double ratio=att/attX;
+				if(ratio>ratioMax)
+				{
+					return false;
+				}
 			}
 			i++;
 		}		
 		return true;
-	}
-	public double getAtt(int index) {
-
-		return this.getDobFeatures().get(index);
-	}
-	public void setAtt(int j, double att)
-	{
-		
-		doubleFeatures.set(j, att);
-
-	}
+	}	
+	
 }

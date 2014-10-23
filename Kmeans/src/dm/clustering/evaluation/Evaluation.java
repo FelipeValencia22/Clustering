@@ -60,7 +60,7 @@ public class Evaluation
 		intraDissims.add(intra);
 		double inter =getInterDissimilarity(ins,cluster,clusters,exp);
 		interDissims.add(inter);	
-		if(intra<inter)
+		/*if(intra<inter)
 		{
 			return 1-(intra/inter);
 		}
@@ -71,8 +71,8 @@ public class Evaluation
 		else
 		{
 			return 0;
-		}
-		//return  (inter-intra)/Math.max(intra, inter);
+		}*/
+		return  (inter-intra)/Math.max(intra, inter);
 	}
 
 	/**
