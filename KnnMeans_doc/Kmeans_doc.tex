@@ -247,7 +247,7 @@ Begin:
 		end
 		
 		for each $x_{n}$
-			$B_{nj} = 1$ si $argmindist(x_{n},m_{j}) = m_{j}$ \foreach $m_{j}$ si no $B_{nj} = 0$
+			$B_{nj} = 1$ if $argmindist(x_{n},m_{j}) = m_{j}$ \foreach $m_{j}$ else $B_{nj} = 0$
 		end
 		
 		for each $B_{nj}$
@@ -264,7 +264,33 @@ end
 
 \section{Implementación}
 
-\subsubsection{Problemas encontrados y soluciones adoptadas}
+\subsection{Análisis del conjunto de datos para decidir la conveniencia de la normalización}
+Debido a las dudas surgidas en torno a la normalización de los atributos y su conveniencia, consideramos adecuado para la tarea tratar de buscar algún método que fuese
+en alguna manera indicador de la utilidad de la normalización.
+
+En un principio nuestro planteamiento se basaba en utilizar la media de la desviación típica de los valores de cada atributo con el objeto de poder analizar los rangos 
+de las diferencias entre valores de cada atributo. Sin embargo la media por su cuenta no nos es útil, ya que por ejemplo, si la media es alta pero la desviación es baja, 
+en realidad, puede no haber mucha variación en los rangos. Esto nos llevó a hallar el Coeficiente de Variación
+
+\begin{equation}
+C_{V}=\frac{\sigma}{\bar{x}}
+ \end{equation}
+
+De esta forma logramos un indicador más preciso sobre el rango que buscamos ya que nos indica la proporción de la variabilidad de las desviaciones, en lugar de la mera 
+cantidad de desviación.
+
+La motivación de este análisis viene dada más por el interés de hallar una forma de conocer la utilidad que pueda tener la normalización en un conjunto de datos, ya que
+ objetivamente, el beneficio principal que puede tener es que si no afecta demasiado al resultado final, nos puede interesar más tener los atributos en su rango numérico inicial (p.ej.: es más visual ver un gráfico con edades entre 0 y 100 que entre 0 y 1).
+
+Por otra parte, hemos tratado de hallar una cifra del Coeficiente de Variación que esté comunmente aceptada como baja, pero no hemos encontrado ninguna fuente fidedigna 
+para ello. Por lo tanto, hemos decidido establecer una cifra pequeña (0,1) teniendo en cuenta que ante la posibilidad de que haya rangos muy variados, puede ser más 
+conveniente normalizar.
+
+Huelga decir que este método y sus resultados son experimentales, pese a tener cierta base empírica carecemos de la certeza sobre su eficacia, siendo nuestro objetivo 
+principal investigar respecto a la normalización en lugar de simplemente aplicarla por estar aceptada como conveniente. 
+
+
+\subsection{Problemas encontrados y soluciones adoptadas}
 
 
 \subsubsubsection{Problema con la normalización de los atributos}
