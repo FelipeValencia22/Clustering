@@ -5,8 +5,8 @@
 \BOOKMARK [1][-]{section.4}{Dise\361o}{}% 5
 \BOOKMARK [2][-]{subsection.4.1}{Algoritmo en pseudoc\363digo}{section.4}% 6
 \BOOKMARK [1][-]{section.5}{Implementaci\363n}{}% 7
-\BOOKMARK [2][-]{subsubsection.5.0.1}{Problemas encontrados}{section.5}% 8
-\BOOKMARK [3][-]{subsubsection.5.0.2}{Soluciones adoptadas}{subsubsection.5.0.1}% 9
+\BOOKMARK [2][-]{subsection.5.1}{An\341lisis del conjunto de datos para decidir la conveniencia de la normalizaci\363n}{section.5}% 8
+\BOOKMARK [2][-]{subsection.5.2}{Problemas encontrados y soluciones adoptadas}{section.5}% 9
 \BOOKMARK [1][-]{section.6}{Validaci\363n del software}{}% 10
 \BOOKMARK [2][-]{subsection.6.1}{Dise\361o del banco de pruebas}{section.6}% 11
 \BOOKMARK [1][-]{section.7}{An\341lisis de resultados}{}% 12
@@ -21,4 +21,7 @@
 \BOOKMARK [3][-]{subsubsection.7.4.3}{Minkowski}{subsection.7.4}% 21
 \BOOKMARK [1][-]{section.8}{Clasificaci\363n supervisada respecto de }{}% 22
 \BOOKMARK [1][-]{section.9}{Conclusiones}{}% 23
-\BOOKMARK [1][-]{section.10}{Valoraci\363n subjetiva}{}% 24
+\BOOKMARK [2][-]{subsection.9.1}{T\351cnicas de clustering: motivaci\363n}{section.9}% 24
+\BOOKMARK [2][-]{subsection.9.2}{Conclusiones generales}{section.9}% 25
+\BOOKMARK [2][-]{subsection.9.3}{Puntos d\351biles y propuestas de mejora}{section.9}% 26
+\BOOKMARK [1][-]{section.10}{Valoraci\363n subjetiva}{}% 27
