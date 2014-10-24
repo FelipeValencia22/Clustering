@@ -188,7 +188,7 @@ public class Kmeans {
 
 				font.setStyle(Font.ITALIC);
 				font.setSize(font.getSize()-6);
-				Paragraph autor = new Paragraph("Autor: Iñigo Sanchez Mendez",font);
+				Paragraph autor = new Paragraph("Autor: Iñigo Sanchez Mendez y Josu Rodríguez",font);
 				autor.setAlignment(Paragraph.ALIGN_CENTER);
 				docu.add(autor);
 
@@ -227,8 +227,6 @@ public class Kmeans {
 							table.addCell(cluster);
 							//docu.add(new Paragraph(output));
 							//dl.SaveFile(filePath, output, false);
-						i++;
-
 						}
 					}
 				}

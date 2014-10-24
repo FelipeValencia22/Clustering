@@ -205,9 +205,6 @@ public class Clustering {
 		frame.pack();
 		frame.setVisible(true);
 		
-
-		//TODO test and evaluation
-
 		for(int j=0;j<clusters.length;j++){
 			System.out.println("CLUSTER: "+j);
 			System.out.println("---------------------------------------");
@@ -225,7 +222,7 @@ public class Clustering {
 		Evaluation eval= new Evaluation();
 		System.out.println("Average Silhouette coefficient: "+eval.silhouetteCoefficient(clusters, 2));
 		System.out.println("===========================================================================");		
-		//kmeans.report(clusters, codebook, InputHandler.getMiHandler().getDataPath());
+		kmeans.report(clusters, codebook, InputHandler.getMiHandler().getDataPath());
 
 	}
 
