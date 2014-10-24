@@ -30,9 +30,21 @@ import dm.core.Instance;
 
 public class Kmeans {
 	
+	
+	private double silhouette=0.0;
 	public Kmeans()
 	{
 		
+	}
+	
+	public void setSilhouette(double pCoefficient)
+	{
+		this.silhouette=pCoefficient;
+	}
+	
+	public double getSilhouette()
+	{
+		return this.silhouette;
 	}
 	
 	/**
@@ -233,7 +245,6 @@ public class Kmeans {
 				archivo.setAlignment(Paragraph.ALIGN_MIDDLE);
 				docu.add(archivo);
 
-				PdfPTable table = new PdfPTable(6);
 
 				//Array que devuelve, para cada instancia el cluster al que pertenece, empezando por 0
 				//Tiene tantos elementos, como número de instancias.
@@ -241,23 +252,42 @@ public class Kmeans {
 				{
 					if(!clusters[i].getListaInstances().isEmpty())
 					{
+						Paragraph clust =  new Paragraph("CLUSTER "+i+"\n\n",font);
+						clust.setAlignment(Paragraph.ALIGN_CENTER);
+						clust.getFont().setSize(15);
+						clust.getFont().setStyle(Font.UNDERLINE);
+						docu.add(clust);
+						PdfPTable table = new PdfPTable(8);
 						for(int j=0;j<clusters[i].getListaInstances().size();j++)
 						{
+							
 							//System.out.printf("Instance %d -> Cluster %d \n", Integer.valueOf(clusters[i].getListaInstances().get(j).getId()), i);
-							//String output = "Instance "+i+" -> Cluster "+ clusterNum+"\n";
+							//String output = "Instance "+i+" -> Cluster "+ clusterNum+"\n";							
 							String instance ="Instance "+clusters[i].getListaInstances().get(j).getId();
-							String cluster ="Cluster "+ i;
+							//String cluster ="Cluster "+ i;
 							PdfPCell cell = new PdfPCell();
-							cell.setBackgroundColor(BaseColor.ORANGE);
+							cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
 							cell.addElement(new Phrase(instance));
 							table.addCell(cell);
-							table.addCell(cluster);
+							//table.addCell(cluster);
 							//docu.add(new Paragraph(output));
 							//dl.SaveFile(filePath, output, false);
 						}
+						docu.add(table);
+						docu.newPage();
 					}
+					
 				}
-				docu.add(table);
+				
+				
+				docu.newPage();
+				
+				Paragraph eval =  new Paragraph("Los resultados de la evaluación de la ejecución: \n"
+						+ "Coeficiente silhouette: "+this.silhouette+"\n"
+						);
+				fecha.setAlignment(Paragraph.ALIGN_CENTER);
+				fecha.getFont().setSize(10);
+				docu.add(eval);
 				docu.close();
 			} 
 			catch (FileNotFoundException e) 
