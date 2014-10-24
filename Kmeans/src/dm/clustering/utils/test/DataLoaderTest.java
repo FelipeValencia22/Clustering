@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import dm.clustering.utils.DataLoader;
+import dm.clustering.io.DataLoader;
 import dm.core.Instance;
 
 public class DataLoaderTest {

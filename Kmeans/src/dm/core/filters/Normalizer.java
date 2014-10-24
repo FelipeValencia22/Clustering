@@ -1,4 +1,4 @@
-package dm.clustering.utils;
+package dm.core.filters;
 
 
 import java.util.ArrayList;

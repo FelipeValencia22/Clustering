@@ -1,4 +1,4 @@
-package dm.clustering.utils;
+package dm.clustering.io;
 
 import java.io.File;
 import java.io.FileNotFoundException;

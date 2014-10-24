@@ -11,9 +11,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.JFreeChart;
-
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -25,196 +22,25 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import dm.clustering.evaluation.Evaluation;
-import dm.clustering.utils.DataLoader;
-import dm.clustering.utils.InputHandler;
-import dm.clustering.utils.Minkowski;
-import dm.clustering.utils.Normalizer;
+import dm.clustering.io.DataLoader;
+import dm.clustering.io.InputHandler;
 import dm.core.Cluster;
 import dm.core.Instance;
-import dm.plots.Plot;
-
 
 
 public class Kmeans {
-	public static void main(String[] args) {
-		String LOG_TAG = Kmeans.class.getSimpleName();
-
-		//Get configuration from the configuration file.
-		InputHandler.getMiHandler().loadArgs("config/kmeans.conf");
-
-		//Let k be the number of clusters to partition the data set
-		//TODO k<<num instances and other args
-		int k = InputHandler.getMiHandler().getK();
-
-		//Let X = {x_{1},x_{2}, ..., x_{n}} be the data set to be analyzed
-		//TODO another data formats.
-
-		ArrayList<Instance> instances = null;
-		String extension=InputHandler.getMiHandler().getFileExtension();
-		instances = loadInstances(extension);
-
-		//Normalize data
-		if(InputHandler.getMiHandler().getNormalize()==1)
-		{
-			Normalizer norm = new Normalizer();
-			try 
-			{
-				instances = norm.normalize(instances);
-			} 
-			catch (Exception e) 
-			{
-				Logger.getLogger(LOG_TAG).log(Level.SEVERE,"ERROR al normalizar las instancias");
-			}
-		}
-		else if (InputHandler.getMiHandler().getNormalize()==0)
-		{
-			System.out.println("No se normalizarán las instancias");
-		}
-		else if (InputHandler.getMiHandler().getNormalize()==2)
-		{
-			Normalizer norm = new Normalizer();
-			if (norm.shouldNormalize(instances))
-			{
-				instances = norm.normalize(instances);
-			}
-		}
-		//B  membership matrix.
-		int nrow = instances.size();
-		int nCol = k;
-		int[][] B = new int[nrow][nCol];
+	
+	public Kmeans()
+	{
 		
-		//codebook
-		ArrayList<Instance> codebook = new ArrayList<Instance>();
-
-		// Instance k clusters
-		Cluster[] clusters = new Cluster[k];
-		for(int index=0;index<k;index++){
-			clusters[index]=new Cluster();
-		}
-		
-		if(InputHandler.getMiHandler().getIni()<1)
-		{
-			//Let seed be the seed for the random number to get the codebook.
-			//Let M = {m_{1}, m_{2}, ..., m_{k}} be the code-book associated to the clusters. Random instances.
-			codebook = startRandomCodebook(k, instances);
-		}
-		else
-		{
-			B = matrixMemberShipInitialize(nrow, nCol);
-			for(int i=0;i<B.length;i++){
-				for(int j=0;j<B[i].length;j++){
-					if(B[i][j]==1)
-					{
-						clusters[j].addInstance(instances.get(i));
-					}
-				}
-			}
-			
-			for(int l=0;l<clusters.length;l++)
-			{
-				codebook.add(clusters[l].calcCentroid());
-			}
-		}
-		
-		//Let distance exponent
-		double distExp = InputHandler.getMiHandler().getExp(); 
-		boolean condParada = false;
-
-		//Iterations		
-		int itera = InputHandler.getMiHandler().getIterations();		
-		if(itera<=0)
-		{
-			itera=instances.size();
-		}
-
-		//Disim
-		double difference = InputHandler.getMiHandler().getDiff();
-		if(difference<0.0)
-		{
-			difference=0.0;
-		}
-		while(!condParada)
-		{
-			for(int numIter=0;numIter<itera;numIter++)
-			{
-				clusters=resetClusters(clusters);
-				B=resetMatrixMembership(B);
-				for (int i=0;i<instances.size();i++)
-				{		
-					Double dist = Minkowski.getMinkowski()
-							.calculateDistance(instances.get(i)
-									, codebook.get(0), distExp);
-					int codewordIndex = 0;
-					clusters[0].addInstance(instances.get(i));
-					B[i][0]=1;
-					for (int j=0;j<k; j++)
-					{
-						Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), distExp);
-						if(dist>distAux-difference)
-						{
-							dist = distAux;
-							//update Matrix membership
-							B[i][j]=1;
-							B[i][codewordIndex]=0;
-							//update Cluster list
-							clusters[codewordIndex].removeInstance(instances.get(i));
-							codewordIndex=j;
-							clusters[j].addInstance(instances.get(i));	
-						}
-					}					
-				}
-				double ratioMax=InputHandler.getMiHandler().getRatioMax();
-				ArrayList<Instance> codebookAux;
-				for (int s=0; s< clusters.length;s++)
-				{
-					codebookAux = (ArrayList<Instance>)codebook.clone();
-					if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());
-						if (compareCodeBooks(codebookAux,codebook,distExp,ratioMax))
-						{
-							condParada = true;
-						}
-				}
-			}
-		}	
-
-		Plot.getMiPlot().setMatrixMembership(B);
-		JFreeChart scatter = Plot.getMiPlot().plottingMatrix("Memberships", "Clusters", "Instances");
-		// create and display a frame...
-		ChartFrame frame = new ChartFrame("CLUSTERING:K-MEDIAS", scatter);
-		frame.pack();
-		frame.setVisible(true);
-		
-
-		//TODO test and evaluation
-
-		for(int j=0;j<clusters.length;j++){
-			System.out.println("CLUSTER: "+j);
-			System.out.println("---------------------------------------");
-			System.out.println("Número de instancias en el cluster: "+clusters[j].getListaInstances().size());
-			
-			
-			String s="";
-			for (int p=0;p<codebook.get(0).numFeatures();p++)
-			{
-				s=s+codebook.get(j).getAtt(p)+"\n";
-			}
-			System.out.println("Con el codeword: \n"+s);
-			System.out.println("===========================================================================");
-		}
-		Evaluation eval= new Evaluation();
-		System.out.println("===========================================================================");
-		System.out.println("Average Silhouette coefficient: "+eval.silhouetteCoefficient(clusters, 2));
-		
-		
-		//report(clusters, codebook, InputHandler.getMiHandler().getDataPath());
 	}
-
+	
 	/**
-	 * reset all clusters
+	 * 
 	 * @param clusters
+	 * @return
 	 */
-	private static Cluster[] resetClusters(Cluster[] clusters) {
+	public  Cluster[] resetClusters(Cluster[] clusters) {
 		for (int p = 0; p<clusters.length;p++)
 		{
 			clusters[p].reset();
@@ -227,7 +53,7 @@ public class Kmeans {
 	 * @param B
 	 * @return matrix with all members = 0.
 	 */
-	private static int[][] resetMatrixMembership(int[][] B){
+	public int[][] resetMatrixMembership(int[][] B){
 		for(int i=0;i<B.length;i++){
 			for(int j=0;j<B[i].length;j++){
 				B[i][j]=0;
@@ -241,7 +67,7 @@ public class Kmeans {
 	 * @param extension
 	 * @return
 	 */
-	private static ArrayList<Instance> loadInstances(String extension) {
+	public ArrayList<Instance> loadInstances(String extension) {
 		ArrayList<Instance> instances = null;
 		if(extension.equals("csv"))
 		{
@@ -276,7 +102,7 @@ public class Kmeans {
 	 * @param k
 	 * @param instances
 	 */
-	private static ArrayList<Instance> startRandomCodebook(int k, ArrayList<Instance> instances) {
+	public ArrayList<Instance> startRandomCodebook(int k, ArrayList<Instance> instances) {
 		ArrayList<Instance> codebook = new ArrayList<Instance>();
 		for(int i=0;i<k;i++)
 		{
@@ -291,7 +117,7 @@ public class Kmeans {
 	 * @param nrow
 	 * @param nCol
 	 */
-	private static int[][]  matrixMemberShipInitialize(int nrow, int nCol) {
+	public int[][]  matrixMemberShipInitialize(int nrow, int nCol) {
 		int[][] B = new int[nrow][nCol];
 		for(int j=0;j<nrow;j++)
 		{
@@ -312,7 +138,7 @@ public class Kmeans {
 	 *  the order), false if not.
 	 */
 
-	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b, double p, double ratioMax)
+	public  boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b, double p, double ratioMax)
 	{		
 		for (int i=0;i<a.size();i++)
 		{
@@ -323,8 +149,13 @@ public class Kmeans {
 		}			
 		return true;	
 	}
-
-	public static void report(Cluster[] clusters, ArrayList<Instance> codebook, String path){
+	/**
+	 * 
+	 * @param clusters
+	 * @param codebook
+	 * @param path
+	 */
+	public  void report(Cluster[] clusters, ArrayList<Instance> codebook, String path){
 		
 		
 		final String LOG_TAG = Kmeans.class.getSimpleName();

@@ -15,8 +15,9 @@ import org.junit.Test;
 
 
 
-import dm.clustering.utils.Normalizer;
+
 import dm.core.Instance;
+import dm.core.filters.Normalizer;
 
 public class NormalizerTest {
 	

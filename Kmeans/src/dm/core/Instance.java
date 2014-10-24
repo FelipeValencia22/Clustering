@@ -2,7 +2,8 @@ package dm.core;
 
 import java.util.ArrayList;
 
-import dm.clustering.utils.*;
+import dm.clustering.io.*;
+import dm.statistic.Statistics;
 
 public class Instance 
 {

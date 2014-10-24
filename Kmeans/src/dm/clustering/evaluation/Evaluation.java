@@ -1,10 +1,10 @@
 package dm.clustering.evaluation;
 import java.util.ArrayList;
 
-import dm.clustering.utils.Minkowski;
-import dm.clustering.utils.Statistics;
 import dm.core.Cluster;
 import dm.core.Instance;
+import dm.core.distance.Minkowski;
+import dm.statistic.Statistics;
 
 
 public class Evaluation 

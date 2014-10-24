@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import dm.clustering.utils.Minkowski;
 import dm.core.Instance;
+import dm.core.distance.Minkowski;
 
 public class MinkowskiTest {
 

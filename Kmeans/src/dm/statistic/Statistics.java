@@ -1,4 +1,4 @@
-package dm.clustering.utils;
+package dm.statistic;
 
 import java.util.ArrayList;
 
