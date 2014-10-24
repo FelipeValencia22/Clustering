@@ -189,7 +189,7 @@ public class Kmeans {
 
 				font.setStyle(Font.ITALIC);
 				font.setSize(font.getSize()-6);
-				Paragraph autor = new Paragraph("Autor: Iñigo Sanchez Mendez y Josu Rodríguez",font);
+				Paragraph autor = new Paragraph("Autores: Iñigo Sanchez Mendez y Josu Rodríguez",font);
 				autor.setAlignment(Paragraph.ALIGN_CENTER);
 				docu.add(autor);
 
