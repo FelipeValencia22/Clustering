@@ -201,7 +201,7 @@ public class Clustering {
 		Plot.getMiPlot().setMatrixMembership(B);
 		JFreeChart scatter = Plot.getMiPlot().plottingMatrix("Memberships", "Clusters", "Instances");
 		// create and display a frame...
-		ChartFrame frame = new ChartFrame("CLUSTERING:K-MEDIAS", scatter);
+		ChartFrame frame = new ChartFrame("CLUSTERING:K-MEANS", scatter);
 		frame.pack();
 		frame.setVisible(true);
 		
