@@ -48,6 +48,7 @@ public class DataLoader
 			List<String[]> features = reader.readAll();	
 			for(int i = pIndexini;i<features.size();i++){
 				Instance ins = new Instance();
+				ins.setId(String.valueOf(i));
 				for(int j = 0;j<features.get(i).length;j++)
 				{					
 						try 
@@ -61,6 +62,7 @@ public class DataLoader
 				}
 				instances.add(ins);
 			}
+			reader.close();
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -111,11 +113,13 @@ public class DataLoader
 					new Exception();
 				}else 
 				{
+					int j=0;
 					while(reader.ready())
 					{
 						linea=reader.readLine();
 						String[] features = linea.split(delimiter);
 						Instance ins = new Instance();
+						ins.setId(String.valueOf(j));
 						for(int i=0;i<features.length;i++)
 						{
 							try 
@@ -128,9 +132,11 @@ public class DataLoader
 							}	
 						}
 						instances.add(ins);
+						j++;
 					}
-				}
 					reader.close();
+				}
+					
 			}
 			catch(IOException e)
 			{
@@ -157,11 +163,13 @@ public class DataLoader
 			try {
 				reader = new BufferedReader(new FileReader(pFilePath));
 				String linea;
+				int j=0;
 				while(reader.ready())
 				{
 					linea=reader.readLine();
 					String[] features = linea.split(pDelimiter);
 					Instance ins = new Instance();
+					ins.setId(String.valueOf(j));
 					for(int i=0;i<features.length;i++)
 					{
 						try 
@@ -174,6 +182,7 @@ public class DataLoader
 						}	
 					}
 					instances.add(ins);
+					j++;
 				}
 			reader.close();	
 			} 

@@ -182,7 +182,8 @@ public class Kmeans {
 						Font.ITALIC,                   // estilo
 						BaseColor.BLACK);
 				font.setStyle(Font.UNDERLINE);
-				Paragraph titulo = new Paragraph("Datos de agrupamiento de la instancias en "+clusters.length+" Clusters",font);
+				Paragraph titulo = new Paragraph("Datos de agrupamiento de la instancias obtenidas del archivo "+
+				InputHandler.getMiHandler().getDataPath()+" en "+clusters.length+" Clusters",font);
 				titulo.setAlignment(Paragraph.ALIGN_CENTER);
 				docu.add(titulo); 
 
@@ -196,6 +197,33 @@ public class Kmeans {
 				fecha.setAlignment(Paragraph.ALIGN_CENTER);
 				fecha.getFont().setSize(10);
 				docu.add(fecha);
+				
+				String distancia="";
+				double exp=InputHandler.getMiHandler().getExp();
+				if(exp==2.0)
+				{
+					distancia="Distancia Euclidea";
+				}
+				else if(exp==1.0)
+				{
+					distancia="Distancia Manhattan";
+				}
+				else
+				{
+					distancia="Distancia Minkowski"+" con exponente "+exp;
+				}
+				
+				Paragraph args =  new Paragraph("Parámetros de la ejecución: \n"
+						+ "Iteraciones: "+InputHandler.getMiHandler().getIterations()
+						+ "\nPonderación de comparación de las distancias de la instancia al centroide actualizado: "
+						+InputHandler.getMiHandler().getDiff()+
+						"\nLa distancia utilizada: "+distancia
+						+"\nInicialización: "+InputHandler.getMiHandler().getIni()
+						+"\nNormalización: "+InputHandler.getMiHandler().getNormalize()
+						+"\nDisimilitud codebooks: "+InputHandler.getMiHandler().getRatioMax());
+				fecha.setAlignment(Paragraph.ALIGN_CENTER);
+				fecha.getFont().setSize(10);
+				docu.add(args);
 
 
 
@@ -215,10 +243,9 @@ public class Kmeans {
 					{
 						for(int j=0;j<clusters[i].getListaInstances().size();j++)
 						{
-							System.out.printf("Instance %d -> Cluster %d \n", j, i);
-							//TODO args para guardar en archivo si el usuario lo pide.
+							System.out.printf("Instance %d -> Cluster %d \n", Integer.valueOf(clusters[i].getListaInstances().get(j).getId()), i);
 							//String output = "Instance "+i+" -> Cluster "+ clusterNum+"\n";
-							String instance ="Instance "+j;
+							String instance ="Instance "+clusters[i].getListaInstances().get(j).getId();
 							String cluster ="Cluster "+ i;
 							PdfPCell cell = new PdfPCell();
 							cell.setBackgroundColor(BaseColor.ORANGE);
