@@ -85,7 +85,6 @@ public class Instance
 				i++;
 			}		
 			ratioMean = Statistics.getMiStatistics().mean(ratios);
-		System.out.println(ratioMean);
 		return ratioMean>=ratioMax;
 	}	
 	
