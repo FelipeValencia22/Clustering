@@ -23,7 +23,7 @@ public class Clustering {
 
 		//Let kmeans object
 		Kmeans kmeans= new Kmeans();
-		
+
 		//Get configuration from the configuration file.
 		InputHandler.getMiHandler().loadArgs("config/kmeans.conf");
 
@@ -66,7 +66,7 @@ public class Clustering {
 		int nrow = instances.size();
 		int nCol = k;
 		int[][] B = new int[nrow][nCol];
-		
+
 		//codebook
 		ArrayList<Instance> codebook = new ArrayList<Instance>();
 
@@ -75,7 +75,7 @@ public class Clustering {
 		for(int index=0;index<k;index++){
 			clusters[index]=new Cluster();
 		}
-		
+
 		if(InputHandler.getMiHandler().getIni()<1)
 		{
 			//Let seed be the seed for the random number to get the codebook.
@@ -93,13 +93,13 @@ public class Clustering {
 					}
 				}
 			}
-			
+
 			for(int l=0;l<clusters.length;l++)
 			{
 				codebook.add(clusters[l].calcCentroid());
 			}
 		}
-		
+
 		//Let distance exponent
 		double distExp = InputHandler.getMiHandler().getExp(); 
 		boolean condParada = false;
@@ -117,7 +117,7 @@ public class Clustering {
 		{
 			difference=0.0;
 		}
-		while(!condParada)
+		if(itera>0)
 		{
 			for(int numIter=0;numIter<itera;numIter++)
 			{
@@ -147,19 +147,56 @@ public class Clustering {
 						}
 					}					
 				}
+				for (int s=0; s< clusters.length;s++)
+				{
+					if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());
+				}
+			}
+		}
+		else
+		{
+			while(!condParada)
+			{
 				double ratioMax=InputHandler.getMiHandler().getRatioMax();
 				ArrayList<Instance> codebookAux;
+				clusters=kmeans.resetClusters(clusters);
+				B=kmeans.resetMatrixMembership(B);
+				for (int i=0;i<instances.size();i++)
+				{		
+					Double dist = Minkowski.getMinkowski()
+							.calculateDistance(instances.get(i)
+									, codebook.get(0), distExp);
+					int codewordIndex = 0;
+					clusters[0].addInstance(instances.get(i));
+					B[i][0]=1;
+					for (int j=0;j<k; j++)
+					{
+						Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), distExp);
+						if(dist>distAux-difference)
+						{
+							dist = distAux;
+							//update Matrix membership
+							B[i][j]=1;
+							B[i][codewordIndex]=0;
+							//update Cluster list
+							clusters[codewordIndex].removeInstance(instances.get(i));
+							codewordIndex=j;
+							clusters[j].addInstance(instances.get(i));	
+						}
+					}					
+				}
 				for (int s=0; s< clusters.length;s++)
 				{
 					codebookAux = (ArrayList<Instance>)codebook.clone();
 					if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());
-						if (kmeans.compareCodeBooks(codebookAux,codebook,distExp,ratioMax))
-						{
-							condParada = true;
-						}
+					if (kmeans.compareCodeBooks(codebookAux,codebook,distExp,ratioMax))
+					{
+						condParada = true;
+					}
 				}
 			}
-		}	
+		}
+		
 
 		Plot.getMiPlot().setMatrixMembership(B);
 		JFreeChart scatter = Plot.getMiPlot().plottingMatrix("Memberships", "Clusters", "Instances");
