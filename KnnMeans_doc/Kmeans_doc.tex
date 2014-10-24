@@ -167,7 +167,8 @@ y de inteligibilidad \par
  establecida por el usuario en el fichero \textbf{kmeans.conf}, es decir: path
  del fichero y su formato, tipo de inicialización para el \textit{codebook}, número de clusters, distancia a
  utilizar, número de clústers deseados, elección manual o automática sobre la
- normalización y diversas opciones más.
+ normalización y diversas opciones más, especificando datos sobre el fichero que
+ se utilizará para las instancias.
 
 \subsection*{Segunda fase: Preproceso de datos}
 
@@ -398,11 +399,49 @@ Una vez incorporado el código necesario para la generación de gráficos su fun
 
 \section{Conclusiones}
 
+\subsection{Técnicas de clustering: motivación}
+Tal y como se ha descrito anteriormente en este documento, el propósito de la
+clasificación no supervisada es, opuestamente a la clasificación supervisada,
+\textbf{descubrir} información, en lugar de predecirla. Los campos y casos a los
+que es aplicable son múltiples y diversos: patrones de comportamiento en
+sociología, análisis genético, reconocimiento facial, etcétera. Todo área de
+conocimiento capaz de recopilar gran cantidad de datos es susceptible y puede
+beneficiarse de metodologías de clustering.
+
+
+\subsection{Conclusiones generales}
+Debido a la modularidad del software realizado, nos ha resultado relativamente
+sencillo encontrar los orígenes de los diversos errores y poder solucionarlos
+así como añadir varios módulos (p. ej.:
+generación de gráficos e informe) a lo largo del desarrollo, teniendo la
+estructura principal del código ya hecha. Además de esto, varias de las clases
+generadas son genéricas y pueden ser utilizadas en otros proyectos, como las 
+funciones estadísticas de Statistics.java o la evaluación de clusters de Evaluation.java.\\
+
+Por otra parte, la realización de esta práctica nos ha llevado a conocer en
+mayor profundidad el funcionamiento de un algoritmo de cierta complejidad,
+haciendo un uso mínimo de librerías externas. De no haber sido así, no se habría
+descubierto el algoritmo del coeficiente Silhouette, y aún menos haberlo
+implementado sin acudir a código ajeno. También cabe destacar la capacidad para
+manejar diversas que se ha obtenido, así como el uso de varias funciones
+estadísticas para calcular si es apto normalizar o no (experimental).
+
+\subsection{Puntos débiles y propuestas de mejora}
+Dadas la complejidad y la diversidad de funciones implementadas en el software,
+ha habido ciertos aspectos en los que no ha sido posible centrarse tanto como
+cabía. Podría destacarse el rendimiento del mismo, que pese a ser correcto y no
+tomar demasiado tiempo con volúmenes grandes de datos, no ha sido puesto a
+revisión exhaustiva por lo que podría ser mejorado.\\
+
+Además de esto, la cantidad de métodos de evaluación que se han podido
+implementar son limitados. Sin embargo no lo consideramos un punto débil
+destacable, ya que el algoritmo implementado, tras su análisis y diversas
+pruebas, nos ha parecido consistente y efectivo.\\
+
 	\begin{itemize}
-		\item Breve descripción de las motivaciones para llevar a cabo técnicas de clustering.
+	
 		\item Conclusiones a la vista de los resultados más relevantes.
-		\item Conclusiones generales.(Análisis de fortalezas del sw y reflexiones sobre la tarea.
-		\item Análisis de puntos débiles y propuestas de mejoras.
+		
 	\end{itemize}
 
 \section{Valoración subjetiva}
