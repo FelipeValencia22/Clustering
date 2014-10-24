@@ -184,17 +184,51 @@ En esta fase se implementa el algoritmo \textbf{K-means}.
 
 \subsection*{Cuarta Fase: Evaluación}
 
-En esta fase se tratará de automatizar la evaluación del algoritmo frente a los datos obtenidos con distintas ejecuciones, variando los parámetros o incluso con  
-los resultados obtenidos con el modelo de \textbf{K-means} que ya implementa el API de \textbf{weka}.
+Existen distintos métodos propuestos de evaluación de Clustering, los que conocemos actualmente pueden dividirse en dos grupos:
+\begin{itemize}
+	\item \emph{Extrinsic methods: } Se aplican cuando disponemos de la etiqueta de las instancias, asignando una puntuación en función de las instancias correctamente agrupadas.
+	
+	\item \emph{Intrinsic methods: } Se aplican cuando no disponemos de la clase. Los métodos que conocemos intentan medir la cohesión \textbf{intra-cluster} y la separación \textbf{inter-cluster}
+\end{itemize}
+
+Inicialmente se pensó en utilizar un método de los que utilizan datos de los que se conoce la clase previamente. Pero siguiendo el criterio de que se trata de implementar un sistema capaz de explorar patrones comunes en conjuntos de datos de los que \textbf{NO} se conoce la clase, evaluar con un problema que no se ajusta a este hecho nos parece que no es una medida muy realista, dado que se conocen el número de clusters ``óptimo'' a priori y que atributos correlan mejor con la clase.Además en un contexto real en el que se intenta explorar un conjunto de datos para encontrar patrones similares, no se dispone de las predicciones o de la etiqueta de la clase, por lo que nos decidimos por analizar e implementar un método de evaluación intrínseco.El método escogido ha sido el coeficiente \textbf{Silhouette}.
+
+\subsection*{Silhouette Coefficient}
+
+%Extraido de tuto MOA
+Es una combinación de las medidas de separación y cohesión:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.50]{./img/silhouette00.png}%crear esquema para incluirlo
+	\caption[Clusters:Separación y cohesión]{Medidas de cohesión y separación}
+	\label{fig:medidas}
+\end{figure}
+
+El coeficiente Silhouette s puede ser calculado para puntos independientes y para clusters. Para un punto individual,a=la distancia promedio de i a los puntos del mismo cluster;b=la distancia promedio de i a los puntos de los otros clusters \ref{fig:coeficiente}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.50]{./img/silhouette01.png}%crear esquema para incluirlo
+	\caption[Coeficiente silhouette para un punto i]{Coheficiente silhouette para un punto}
+	\label{fig:coeficiente}
+\end{figure}
+
+\newpage
 
 \subsection*{Dependencias}
+
  %mapa de diseño donde se muestran las dependencias y se documentan las rutinas.
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.50]{./img/dependenciasKmeans.pdf}%crear esquema para incluirlo
+	\includegraphics[scale=0.80]{./img/dependenciasKmeans.pdf}%crear esquema para incluirlo
 	\caption[Esquema de dependencias del sistema]{Dependencias del sistema}
 	\label{fig:dependencias}
 \end{figure}
+
+Para calcular el coeficiente del conjunto total de los clusters utilizamos la media del coeficiente para cada punto, la media de todos los puntos para calcular el del cluster, y la media de todos los coeficientes obtenidos para cada cluster.
+
+\newpage
 
 %\footnotetext{Imagen obtenida de:
 %\href{http://stackoverflow.com/questions/6160495/support-vector-machines-a-simple-explanation}{http://stackoverflow.com/questions/6160495/support-vector-machines-a-simple-explanation}.}
@@ -206,6 +240,8 @@ los resultados obtenidos con el modelo de \textbf{K-means} que ya implementa el 
 %	min\frac{1}{2}||w||^{2}
 %	\label{eq:pl}
 %\end{equation}
+
+\newpage
 
 \subsection{Algoritmo en pseudocódigo}
 
@@ -264,6 +300,8 @@ end
 
 \end{lstlisting}
 
+\newpage
+
 \section{Implementación}
 
 \subsection{Análisis del conjunto de datos para decidir la conveniencia de la normalización}
@@ -296,23 +334,23 @@ principal investigar respecto a la normalización en lugar de simplemente aplica
 \subsection{Problemas encontrados y soluciones adoptadas}
 
 
-\subsubsubsection{Problema con la normalización de los atributos}
+\subsubsection{Problema con la normalización de los atributos}
 En un comienzo, para normalizar, nuestra intención era aplicar la función Z-Score sobre los atributos de las diferentes instancias. Sin embargo, de esta forma se 
 obtenían resultados fuera del rango de [-1, 1], que es incorrecto para esta normalización. No se consiguió localizar el error, desconociendo si se trataba de una
  formulación incorrecta o un bug de programación. En lugar de ello se ha realizado una proyección lineal al intervalo [0,1] y de esta forma se ha conseguido 
  unificar los atributos en el mismo intervalo.
 
-\subsubsubsection{Problema de generación de excesivas instancias}
+\subsubsection{Problema de generación de excesivas instancias}
 Una vez estructurado todo el código y con todos los módulos programados, nos encontramos con el problema de que durante la ejecución, 
 se generaban demasiadas instancias. Esto se debía a que en cada iteración del algoritmo, los clusters no eran reseteados correctamente, y cada vez que se añadía 
 una nueva instancia en lugar de eliminar la que estaba presente en su lugar, desplazaba esta última y se insertaba en su posición. Para corregir esto sencillamente
 se modificó la función de añadir instancias para que esta sobreescribiese la presente, y además, se resetean los clusters en cada iteración.
 
-\subsubsubsection{Instancias repetidas en los gráficos}
+\subsubsection{Instancias repetidas en los gráficos}
 Al igual que en el anterior problema, nos encontramos con que a la hora de graficar, se marcaban más instancias de las que realmente había. La solución también pasó por 
 realizar un reinicio de la matriz de bits en cada iteración del algoritmo.
 
-\subsubsubsection{Ausencia de representación para el cluster 0}
+\subsubsection{Ausencia de representación para el cluster 0}
 Una vez incorporado el código necesario para la generación de gráficos su funcionamiento era correcto, pero no mostraba los datos del cluster 0. El problema radicaba
  en que a la hora de tratar la matriz de bits de pertenencia, el primer caso se trataba fuera de un bucle y por ello no se hacían las actualizaciones correctas. Una 
  vez corregido esto el gráfico se crea correctamente.
@@ -435,8 +473,11 @@ pruebas, nos ha parecido consistente y efectivo.\\
 
 \newpage
 
-\bibliographystyle{plain}
-\bibliography{bibliografia}
+\begin{thebibliography}{X}
+
+	\bibitem{MOA} MOA	
+	
+\end{thebibliography}
 
 %Ser crítico, analizar datos experemientales.Aplicar pequeños heurísticos.
 
