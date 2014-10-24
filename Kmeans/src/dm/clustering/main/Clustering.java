@@ -186,8 +186,9 @@ public class Clustering {
 			System.out.println("===========================================================================");
 		}
 		Evaluation eval= new Evaluation();
-		System.out.println("===========================================================================");
 		System.out.println("Average Silhouette coefficient: "+eval.silhouetteCoefficient(clusters, 2));
+		System.out.println("===========================================================================");
+		
 		
 		
 		//kmeans.report(clusters, codebook, InputHandler.getMiHandler().getDataPath());
