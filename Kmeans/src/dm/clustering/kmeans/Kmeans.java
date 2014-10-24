@@ -55,7 +55,7 @@ public class Kmeans {
 		instances = loadInstances(extension);
 
 		//Normalize data
-		if(InputHandler.getMiHandler().getNormalize())
+		if(InputHandler.getMiHandler().getNormalize()==1)
 		{
 			Normalizer norm = new Normalizer();
 			try 
@@ -65,6 +65,18 @@ public class Kmeans {
 			catch (Exception e) 
 			{
 				Logger.getLogger(LOG_TAG).log(Level.SEVERE,"ERROR al normalizar las instancias");
+			}
+		}
+		else if (InputHandler.getMiHandler().getNormalize()==0)
+		{
+			System.out.println("No se normalizarán las instancias");
+		}
+		else if (InputHandler.getMiHandler().getNormalize()==2)
+		{
+			Normalizer norm = new Normalizer();
+			if (norm.shouldNormalize(instances))
+			{
+				instances = norm.normalize(instances);
 			}
 		}
 		//B  membership matrix.
