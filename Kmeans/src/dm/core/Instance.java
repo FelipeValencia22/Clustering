@@ -63,27 +63,30 @@ public class Instance
 		int i = 0;
 		double ratioMean=0;
 		ArrayList<Double>ratios=new ArrayList<Double>();
-		if(x.equals(this))
-		{
 			while (i<this.doubleFeatures.size()&&i<x.doubleFeatures.size())
 			{
-				double att=Math.abs(this.doubleFeatures.get(i));
-				double attX=Math.abs(x.doubleFeatures.get(i));
+				double att=this.doubleFeatures.get(i);
+				double attX=x.doubleFeatures.get(i);
 				if(att>attX)
 				{
 					double ratio=attX/att;
 					ratios.add(ratio);
 				}
-				else 
+				else if(att<attX)
 				{
 					double ratio=att/attX;
+					ratios.add(ratio);
+				}
+				else
+				{
+					double ratio=1.0;
 					ratios.add(ratio);
 				}
 				i++;
 			}		
 			ratioMean = Statistics.getMiStatistics().mean(ratios);
-		}
-		return ratioMean>ratioMax;
+		System.out.println(ratioMean);
+		return ratioMean>=ratioMax;
 	}	
 	
 }

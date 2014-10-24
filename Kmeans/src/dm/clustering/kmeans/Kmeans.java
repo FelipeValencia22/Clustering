@@ -124,7 +124,8 @@ public class Kmeans {
 		}
 		while(!condParada)
 		{
-			for(int numIter=0;numIter<itera;numIter++){
+			for(int numIter=0;numIter<itera;numIter++)
+			{
 				clusters=resetClusters(clusters);
 				B=resetMatrixMembership(B);
 				for (int i=0;i<instances.size();i++)
@@ -149,22 +150,19 @@ public class Kmeans {
 							codewordIndex=j;
 							clusters[j].addInstance(instances.get(i));	
 						}
-					}
-					double ratioMax=InputHandler.getMiHandler().getRatioMax();
-					ArrayList<Instance> codebookAux;
-					for (int s=0; s< clusters.length;s++)
-					{
-						codebookAux = (ArrayList<Instance>)codebook.clone();
-						if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());
-						if(!codebook.equals(codebookAux))
+					}					
+				}
+				double ratioMax=InputHandler.getMiHandler().getRatioMax();
+				ArrayList<Instance> codebookAux;
+				for (int s=0; s< clusters.length;s++)
+				{
+					codebookAux = (ArrayList<Instance>)codebook.clone();
+					if(clusters[s].getInstances().hasNext())codebook.set(s, clusters[s].calcCentroid());
+						if (compareCodeBooks(codebookAux,codebook,distExp,ratioMax))
 						{
-							if (compareCodeBooks(codebookAux,codebook,distExp,ratioMax))
-							{
-								condParada = true;
-							}
+							condParada = true;
 						}
-					}
-				}		
+				}
 			}
 		}	
 
@@ -303,21 +301,14 @@ public class Kmeans {
 	 */
 
 	public static boolean compareCodeBooks(ArrayList<Instance> a, ArrayList<Instance> b, double p, double ratioMax)
-	{
-		int i = 0, j=0;
-
-		while (i<a.size())
+	{		
+		for (int i=0;i<a.size();i++)
 		{
-			while (j<b.size())
-			{
-				if (!a.get(i).equals(b.get(j),ratioMax))
+				if (!a.get(i).equals(b.get(i),ratioMax))
 				{
 					return false;
 				}
-				j++;
-			}
-			i++;
-		}
+		}			
 		return true;	
 	}
 

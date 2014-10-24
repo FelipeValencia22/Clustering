@@ -61,11 +61,6 @@ public class Cluster {
 		if(getInstances().hasNext())numFeatures = this.getInstances().next().getDobFeatures().size(); 
 		double[] codeword = new double[numFeatures];
 		
-		//Initialize array for calculus
-		for (int i = 0; i < numFeatures; i++) 
-		{
-			codeword[i] = (this.getListaInstances().get(0).getDobFeatures().get(i))/numInstances;
-		}
 		
 		//Calculate centroid
 		for(int j=1;j<numInstances;j++)

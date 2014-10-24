@@ -154,7 +154,6 @@ public class DataLoader
 		File file = new File(pFilePath);
 		if(file.exists()){
 			BufferedReader reader;
-			boolean enc=false;
 			try {
 				reader = new BufferedReader(new FileReader(pFilePath));
 				String linea;
