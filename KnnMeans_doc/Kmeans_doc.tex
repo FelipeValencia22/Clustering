@@ -296,27 +296,34 @@ principal investigar respecto a la normalización en lugar de simplemente aplica
 \subsection{Problemas encontrados y soluciones adoptadas}
 
 
-\subsubsubsection{Problema con la normalización de los atributos}
+\subsubsection{Problema con la normalización de los atributos}
 En un comienzo, para normalizar, nuestra intención era aplicar la función Z-Score sobre los atributos de las diferentes instancias. Sin embargo, de esta forma se 
 obtenían resultados fuera del rango de [-1, 1], que es incorrecto para esta normalización. No se consiguió localizar el error, desconociendo si se trataba de una
  formulación incorrecta o un bug de programación. En lugar de ello se ha realizado una proyección lineal al intervalo [0,1] y de esta forma se ha conseguido 
  unificar los atributos en el mismo intervalo.
 
-\subsubsubsection{Problema de generación de excesivas instancias}
+\subsubsection{Problema de generación de excesivas instancias}
 Una vez estructurado todo el código y con todos los módulos programados, nos encontramos con el problema de que durante la ejecución, 
 se generaban demasiadas instancias. Esto se debía a que en cada iteración del algoritmo, los clusters no eran reseteados correctamente, y cada vez que se añadía 
 una nueva instancia en lugar de eliminar la que estaba presente en su lugar, desplazaba esta última y se insertaba en su posición. Para corregir esto sencillamente
 se modificó la función de añadir instancias para que esta sobreescribiese la presente, y además, se resetean los clusters en cada iteración.
 
-\subsubsubsection{Instancias repetidas en los gráficos}
+\subsubsection{Instancias repetidas en los gráficos}
 Al igual que en el anterior problema, nos encontramos con que a la hora de graficar, se marcaban más instancias de las que realmente había. La solución también pasó por 
 realizar un reinicio de la matriz de bits en cada iteración del algoritmo.
 
-\subsubsubsection{Ausencia de representación para el cluster 0}
+\subsubsection{Ausencia de representación para el cluster 0}
 Una vez incorporado el código necesario para la generación de gráficos su funcionamiento era correcto, pero no mostraba los datos del cluster 0. El problema radicaba
  en que a la hora de tratar la matriz de bits de pertenencia, el primer caso se trataba fuera de un bucle y por ello no se hacían las actualizaciones correctas. Una 
  vez corregido esto el gráfico se crea correctamente.
 
+\subsubsection{Análisis de condición de parada del algoritmo incorrecta}
+En las últimas fases de desarrollo del software, cuando decidimos volver a
+hablitar la opción de que el algoritmo itere hasta encontrar la solución óptima
+local (dada la inicialización), la comparación de los nuevos codewords con los
+anteriores daba problemas. Haciendo uso de la herramienta de debug descubrimos
+que el origen de esto era la comparación de todos los clusters entre sí, en
+lugar de cada uno con su par.
 
 \section{Validación del \textit{software}}
 
