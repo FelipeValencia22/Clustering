@@ -243,7 +243,7 @@ public class Kmeans {
 					{
 						for(int j=0;j<clusters[i].getListaInstances().size();j++)
 						{
-							System.out.printf("Instance %d -> Cluster %d \n", Integer.valueOf(clusters[i].getListaInstances().get(j).getId()), i);
+							//System.out.printf("Instance %d -> Cluster %d \n", Integer.valueOf(clusters[i].getListaInstances().get(j).getId()), i);
 							//String output = "Instance "+i+" -> Cluster "+ clusterNum+"\n";
 							String instance ="Instance "+clusters[i].getListaInstances().get(j).getId();
 							String cluster ="Cluster "+ i;
