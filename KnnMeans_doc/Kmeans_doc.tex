@@ -21,6 +21,8 @@
 \usepackage{listings}%Entornos de código
 \usepackage{color}
 
+\usepackage{pdfpages}
+
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -98,11 +100,11 @@
 \thispagestyle{empty}
 \newpage
 
-%Lista de tablas
-\renewcommand{\listtablename}{\centering ÍNDICE DE TABLAS} %Para cambiar el índice de las tablas
-\listoftables
-\thispagestyle{empty}
-\newpage
+%%Lista de tablas
+%\renewcommand{\listtablename}{\centering ÍNDICE DE TABLAS} %Para cambiar el índice de las tablas
+%\listoftables
+%\thispagestyle{empty}
+%\newpage
 
 %lista de figuras 
 \renewcommand\listfigurename{\centering ÍNDICE DE FIGURAS}
@@ -139,14 +141,15 @@ y de inteligibilidad \par
 		\begin{itemize}
 			\item En formato \textit{.txt}: \textcolor{green}{ClusterData.atributos.txt} (este fichero si tiene la clase asociada para 
 			evaluar la calidad del \textit{clustering} en \textcolor{green}{ClusterData.clase.txt}).
-			\item E formato \textit{.csv} \textcolor{green}{bank-data.csv}clustering
+			\item En formato \textit{.csv} \textcolor{green}{bank-data.csv}clustering
 		\end{itemize}
 \end{itemize}
 
 \section{Clasificación \textbf{NO-supervisada} o \textit{Clustering}}
 
 \begin{defi}
-	Técnicas de aprendizaje donde no hay un conocimiento a priori, donde agrupa las instancias sin atributos dependientes pre-especificados.Los algoritmos "clustering" son un método común de aprendizaje no supervisado.
+	Técnicas de aprendizaje donde no hay un conocimiento a priori, donde agrupa las instancias sin atributos dependientes pre-especificados.Los algoritmos de ``clustering'' son un método común de aprendizaje no supervisado.
+	
 \end{defi}
 
 \subsection{Clustering \textit{\textbf{k-means}}}
@@ -191,42 +194,14 @@ Existen distintos métodos propuestos de evaluación de Clustering, los que cono
 	\item \emph{Intrinsic methods: } Se aplican cuando no disponemos de la clase. Los métodos que conocemos intentan medir la cohesión \textbf{intra-cluster} y la separación \textbf{inter-cluster}
 \end{itemize}
 
-Inicialmente se pensó en utilizar un método de los que utilizan datos de los que se conoce la clase previamente. Pero siguiendo el criterio de que se trata de implementar un sistema capaz de explorar patrones comunes en conjuntos de datos de los que \textbf{NO} se conoce la clase, evaluar con un problema que no se ajusta a este hecho nos parece que no es una medida muy realista, dado que se conocen el número de clusters ``óptimo'' a priori y que atributos correlan mejor con la clase.Además en un contexto real en el que se intenta explorar un conjunto de datos para encontrar patrones similares, no se dispone de las predicciones o de la etiqueta de la clase, por lo que nos decidimos por analizar e implementar un método de evaluación intrínseco.El método escogido ha sido el coeficiente \textbf{Silhouette}.
+Inicialmente pensamos  en utilizar un método de los que utilizan datos de los que se conoce la clase previamente. Pero siguiendo el criterio de que se trata de implementar un sistema capaz de explorar patrones comunes en conjuntos de datos, de los que \textbf{NO} se conoce la clase a priori, evaluar con un problema que no se ajusta a este hecho se nos antoja que no es una medida muy realista, dado que se conocen el número de clusters ``óptimo'' a priori y que atributos correlan mejor con la clase.\\
 
-\subsection*{Silhouette Coefficient}
+Además en un contexto real en el que se intenta explorar un conjunto de datos para encontrar patrones similares, no se dispone de las predicciones o de la etiqueta de la clase, por lo que nos decidimos a analizar e implementar un método de evaluación.
 
-%Extraido de tuto MOA
-Es una combinación de las medidas de separación y cohesión:
+Otro de los motivos para implementar nuestro propio método nace de la base para nosotros necesaria de independencia, es decir queremos un sistema capaz por si sólo de decidir cuanto de bien agrupa las instancias, para éste fin como es de esperar lo que buscamos es un índice indicador de la cohesión de las instancias agrupadas en un mismo cluster. \\
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.50]{./img/silhouette00.png}%crear esquema para incluirlo
-	\caption[Clusters:Separación y cohesión]{Medidas de cohesión y separación}
-	\label{fig:medidas}
-\end{figure}
+El método escogido ha sido el coeficiente \textbf{Silhouette}, esto es así porque como se explicará mas adelante, para calcular el indicador se utilizan medidas de cohesión y además de separación, por lo que nos parece que se ajusta a lo que buscamos para nuestro sistema, teniendo en cuenta que tratamos con heurísticos relativamente novedosos y de base experimental. \\
 
-El coeficiente Silhouette s puede ser calculado para puntos independientes y para clusters. Para un punto individual,a=la distancia promedio de i a los puntos del mismo cluster;b=la distancia promedio de i a los puntos de los otros clusters \ref{fig:coeficiente}.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.50]{./img/silhouette01.png}%crear esquema para incluirlo
-	\caption[Coeficiente silhouette para un punto i]{Coheficiente silhouette para un punto}
-	\label{fig:coeficiente}
-\end{figure}
-
-\newpage
-
-\subsection*{Dependencias}
-
- %mapa de diseño donde se muestran las dependencias y se documentan las rutinas.
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.80]{./img/dependenciasKmeans.pdf}%crear esquema para incluirlo
-	\caption[Esquema de dependencias del sistema]{Dependencias del sistema}
-	\label{fig:dependencias}
-\end{figure}
-
-Para calcular el coeficiente del conjunto total de los clusters utilizamos la media del coeficiente para cada punto, la media de todos los puntos para calcular el del cluster, y la media de todos los coeficientes obtenidos para cada cluster.
 
 \newpage
 
@@ -263,7 +238,7 @@ Begin:
 	
 	//assign dataset instances to each cluster generated by the centroids
 	for each $x_{n}$
-		$B_{nj} = 1$ si argmin $dist(x_{n},m_{j}) = m_{j}$ \foreach $m_{j}$ si no $B_{nj} = 0$ 
+		$B_{nj} = 1$ if argmin $dist(x_{n},m_{j}) = m_{j}$ \foreach $m_{j}$ else $B_{nj} = 0$ 
 	end
 		
 	for each $B_{nj}$
@@ -304,68 +279,138 @@ end
 
 \section{Implementación}
 
-\subsection{Análisis del conjunto de datos para decidir la conveniencia de la normalización}
-Debido a las dudas surgidas en torno a la normalización de los atributos y su conveniencia, consideramos adecuado para la tarea tratar de buscar algún método que fuese
-en alguna manera indicador de la utilidad de la normalización.
+\subsection{Formato de entrada de datos}
 
-En un principio nuestro planteamiento se basaba en utilizar la media de la desviación típica de los valores de cada atributo con el objeto de poder analizar los rangos 
+Este particular es el que menos tiempo y esfuerzo nos ha llevado en la implementación, ya que el manejo de archivos se encuentra resuelto con clases disponibles en el API de java.\\
+
+Gracias al alto nivel de configuración del sistema, que se pasará a explicar a continuación, éste es capaz de tratar ficheros de entrada de los tres tipos propuestos: ARFF, TXT, CSV.
+
+Tanto para los ficheros con extensión arff como txt hemos realizado nuestra propia implementación, para los ficheros de entrada hemos decidido hacer uso de la librería OpenCSV disponible de manera libre en Internet, aunque podrían ser tratados como los ficheros txt de manera  interna en nuestro sistema, decidimos hacer uso de esta librería ya que desconocíamos de su existencia y nos pareció útil a la vez que práctico hacer uso de ella.
+
+\subsection{Configuración del sistema}
+
+Cómo hemos nombrado anteriormente en este documento, el sistema es altamente configurable, por lo que los argumentos de configuración son numerosos y sabemos, dada nuestra propia experiencia, que no es eficiente tratar un número alto de argumentos de entrada a través de la línea de comandos.\\
+
+La decisión a este respecto ha sido crear un fichero de configuración a través del cual el usuario tiene la posibilidad de ajustar la ejecución a sus datos o incluso realizar diferentes ejecuciones con distintos parámetros en la búsqueda de una ejecución óptima.\\
+
+Parámetros:
+\begin{itemize}
+	\item file : donde indicaremos el path del fichero que contiene el conjunto de datos.
+	\item k: donde indicaremos el número de clusters para la ejecución.
+	\item iterations: si este es 0 la parada ejecución se decidirá por disimilitud de los codebook.
+	\item difference: valor para ponderar la diferencia de las distancias entre las instancias y los centroides. Es decir el cambio de pertenencia.
+	\item distance: el exponente de la distancia Minkowski.
+	\item initialize: para inicializar con una matriz de pertenencia aleatoria(0) o con instancias del conjunto escogidas aleatoriamente como codewords(1).
+	\item file\_ extension: indica la extensión del archivo.
+	\item data\_ line\_ start: permite al usuario indicar la línea en la que comienzan los datos. Este parámetro nos pareció interesante por dos motivos. El primero es que permite manejar archivos con cualquier información antes de comenzar a extraer los datos y el segundo es que se pueden obtener datos conjuntos de datos de diferentes tamaños extraídos de un mismo fichero.
+	\item delimiter: para indicar el delimitador entre los distintos atributos.
+	\item normalize: para dejar que el usuario decida si normalizar(1) o no(0).Por otra parte cabe la posibilidad de dejar que el sistema decida si normalizar o no(2).
+	\item ratio\_ max: para indicar la disimilitud entre codebooks(0.0 distintos, 1.0 iguales). 
+\end{itemize}  
+
+
+\subsection{Análisis del conjunto de datos para decidir la conveniencia de la normalización}
+
+Debido a las dudas surgidas en torno a la normalización de los atributos y su conveniencia, consideramos adecuado para la tarea tratar de buscar algún método que fuese
+de alguna manera indicador de la utilidad de la normalización.
+
+Inicialmente nuestro planteamiento se basaba en utilizar la media de la desviación típica de los valores de cada atributo con el objeto de poder analizar los rangos 
 de las diferencias entre valores de cada atributo. Sin embargo la media por su cuenta no nos es útil, ya que por ejemplo, si la media es alta pero la desviación es baja, 
-en realidad, puede no haber mucha variación en los rangos. Esto nos llevó a
-hallar el Coeficiente de Variación\\
+en realidad, puede no haber mucha variación en los rangos. Esto nos llevó a hallar lo que denominamos Coeficiente de Variación:\\
 
 \begin{equation}
 C_{V}=\frac{\sigma}{\bar{x}}
  \end{equation}\\
 
-De esta forma logramos un indicador más preciso sobre el rango que buscamos ya que nos indica la proporción de la variabilidad de las desviaciones, en lugar de la mera 
-cantidad de desviación.
+De esta forma logramos un indicador más preciso sobre el rango que buscamos ya que nos indica la proporción de la variabilidad de las desviaciones, en lugar de la mera cantidad de desviación.
 
-La motivación de este análisis viene dada más por el interés de hallar una forma de conocer la utilidad que pueda tener la normalización en un conjunto de datos, ya que
- objetivamente, el beneficio principal que puede tener es que si no afecta demasiado al resultado final, nos puede interesar más tener los atributos en su rango numérico inicial (p.ej.: es más visual ver un gráfico con edades entre 0 y 100 que entre 0 y 1).
+La motivación de este análisis viene dada más por el interés de hallar una forma de conocer la utilidad que pueda tener la normalización en un conjunto de datos, ya que objetivamente, el beneficio principal que puede tener es que si no afecta demasiado al resultado final, nos puede interesar más tener los atributos en su rango numérico inicial (p.ej.: es más visual ver un gráfico con edades entre 0 y 100 que entre 0 y 1).
 
-Por otra parte, hemos tratado de hallar una cifra del Coeficiente de Variación que esté comunmente aceptada como baja, pero no hemos encontrado ninguna fuente fidedigna 
-para ello. Por lo tanto, hemos decidido establecer una cifra pequeña (0,1) teniendo en cuenta que ante la posibilidad de que haya rangos muy variados, puede ser más 
-conveniente normalizar.
+Por otra parte, hemos tratado de hallar una cifra del Coeficiente de Variación que esté comúnmente aceptada como baja, pero no hemos encontrado ninguna fuente fidedigna para ello. Por lo tanto, hemos decidido establecer una cifra pequeña (0,1) teniendo en cuenta que ante la posibilidad de que haya rangos muy variados, puede ser más conveniente normalizar.
 
-Huelga decir que este método y sus resultados son experimentales, pese a tener cierta base empírica carecemos de la certeza sobre su eficacia, siendo nuestro objetivo 
-principal investigar respecto a la normalización en lugar de simplemente aplicarla por estar aceptada como conveniente. 
+Huelga decir que este método y sus resultados son experimentales, pese a tener cierta base empírica carecemos de la certeza sobre su eficacia, siendo nuestro objetivo principal investigar respecto a la normalización en lugar de simplemente aplicarla por estar aceptada como conveniente. 
+
+\subsection{Evaluación: Silhouette Coefficient}
+
+%Extraido de tuto MOA
+Es una combinación de las medidas de separación y cohesión:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.50]{./img/silhouette00.png}%crear esquema para incluirlo
+	\caption[Clusters:Separación y cohesión]{Medidas de cohesión y separación}
+	\label{fig:medidas}
+\end{figure}
+
+El coeficiente Silhouette s puede ser calculado para puntos independientes y para clusters. Para un punto individual,a=la distancia promedio de i a los puntos del mismo cluster;b=la distancia promedio de i a los puntos de los otros clusters \ref{fig:coeficiente}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.50]{./img/silhouette01.png}%crear esquema para incluirlo
+	\caption[Coeficiente silhouette para un punto i]{Coheficiente silhouette para un punto}
+	\label{fig:coeficiente}
+\end{figure}
+
+\newpage
+
+\subsection*{Dependencias}
+
+ %mapa de diseño donde se muestran las dependencias y se documentan las rutinas.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.80]{./img/dependenciasKmeans.pdf}%crear esquema para incluirlo
+	\caption[Esquema de dependencias del sistema]{Dependencias del sistema}
+	\label{fig:dependencias}
+\end{figure}
+
+Para calcular el coeficiente del conjunto total de los clusters inicialmente se calcula el coeficiente para cada miembro de un mismo cluster y se calcula la media de todos los coeficientes hallados,se calcula ésto para cada cluster y se devuelve la media de todos los coeficientes hallados para todos los clusters.\\
+
+\subsection{Visualización}
+
+Con el fin de analizar los resultados de una forma visual, se presenta la representación gráfica de la matriz de pertenencias, el resumen de la ejecución por consola, y un informe detallado de la ejecución en formato pdf.\\
+ Para este fin y dado que nos parece que no aporta a las competencias que se espera adquirir con la práctica hacemos uso de la librería \textbf{JFreeChart} para realizar los gráficos y de \textbf{iTex} para generar el informe en PDF.\\
+ Al finalizar el sistema muestra una gráfica de la matriz de pertenencias, permitiendo analizar de una forma visual a que cluster pertenece cada instancia:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.40]{./img/membership.png}%crear esquema para incluirlo
+	\caption[Gráfica Matriz de pertenencias]{Pertenencias}
+	\label{fig:dependencias}
+\end{figure}
 
 
 \subsection{Problemas encontrados y soluciones adoptadas}
 
 
 \subsubsection{Problema con la normalización de los atributos}
+
 En un comienzo, para normalizar, nuestra intención era aplicar la función Z-Score sobre los atributos de las diferentes instancias. Sin embargo, de esta forma se 
 obtenían resultados fuera del rango de [-1, 1], que es incorrecto para esta normalización. No se consiguió localizar el error, desconociendo si se trataba de una
- formulación incorrecta o un bug de programación. En lugar de ello se ha realizado una proyección lineal al intervalo [0,1] y de esta forma se ha conseguido 
- unificar los atributos en el mismo intervalo.
+ formulación incorrecta o un bug de programación. En lugar de ello se ha realizado una proyección lineal al intervalo [0,1] y de esta forma se ha conseguido unificar los atributos en el mismo intervalo.\\
 
 \subsubsection{Problema de generación de excesivas instancias}
+
 Una vez estructurado todo el código y con todos los módulos programados, nos encontramos con el problema de que durante la ejecución, 
-se generaban demasiadas instancias. Esto se debía a que en cada iteración del algoritmo, los clusters no eran reseteados correctamente, y cada vez que se añadía 
-una nueva instancia en lugar de eliminar la que estaba presente en su lugar, desplazaba esta última y se insertaba en su posición. Para corregir esto sencillamente
-se modificó la función de añadir instancias para que esta sobreescribiese la presente, y además, se resetean los clusters en cada iteración.
+se generaban demasiadas instancias. Esto se debía a que en cada iteración del algoritmo, los clusters no eran reseteados correctamente, y cada vez que se añadía una nueva instancia en lugar de eliminar la que estaba presente en su lugar, desplazaba esta última y se insertaba en su posición. Para corregir esto sencillamente se modificó la función de añadir instancias para que esta sobreescribiese la presente, y además, se vacían de instancias los clusters en cada iteración.\\
 
 \subsubsection{Instancias repetidas en los gráficos}
-Al igual que en el anterior problema, nos encontramos con que a la hora de graficar, se marcaban más instancias de las que realmente había. La solución también pasó por 
-realizar un reinicio de la matriz de bits en cada iteración del algoritmo.
+
+Al igual que en el anterior problema, nos encontramos con que a la hora de visualizar los resultados, se marcaban más instancias de las que realmente había. La solución también pasó por realizar un reinicio de la matriz de bits de pertenencia en cada iteración del algoritmo.\\
 
 \subsubsection{Ausencia de representación para el cluster 0}
-Una vez incorporado el código necesario para la generación de gráficos su funcionamiento era correcto, pero no mostraba los datos del cluster 0. El problema radicaba
- en que a la hora de tratar la matriz de bits de pertenencia, el primer caso se trataba fuera de un bucle y por ello no se hacían las actualizaciones correctas. Una 
- vez corregido esto el gráfico se crea correctamente.
+
+Una vez incorporado el código necesario para la generación de gráficos su funcionamiento era correcto, pero no mostraba los datos del cluster 0. El problema radicaba en que a la hora de tratar la matriz de bits de pertenencia, el primer caso se trataba fuera del bucle principal para obtener la distancia inicial con la que comparar,. Una vez corregido esto el gráfico se crea correctamente.
 
 \subsection{Métrica o distancia utilizada}
+
 La métrica utilizada para medir la distancia entre instancias del conjunto es la
 \textbf{Distancia de Minkowski}:
 
-\begin{equation}
-\text{Siendo} P=(x_1,x_2,\ldots,x_n)\text{ y }Q=(y_1,y_2,\ldots,y_n) \in
-\mathbb{R}^n
-\text{La distancia Minkowski entre ambas instancias está definida por:}
-\left(\sum_{i=1}^n |x_i-y_i|^p\right)^{1/p}
+Siendo: $$P=(x_1,x_2,\ldots,x_n)\text{ y }Q=(y_1,y_2,\ldots,y_n) \in
+\mathbb{R}^n$$
 
-\end{equation}
+La distancia Minkowski entre ambas instancias está definida por:
+$$\left(\sum_{i=1}^n |x_i-y_i|^p\right)^{1/p}$$
 
 Esta distancia es una generalización de la distancia Euclídea. En ella, variando
 el parámetro p, se pueden obtener distintas distancias. Siendo p=1 la distancia
@@ -383,29 +428,58 @@ instancias no tenga por qué ser estrictamente lineal.
 
 \subsection{Diseño del banco de pruebas}
 
+\begin{tabular}[H]{|l|*{6}{c|}r|}
+\hline
+File              & k & iterations & difference & distance & initialize  & normalize & disimilitud \\
+\hline
+bank-data.csv	 & 1 & 0 & 0.0 & 2 & 0 & 0 & 0.5	\\
+bank-data.csv    & 2 & 0 & 0.0 & 2 & 1 & 1 & 0.8 \\
+bank-data.csv    & 3 & 10 & 0.3 & 1 & 0 & 2 & x \\
+bank-data.csv    & 25 & 100& 0 & 3.5 & 1 & 0 & x \\
+bank-data.csv    & 25 & 0 & 0 & 7.5 & 1 & 2 & 1.0\\
+bank-data.csv    & 25 & 0 & 0 & 7.5 & 1 & 0 & 0.6\\
+colon.arff	 & 1 & 0 & 0.0 & 2 & 0 & 0 & 0.5	\\
+colon.arff    & 2 & 0 & 0.0 & 2 & 1 & 1 & 0.8 \\
+colon.arff   & 3 & 10 & 0.3 & 1 & 0 & 2 & x \\
+colon.arff    & 10 & 30& 0 & 3.5 & 1 & 0 & x \\
+colon.arff    & 10 & 0 & 0 & 7.5 & 1 & 2 & 1.0\\
+colon.arff   & 10 & 0 & 0 & 7.5 & 1 & 0 & 0.6\\
+ClusterData.atributos.txt    & 1 & 0 & 0.0 & 2 & 0 & 0 & 0.5	\\
+ClusterData.atributos.txt    & 2 & 0 & 0.0 & 2 & 1 & 1 & 0.8 \\
+ClusterData.atributos.txt     & 3 & 10 & 0.3 & 1 & 0 & 2 & x \\
+ClusterData.atributos.txt    & 30 & 40& 0 & 3.5 & 1 & 0 & x \\
+ClusterData.atributos.txt    & 30 & 0 & 0 & 7.5 & 1 & 0 & 1.0\\
+ClusterData.atributos.txt    & 30 & 0 & 0 & 7.5 & 1 & 2 & 0.6\\
+\hline
+\end{tabular}
+
+Tras resolver los problemas de implementación expuestos en puntos anteriores, el sistema pasa el banco de pruebas completo con éxito.
+
 \section{Análisis de resultados}
+
+Analizar los resultados no es tarea fácil, no existe un método de evaluación estandarizado para el clustering, por lo que nos basamos únicamente en el coeficiente ya que nos acerca a una medida de lo bien que el algoritmo agrupa las instancias.
+
+Dicho esto y a la vista de los resultados aportados como anexo, se puede ver que el algoritmo es bastante eficiente. Podemos observar que para agrupar en un único cluster, la evaluación siempre nos dará el mismo resultado 1.0, que es el mejor que podemos obtener.
+
+Si nos centramos la atención en los conjuntos de datos de los que disponemos la clase, con distancia euclidea y con disimilitud 1.0 aunque no obtenemos más de 0.3 de coeficiente, podemos analizar los datos con respecto a la ejecución y ver que el número de instancias de cada clase es similar al número de instancias en cada cluster. Esto nos índica que quizás merezca analizar los datos a partir de un índice no muy alto.
 
 \subsection{Modificando inicializaciones}
 
-\subsection{Modificando distancia Minkowski}
+Debido a que las inicializaciones posibles son matriz de pertenencia aleatoria o codebook inicial escogiendo instancias del conjunto de datos, los resultados no varían demasiado con el cambio de este método, pero el resultado si depende de como se inicializa el codebook.
 
 \subsection{Criterios de convergencia}
 
 \subsubsection{Número fijo de iteraciones}
 
+Por lo general el aumento de iteraciones es proporcional al resultado, aunque llegado a un número de iteraciones el resultado no varía. Para los datos manejados generalmente a partir de la iteración diez el coeficiente silhouette no varía.
+
 \subsubsection{Disimilitud entre \textit{codebooks}}
+
+Este punto se podría analizar igual que el punto anterior, dado que la disimilitud escogida lo que permite es un mayor número de iteraciones. Es decir que aunque pongamos que la disimilitud entre codebooks sea 0.2 y no 1.0 que es la máxima similitud, es decir que no para hasta que sean iguales, cuando alcanza el número de iteraciones a partir del cual el coeficiente no varía, se alcanza el mejor resultado posible.
 
 \subsection{Distintas métricas}
 
-\subsubsection{Manhattan}
-
-\subsubsection{Euclídea}
-
-\subsubsection{Minkowski}
-
-\section{Clasificación supervisada respecto de }
-
-
+Tras hacer diferentes ejecuciones, tanto con distancias mahattan y euclidea como con diversos exponentes para la distancia Minkowski, se observa que los mejores resultados se obtienen con las dos primeras, para los tipos de problemas de los que disponemos. Esto podría justificar porque algunas librerías de minería de datos ya existentes como Weka no implementen Minkowski para este tipo de algoritmo ya que a partir de un exponente de tres, los resultados del coeficiente disminuyen casi hasta cero.
 
 
 \section{Conclusiones}
@@ -414,8 +488,9 @@ instancias no tenga por qué ser estrictamente lineal.
 
 Tal y como se ha descrito anteriormente en este documento, el propósito de la
 clasificación no supervisada es, opuestamente a la clasificación supervisada,
-\textbf{descubrir} información, en lugar de predecirla. Los campos y casos a los
-que es aplicable son múltiples y diversos: patrones de comportamiento en
+\textbf{descubrir} información, en lugar de predecirla.Explorar los datos en busca de patrones de comportamiento.
+ Los campos y casos a los
+que es aplicable son múltiples y diversos: en
 sociología, análisis genético, reconocimiento facial, etcétera. Todo área de
 conocimiento capaz de recopilar gran cantidad de datos es susceptible y puede
 beneficiarse de metodologías de clustering.
@@ -426,7 +501,7 @@ beneficiarse de metodologías de clustering.
 Debido a la modularidad del software realizado, nos ha resultado relativamente
 sencillo encontrar los orígenes de los diversos errores y poder solucionarlos
 así como añadir varios módulos (p. ej.:
-generación de gráficos e informe) a lo largo del desarrollo, teniendo la
+generación de gráficos e informe, cálculos estadísticos) a lo largo del desarrollo, teniendo la
 estructura principal del código ya hecha. Además de esto, varias de las clases
 generadas son genéricas y pueden ser utilizadas en otros proyectos, como las 
 funciones estadísticas de Statistics.java o la evaluación de clusters de Evaluation.java.\\
@@ -435,7 +510,8 @@ Por otra parte, la realización de esta práctica nos ha llevado a conocer en
 mayor profundidad el funcionamiento de un algoritmo de cierta complejidad,
 haciendo un uso mínimo de librerías externas. De no haber sido así, no se habría
 descubierto el algoritmo del coeficiente Silhouette, y aún menos haberlo
-implementado sin acudir a código ajeno. También cabe destacar la capacidad para
+implementado sin acudir a código ajeno, de hecho se podría haber prescindido de estas librerías. 
+También cabe destacar la capacidad para
 manejar diversas que se ha obtenido, así como el uso de varias funciones
 estadísticas para calcular si es apto normalizar o no (experimental).
 
@@ -451,12 +527,6 @@ Además de esto, la cantidad de métodos de evaluación que se han podido
 implementar son limitados. Sin embargo no lo consideramos un punto débil
 destacable, ya que el algoritmo implementado, tras su análisis y diversas
 pruebas, nos ha parecido consistente y efectivo.\\
-
-	\begin{itemize}
-	
-		\item Conclusiones a la vista de los resultados más relevantes.
-		
-	\end{itemize}
 
 \section{Valoración subjetiva}
 
@@ -477,11 +547,11 @@ pruebas, nos ha parecido consistente y efectivo.\\
 							\hline
 							\multicolumn{2}{|c|}{\textbf{Coste temporal}}\\
 							\hline
-								Diseño de software & \\
-								Implementación de software & \\
-								Tiempo trabajando con Weka & \\
-								Búsqueda bibliográfica & \\
-								Informe & 1\\
+								Diseño de software & 5\\
+								Implementación de software & 40\\
+								Tiempo trabajando con Weka & 1\\
+								Búsqueda bibliográfica & 1\\
+								Informe & 2.5\\
 								\hline
 							\end{tabular}
 						}
@@ -496,8 +566,19 @@ pruebas, nos ha parecido consistente y efectivo.\\
 
 \newpage
 
-\begin{thebibliography}{X}
+\section*{ANEXOS}
 
+\newpage
+
+\includepdf[pages=-]{ejecuciones/20141025-1905_colon_resultados.pdf}
+
+\newpage
+
+\includepdf[pages=-]{ejecuciones/20141025-1904_bank-dat_resultados.pdf}
+
+\newpage
+
+\begin{thebibliography}{X}
 	\bibitem{MOA} MOA	
 	
 \end{thebibliography}

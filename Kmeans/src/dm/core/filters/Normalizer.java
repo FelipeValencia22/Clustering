@@ -7,6 +7,11 @@ import dm.core.Instance;
 
 public class Normalizer {
 	
+	/**
+	 * 
+	 * @param Instances
+	 * @return
+	 */
 	public ArrayList<Instance> normalize(ArrayList<Instance> Instances)
 	{
 		/*

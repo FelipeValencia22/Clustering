@@ -1,5 +1,7 @@
 package dm.clustering.main;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +22,23 @@ public class Clustering {
 
 	public static void main(String[] args) {
 		String LOG_TAG = Kmeans.class.getSimpleName();
+		
+		File data = new File("data");
+		if(!data.exists())
+		{
+			data.mkdirs();
+		}
+		
+		File config = new File("config");
+		if(!config.exists())
+		{
+			config.mkdirs();
+		}
+		File rdo = new File("Resultados");
+		if(!rdo.exists())
+		{
+			rdo.mkdirs();
+		}
 
 		//Let kmeans object
 		Kmeans kmeans= new Kmeans();
@@ -121,6 +140,7 @@ public class Clustering {
 		{
 			for(int numIter=0;numIter<itera;numIter++)
 			{
+				System.out.println("Agrupando por número de iteraciones fijo..........................."+(numIter*100)/itera+"%");
 				clusters=kmeans.resetClusters(clusters);
 				B=kmeans.resetMatrixMembership(B);
 				for (int i=0;i<instances.size();i++)
@@ -134,7 +154,7 @@ public class Clustering {
 					for (int j=0;j<k; j++)
 					{
 						Double distAux = Minkowski.getMinkowski().calculateDistance(instances.get(i), codebook.get(j), distExp);
-						if(dist>distAux-difference)
+						if(dist>distAux+difference)
 						{
 							dist = distAux;
 							//update Matrix membership

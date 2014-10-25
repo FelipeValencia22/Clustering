@@ -5,27 +5,27 @@
 \BOOKMARK [1][-]{section.4}{Dise\361o}{}% 5
 \BOOKMARK [2][-]{subsection.4.1}{Algoritmo en pseudoc\363digo}{section.4}% 6
 \BOOKMARK [1][-]{section.5}{Implementaci\363n}{}% 7
-\BOOKMARK [2][-]{subsection.5.1}{An\341lisis del conjunto de datos para decidir la conveniencia de la normalizaci\363n}{section.5}% 8
-\BOOKMARK [2][-]{subsection.5.2}{Problemas encontrados y soluciones adoptadas}{section.5}% 9
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Problema con la normalizaci\363n de los atributos}{subsection.5.2}% 10
-\BOOKMARK [3][-]{subsubsection.5.2.2}{Problema de generaci\363n de excesivas instancias}{subsection.5.2}% 11
-\BOOKMARK [3][-]{subsubsection.5.2.3}{Instancias repetidas en los gr\341ficos}{subsection.5.2}% 12
-\BOOKMARK [3][-]{subsubsection.5.2.4}{Ausencia de representaci\363n para el cluster 0}{subsection.5.2}% 13
-\BOOKMARK [1][-]{section.6}{Validaci\363n del software}{}% 14
-\BOOKMARK [2][-]{subsection.6.1}{Dise\361o del banco de pruebas}{section.6}% 15
-\BOOKMARK [1][-]{section.7}{An\341lisis de resultados}{}% 16
-\BOOKMARK [2][-]{subsection.7.1}{Modificando inicializaciones}{section.7}% 17
-\BOOKMARK [2][-]{subsection.7.2}{Modificando distancia Minkowski}{section.7}% 18
-\BOOKMARK [2][-]{subsection.7.3}{Criterios de convergencia}{section.7}% 19
-\BOOKMARK [3][-]{subsubsection.7.3.1}{N\372mero fijo de iteraciones}{subsection.7.3}% 20
-\BOOKMARK [3][-]{subsubsection.7.3.2}{Disimilitud entre codebooks}{subsection.7.3}% 21
-\BOOKMARK [2][-]{subsection.7.4}{Distintas m\351tricas}{section.7}% 22
-\BOOKMARK [3][-]{subsubsection.7.4.1}{Manhattan}{subsection.7.4}% 23
-\BOOKMARK [3][-]{subsubsection.7.4.2}{Eucl\355dea}{subsection.7.4}% 24
-\BOOKMARK [3][-]{subsubsection.7.4.3}{Minkowski}{subsection.7.4}% 25
-\BOOKMARK [1][-]{section.8}{Clasificaci\363n supervisada respecto de }{}% 26
-\BOOKMARK [1][-]{section.9}{Conclusiones}{}% 27
-\BOOKMARK [2][-]{subsection.9.1}{T\351cnicas de clustering: motivaci\363n}{section.9}% 28
-\BOOKMARK [2][-]{subsection.9.2}{Conclusiones generales}{section.9}% 29
-\BOOKMARK [2][-]{subsection.9.3}{Puntos d\351biles y propuestas de mejora}{section.9}% 30
-\BOOKMARK [1][-]{section.10}{Valoraci\363n subjetiva}{}% 31
+\BOOKMARK [2][-]{subsection.5.1}{Formato de entrada de datos}{section.5}% 8
+\BOOKMARK [2][-]{subsection.5.2}{Configuraci\363n del sistema}{section.5}% 9
+\BOOKMARK [2][-]{subsection.5.3}{An\341lisis del conjunto de datos para decidir la conveniencia de la normalizaci\363n}{section.5}% 10
+\BOOKMARK [2][-]{subsection.5.4}{Evaluaci\363n: Silhouette Coefficient}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.5}{Visualizaci\363n}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.6}{Problemas encontrados y soluciones adoptadas}{section.5}% 13
+\BOOKMARK [3][-]{subsubsection.5.6.1}{Problema con la normalizaci\363n de los atributos}{subsection.5.6}% 14
+\BOOKMARK [3][-]{subsubsection.5.6.2}{Problema de generaci\363n de excesivas instancias}{subsection.5.6}% 15
+\BOOKMARK [3][-]{subsubsection.5.6.3}{Instancias repetidas en los gr\341ficos}{subsection.5.6}% 16
+\BOOKMARK [3][-]{subsubsection.5.6.4}{Ausencia de representaci\363n para el cluster 0}{subsection.5.6}% 17
+\BOOKMARK [2][-]{subsection.5.7}{M\351trica o distancia utilizada}{section.5}% 18
+\BOOKMARK [1][-]{section.6}{Validaci\363n del software}{}% 19
+\BOOKMARK [2][-]{subsection.6.1}{Dise\361o del banco de pruebas}{section.6}% 20
+\BOOKMARK [1][-]{section.7}{An\341lisis de resultados}{}% 21
+\BOOKMARK [2][-]{subsection.7.1}{Modificando inicializaciones}{section.7}% 22
+\BOOKMARK [2][-]{subsection.7.2}{Criterios de convergencia}{section.7}% 23
+\BOOKMARK [3][-]{subsubsection.7.2.1}{N\372mero fijo de iteraciones}{subsection.7.2}% 24
+\BOOKMARK [3][-]{subsubsection.7.2.2}{Disimilitud entre codebooks}{subsection.7.2}% 25
+\BOOKMARK [2][-]{subsection.7.3}{Distintas m\351tricas}{section.7}% 26
+\BOOKMARK [1][-]{section.8}{Conclusiones}{}% 27
+\BOOKMARK [2][-]{subsection.8.1}{T\351cnicas de clustering: motivaci\363n}{section.8}% 28
+\BOOKMARK [2][-]{subsection.8.2}{Conclusiones generales}{section.8}% 29
+\BOOKMARK [2][-]{subsection.8.3}{Puntos d\351biles y propuestas de mejora}{section.8}% 30
+\BOOKMARK [1][-]{section.9}{Valoraci\363n subjetiva}{}% 31
