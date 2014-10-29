@@ -1,7 +1,10 @@
 package dm.clustering.io;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -24,7 +27,7 @@ public class InputHandler
 	private double ratioMax;
 
 	private final String LOG_TAG = InputHandler.class.getSimpleName();
-	
+
 	private InputHandler() {
 		K = 1;
 		this.exp = 2;
@@ -37,7 +40,7 @@ public class InputHandler
 		this.normalize=0;
 		this.ratioMax=0;
 	}		
-	
+
 	public void setRatioMax(double ratioMax) {
 		this.ratioMax = ratioMax;
 	}
@@ -45,7 +48,7 @@ public class InputHandler
 	public static InputHandler getMiHandler(){
 		return miHandler;
 	}
-	
+
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -81,7 +84,7 @@ public class InputHandler
 	public int getIterations() {
 		return iterations;
 	}
-	
+
 	public int getNormalize(){
 		return normalize;
 	}
@@ -97,15 +100,15 @@ public class InputHandler
 	public void setDiff(double diff) {
 		this.diff = diff;
 	}
-	
+
 	private void setIni(Integer pIni) {
 		this.initialize=pIni;
 	}
-	
+
 	public int getIni(){
 		return this.initialize;
 	}
-	
+
 	public int getDataIndexStart() {
 		return dataIndexStart;
 	}
@@ -113,7 +116,7 @@ public class InputHandler
 	public void setDataIndexStart(int dataIndexStart) {
 		this.dataIndexStart = dataIndexStart;
 	}
-	
+
 	public String getDelimiter() {
 		return delimiter;
 	}
@@ -121,27 +124,28 @@ public class InputHandler
 	public void setDelimiter(String delimiter) {
 		this.delimiter = delimiter;
 	}
-	
+
 	public void setNormalize(int i)
 	{
 		this.normalize=i;
 	}
-	
+
 	public double getRatioMax() {
 		return this.ratioMax;
 	}
 
 	public void loadArgs(String filePath){
+		BufferedReader reader;
 		try 
 		{
-			@SuppressWarnings("resource")
-			Scanner sc = new Scanner(new File(filePath));
-			sc.useDelimiter(";");
-			ArrayList<String> args = new ArrayList<String>(); 
-			while(sc.hasNext()){
-				String line = sc.next();
+			String linea;
+			ArrayList<String> args = new ArrayList<String>();
+			reader=new BufferedReader(new FileReader(filePath));
+			while(reader.ready())
+			{
+				String line = reader.readLine();
 				String[] arg = line.split("=");
-				args.add(arg[1]);
+				if(arg.length>0)args.add(arg[1]);
 			}
 			try 
 			{
@@ -244,14 +248,15 @@ public class InputHandler
 			{
 				Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Revise el parámetro ratio_max en el archivo de configuración");
 
-			}
-			
+			}	
 		} 
-		catch (FileNotFoundException e) 
+		catch (FileNotFoundException e1) 
+		{
+			Logger.getLogger(LOG_TAG).log(Level.SEVERE, "No es posible encontrar el archivo de configuración");
+		} 
+		catch (IOException e1) 
 		{
 			Logger.getLogger(LOG_TAG).log(Level.SEVERE, "No es posible encontrar el archivo de configuración");
 		}
 	}
-
-	
 }
