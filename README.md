@@ -1,4 +1,4 @@
-DataMinig
+DataMining
 =========
 
-repositorio para aplicaciones de data minig
+Repositorio para aplicaciones de Data Mining
