@@ -57,7 +57,7 @@ public class DataLoader
 	 * post:carga como instancias el fichero instanciado previamente en la constructora de la clase.
 	 * 
 	 */
-	public  Instances instancesLoader()
+	public Instances instancesLoader()
 	{	
 		Instances data=null;
 		try 
