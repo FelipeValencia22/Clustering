@@ -1,4 +1,6 @@
-DataMining
+Clustering
 =========
 
-Implementación java del algoritmo k-means e indice de bondad silueta
+Java implementation of KMeans algorithm.
+
+- Silhouette index
